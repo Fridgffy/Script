@@ -1,0 +1,314 @@
+#!/usr/bin/env bash
+
+### set variable
+GREEN='\033[3;32m'
+RED='\033[1;31m'
+YELLO='\033[1;33m'
+END='\033[0m'
+
+### ErrorArray funtion
+function ea()
+{
+	if [ $? -ne 0 ];then
+		array[${#array[*]}]="$1"
+	fi
+}
+
+### get the version number
+function version()
+{	
+	### first variable is owner,second is repo
+
+	num=`curl -s https://api.github.com/repos/$1/$2/releases/latest | grep tag_name | cut -f4 -d "\""`
+	if [ ! "$num" ];then
+		echo -e "${RED} The version number was not obtained! ${END}"
+		array[${#array[*]}]="$2_version"
+		return
+	else
+		echo $num 
+	fi
+}
+
+### set current shell proxy
+function setproxy()
+{
+	### determine whether clash is enabled
+	if [ `ps -ef | grep clash |grep -v grep | wc -l` -eq 0 ];then
+		echo -e "${RED} clash is not enabled ${END}!"
+		exit
+	else
+		echo -e "${GREEN} clash is enabled"
+	fi
+
+	### detarmine whether proxychains is set
+	if [ `cat /etc/proxychains4.conf| grep 7891 |wc -l` -eq 0 ];then
+		echo -e "${RED} proxychains is not set ${END}!"
+		exit
+	else
+		echo -e "${GREEN} proxychains is set ${END}"
+	fi
+
+	### apt updatte
+	apt update  > /dev/null 2>&1
+	sleep 3
+}
+
+function MakeNewFolder()
+{	
+	if [ ! -e ~/Arsenals ];then
+		mkdir ~/Arsenals
+		mkdir ~/Arsenals/company
+		mkdir ~/Arsenals/subdomain
+		mkdir ~/Arsenals/comprehensive
+		mkdir ~/Arsenals/app
+		mkdir ~/Arsenals/app/apk
+		mkdir ~/Arsenals/app/ipa
+		mkdir ~/Arsenals/fingerprint
+		mkdir ~/Arsenals/directory
+		mkdir ~/Arsenals/urlspider
+		mkdir ~/Arsenals/sensitive
+		mkdir ~/Arsenals/dict
+		mkdir ~/Arsenals/result
+		mkdir ~/Arsenals/result/sub
+		mkdir ~/Arsenals/dict/subdomain
+	else
+		echo -e "${RED} File or directory Arsenals is already exists! ${END}"
+		exit
+	fi
+
+	sleep 3
+}
+
+
+function DownCompanyTools()
+{
+	echo -e "${GREEN}  download ENScan_GO ${END}"
+
+	### get version
+	num_ens=`version wgpsec ENScan_GO`
+
+	### download
+	cd ~/Arsenals/company && mkdir enscan && cd enscan && proxychains wget https://github.com/wgpsec/ENScan_GO/releases/download/${num_ens}/enscan-${num_ens}-linux-amd64.tar.gz  > /dev/null 2>&1 && tar -zxvf *.tar.gz  > /dev/null 2>&1 && rm *.tar.gz && mv enscan* enscan
+	ea 'ENScan'
+
+	sleep 3
+}
+
+
+function DownAppTools()
+{
+	### AppInfoScanner
+	echo -e "${GREEN}  download AppInfoScanner ${END}"
+
+	cd ~/Arsenals/app && proxychains git clone https://github.com/kelvinBen/AppInfoScanner  > /dev/null 2>&1
+	ea 'AppInfoScanner'
+	
+	pip install -r ~/Arsenals/app/AppInfoScanner/requirements.txt > /dev/null 2>&1
+	ea 'PipAppInfoScanner'
+	
+	sleep 3
+	
+	### apkleaks
+	echo -e "${GREEN}  download apkleaks${END}"
+
+	pip install apkleaks > /dev/null 2>&1
+	ea 'apkleaks'
+	
+	sleep 3
+
+	### AppMessenger
+	echo -e "${RED} Download Windows software AppMessenger in https://github.com/sulab999/AppMessenger/releases/download/v4.6.3/appmsg4.6.3.zip ${END}"
+
+	pip install async_timeout > /dev/null 2>&1
+	ea 'Pipasync_timeout'
+
+	sleep 3
+}
+
+function DownSubdomainTools()
+{
+	### knock
+	echo -e "${GREEN}  download knock ${END}"
+	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/guelfoweb/knock  > /dev/null 2>&1 && chmod 744 ~/Arsenals/subdomain/knock/knockpy.py && ln -s ~/Arsenals/subdomain/knock/knockpy.py /usr/bin/knock
+	ea 'knock'
+	
+	pip install -r ~/Arsenals/subdomain/knock/requirements.txt > /dev/null 2>&1
+	ea 'Pipknock'
+
+	sleep 3
+	
+	### oneforall
+	echo -e "${GREEN}  download OneForAll ${END}"
+	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/shmilylty/OneForAll  > /dev/null 2>&1 && chmod 744 ~/Arsenals/subdomain/OneForAll/oneforall.py && ln -s ~/Arsenals/subdomain/OneForAll/oneforall.py /usr/bin/oneforall
+	ea 'OneForAll'
+	
+	pip install -r ~/Arsenals/subdomain/OneForAll/requirements.txt > /dev/null 2>&1
+	ea 'PipOneforall'
+	
+	sleep 3
+	
+
+	## subdomainBurte
+	echo -e "${GREEN}  download subDomainsBrute ${END}"
+	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/lijiejie/subDomainsBrute  > /dev/null 2>&1 && chmod 744 ~/Arsenals/subdomain/subDomainsBrute/subDomainsBrute.py && ln -s ~/Arsenals/subdomain/subDomainsBrute/subDomainsBrute.py /usr/bin/subdomainbrute && pip install dnspython==2.2.1 async_timeout > /dev/null 2>&1
+	ea 'subDomainsBrute'
+
+	sleep 3
+	
+	## ksubdomain
+	echo -e "${GREEN}  download ksubdomain ${END}"
+
+	### get version
+	num_ksu=`version knownsec ksubdomain`
+
+	cd ~/Arsenals/subdomain && mkdir ksubdomain && cd ksubdomain && proxychains wget https://github.com/knownsec/ksubdomain/releases/download/${num_ksu}/ksubdomain_linux.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv ksubdomain /usr/bin 
+	ea 'ksubdomain'
+	
+	sleep 3
+	
+
+	### sublist3r
+	echo -e "${GREEN}  download sublist3r ${END}"
+	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/aboul3la/Sublist3r  > /dev/null 2>&1 && cd Sublist3r && chmod 744 ~/Arsenals/subdomain/Sublist3r/sublist3r.py && ln -s ~/Arsenals/subdomain/Sublist3r/sublist3r.py /usr/bin/sublist3r 
+	ea 'sublist3r'
+	
+	pip install -r ~/Arsenals/subdomain/Sublist3r/requirements.txt > /dev/null 2>&1
+	ea 'Pipsublist3r'
+	
+	sleep 3
+	
+
+	### dnsmap
+	echo -e "${GREEN}  download dnsmap ${END}"
+	apt install dnsmap > /dev/null 2>&1
+	ea 'dnsmap'
+	
+	sleep 3
+	
+	### esd
+	echo -e "${GREEN}  download esd ${END}"
+	pip install esd > /dev/null 2>&1
+	ea 'esd'
+	
+	sleep 3
+
+	### ctfr
+	echo -e "${GREEN}  download ctfr ${END}"
+	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/UnaPibaGeek/ctfr  > /dev/null 2>&1 && cd ctfr && chmod 744 ~/Arsenals/subdomain/ctfr/ctfr.py && ln -s ~/Arsenals/subdomain/ctfr/ctfr.py /usr/bin/ctfr 
+	ea 'ctfr'
+	
+	pip install -r ~/Arsenals/subdomain/ctfr/requirements.txt > /dev/null 2>&1
+	ea 'Pipctfr'
+	
+	sleep 3
+
+	## subfinder
+	echo -e "${GREEN}  download subfinder${END}"
+
+	### get version
+	num_sub=`version projectdiscovery subfinder`
+	num_sub_v=`echo $num_sub | cut -f2 -d "v"`
+
+	cd ~/Arsenals/subdomain && mkdir subfinder && cd subfinder && proxychains wget https://github.com/projectdiscovery/subfinder/releases/download/${num_sub}/subfinder_${num_sub_v}_linux_amd64.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv subfinder /usr/bin 
+	ea 'subfinder'
+	
+	sleep 3
+	
+	## assetfinder
+	echo -e "${GREEN}  download assetfinder ${END}"
+
+	cd ~/Arsenals/subdomain && mkdir assetfinder && cd assetfinder && proxychains wget https://github.com/tomnomnom/assetfinder/releases/download/v0.1.1/assetfinder-linux-amd64-0.1.1.tgz  > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv assetfinder /usr/bin 
+	ea 'assetfinder'
+	
+	sleep 3
+	
+
+	## findomain
+	echo -e "${GREEN}  download findomain ${END}"
+
+	### get version
+	num_fin=`version Findomain Findomain`
+
+	cd ~/Arsenals/subdomain && mkdir findomain && cd findomain && proxychains wget https://github.com/Findomain/Findomain/releases/download/${num_fin}/findomain-linux.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && chmod 744 findomain && mv findomain /usr/bin
+	ea 'findomain'
+	
+	sleep 3
+	
+
+	## dnsub
+	echo -e "${GREEN}  download dnsub ${END}"
+
+	### get version
+	num_dns=`version yunxu1 dnsub`
+
+	cd ~/Arsenals/subdomain && mkdir dnsub && cd dnsub && proxychains wget https://github.com/yunxu1/dnsub/releases/download/${num_dns}/dnsub_linux_amd64_${num_dns}.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip 
+	ea 'dnsub'
+	
+	sleep 3
+
+	## fierce
+	echo -e "${GREEN}  download fierce ${END}"
+	pip install fierce > /dev/null 2>&1
+	ea 'fierce'
+	
+	sleep 3
+	
+	
+	## altdns
+	echo -e "${GREEN}  download altdns ${END}"
+	pip install py-altdns > /dev/null 2>&1
+	ea 'altdns'
+	
+	sleep 3
+
+	## ldns-walk
+	echo -e "${GREEN}  download ldns-walk ${END}"
+	apt install ldnsutils --upgrade > /dev/null 2>&1
+	ea 'ldns-walk'
+	
+	sleep 3
+	
+	## virtual-host-discovery
+	echo -e "${GREEN}  download virtual-host-discovery ${END}"
+	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/jobertabma/virtual-host-discovery > /dev/null 2>&1
+	ea 'virtual-host-discovery'
+	
+	sleep 3
+
+	## domains-from-csp
+	echo -e "${GREEN}  download domains-from-csp ${END}"
+	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/0xbharath/domains-from-csp > /dev/null 2>&1
+	ea 'domains-from-csp'
+	
+	sleep 3
+	
+}
+
+function CycleArray()
+{
+	for i in ${array[*]}
+	do
+		echo $i
+	done
+}
+
+
+echo -e "${RED}START${END}"
+setproxy
+
+echo -e "${YELLO} start MakeNewFolder${END}"
+MakeNewFolder
+
+echo -e "${YELLO} start DownCompanyTools${END}"
+DownCompanyTools
+
+echo -e "${YELLO} start DownAppTools${END}"
+DownAppTools
+
+echo -e "${YELLO} start DownSubdomainTools${END}"
+DownSubdomainTools
+
+echo -e "${RED}END ${END}"
+
+echo -e "${RED}Error ${END}"
+CycleArray
