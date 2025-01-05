@@ -29,6 +29,19 @@ function version()
 	fi
 }
 
+### configuration file
+function config()
+{
+	### first variable is command,second is configuration file
+	`$1 > /dev/null 2>&1`
+	if [ -e $2 ];then
+		echo -e "${GREEN}configuration file set successfully! ${END}"
+	else
+		echo -e "${RED}configuration file set failed! ${END}"
+		array[${#array[*]}]="$2"
+	fi
+}
+
 ### set current shell proxy
 function setproxy()
 {
@@ -59,14 +72,10 @@ function MakeNewFolder()
 		mkdir ~/Arsenals
 		mkdir ~/Arsenals/company
 		mkdir ~/Arsenals/subdomain
-		mkdir ~/Arsenals/comprehensive
 		mkdir ~/Arsenals/app
 		mkdir ~/Arsenals/app/apk
 		mkdir ~/Arsenals/app/ipa
 		mkdir ~/Arsenals/fingerprint
-		mkdir ~/Arsenals/directory
-		mkdir ~/Arsenals/urlspider
-		mkdir ~/Arsenals/sensitive
 		mkdir ~/Arsenals/dict
 		mkdir ~/Arsenals/result
 		mkdir ~/Arsenals/result/sub
@@ -91,6 +100,10 @@ function DownCompanyTools()
 	cd ~/Arsenals/company && mkdir enscan && cd enscan && proxychains wget https://github.com/wgpsec/ENScan_GO/releases/download/${num_ens}/enscan-${num_ens}-linux-amd64.tar.gz  > /dev/null 2>&1 && tar -zxvf *.tar.gz  > /dev/null 2>&1 && rm *.tar.gz && mv enscan* enscan
 	ea 'ENScan'
 
+	### configuration file
+	echo `config '/root/Arsenals/company/enscan/enscan -v' '/root/Arsenals/company/enscan/config.yaml'`
+	
+	
 	sleep 3
 }
 
@@ -117,7 +130,7 @@ function DownAppTools()
 	sleep 3
 
 	### AppMessenger
-	echo -e "${RED} Download Windows software AppMessenger in https://github.com/sulab999/AppMessenger/releases/download/v4.6.3/appmsg4.6.3.zip ${END}"
+	echo -e "${YELLO} Download Windows software AppMessenger in https://github.com/sulab999/AppMessenger/releases/download/v4.6.3/appmsg4.6.3.zip ${END}"
 
 	pip install async_timeout > /dev/null 2>&1
 	ea 'Pipasync_timeout'
@@ -139,7 +152,7 @@ function DownSubdomainTools()
 	
 	### oneforall
 	echo -e "${GREEN}  download OneForAll ${END}"
-	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/shmilylty/OneForAll  > /dev/null 2>&1 && chmod 744 ~/Arsenals/subdomain/OneForAll/oneforall.py && ln -s ~/Arsenals/subdomain/OneForAll/oneforall.py /usr/bin/oneforall
+	cd ~/Arsenals/subdomain && git clone https://github.com/shmilylty/OneForAll  > /dev/null 2>&1 && chmod 744 ~/Arsenals/subdomain/OneForAll/oneforall.py && ln -s ~/Arsenals/subdomain/OneForAll/oneforall.py /usr/bin/oneforall
 	ea 'OneForAll'
 	
 	pip install -r ~/Arsenals/subdomain/OneForAll/requirements.txt > /dev/null 2>&1
@@ -180,7 +193,7 @@ function DownSubdomainTools()
 
 	### dnsmap
 	echo -e "${GREEN}  download dnsmap ${END}"
-	apt install dnsmap > /dev/null 2>&1
+	apt -y install dnsmap > /dev/null 2>&1
 	ea 'dnsmap'
 	
 	sleep 3
@@ -263,7 +276,7 @@ function DownSubdomainTools()
 
 	## ldns-walk
 	echo -e "${GREEN}  download ldns-walk ${END}"
-	apt install ldnsutils --upgrade > /dev/null 2>&1
+	apt -y install ldnsutils --upgrade > /dev/null 2>&1
 	ea 'ldns-walk'
 	
 	sleep 3
@@ -293,7 +306,7 @@ function CycleArray()
 }
 
 
-echo -e "${RED}START${END}"
+echo -e "${YELLO}START${END}"
 setproxy
 
 echo -e "${YELLO} start MakeNewFolder${END}"
@@ -308,7 +321,7 @@ DownAppTools
 echo -e "${YELLO} start DownSubdomainTools${END}"
 DownSubdomainTools
 
-echo -e "${RED}END ${END}"
+echo -e "${YELLO}END ${END}"
 
 echo -e "${RED}Error ${END}"
 CycleArray
