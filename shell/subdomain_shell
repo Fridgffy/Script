@@ -1,0 +1,174 @@
+#!/usr/bin/env bash
+
+# Tools function
+# terminal run
+
+function fknock(){
+	echo -e "\033[3;32mstart knock[1/14]...\033[0m"
+	terminal -e "knock $1 -o /home/result/sub/knock" -T "Knock" 2>&1 &
+	if [ $? -ne 0 ];then
+		array[1]='knock'
+	fi
+}
+
+function fsublist3r(){
+	echo -e "\033[3;32mstart sublist3r[2/14]...\033[0m"
+	terminal -e "sublist3r -d $1 -b -v -o /home/result/sub/sublist3r.txt" -T "Sublist3r" 2>&1 &
+	if [ $? -ne 0 ];then
+		array[2]='sublist3r'
+	fi
+}
+
+function foneforall(){
+	echo -e "\033[3;32mstart oneforall[3/14]...\033[0m"
+	terminal -e "oneforall --target $1 --port medium --path /home/result/sub/oneforall.csv run" -T "Oneforall" 2>&1 &
+	if [ $? -ne 0 ];then
+		array[3]='oneforall'
+	fi
+}
+
+function fsubdomainbrute(){
+	echo -e "\033[3;32mstart subdomainsbrute[4/14]...\033[0m"
+	terminal -e "subdomainsbrute $1 --full -o /home/result/sub/subdomainsbrute.txt" -T "Subdomainsbrute" 2>&1 &
+	if [ $? -ne 0 ];then
+		array[4]='subdomainbrute'
+	fi
+}
+
+function fksubdomain(){
+	echo -e "\033[3;32mstart ksubdomain[5/14]...\033[0m"
+	terminal -e "ksubdomain -d $1 --full --csv -o /home/result/sub/ksubdomain" -T "Ksubdomain" 2>&1 &
+	if [ $? -ne 0 ];then
+		array[5]='ksubdomain'
+	fi
+}
+
+function fdnsmap(){
+	echo -e "\033[3;32mstart dnsmap[6/14]...\033[0m"
+	terminal -e  "dnsmap $1 -r /home/result/sub/dnsmap.txt" -T "Dnsmap" 2>&1 &
+	if [ $? -ne 0 ];then
+		array[6]='dnsmap'
+	fi
+}
+
+function fesd(){
+	echo -e "\033[3;32mstart esd[7/14]...\033[0m"
+	terminal -e "esd -d $1" -T "ESD" 2>&1 &
+	if [ $? -ne 0 ];then
+		array[7]='esd'
+	fi
+}
+
+function ffindomain(){
+	echo -e "\033[3;32mstart findomain[8/14]...\033[0m"
+	terminal -e "findomain -t $1 -u /home/result/sub/findomain.txt" -T "Findomain" 2>&1 &
+	if [ $? -ne 0 ];then
+		array[11]='findomain'
+	fi
+}
+
+function fdnsub(){
+	echo -e "\033[3;32mstart dnsub[9/14]...\033[0m"
+	cd /home/subdomain/dnsub 
+	terminal -e "./dnsub -d $1 --depth 5 -o /home/result/sub/dnsub.csv" -T "Dnsub" 2>&1 &
+	if [ $? -ne 0 ];then
+		array[12]='dnsub'
+	fi
+	cd /home
+}
+
+function ffierce(){
+	echo -e "\033[3;32mstart fierce[10/14]...\033[0m"
+	terminal -H -e "fierce --domain $1" -T "Fierce" 2>&1 &
+	if [ $? -ne 0 ];then
+		array[13]='fierce'
+	fi
+}
+
+# shell run 
+
+function fctfr(){
+	echo -e "\033[3;32mstart ctfr[11/14]...\033[0m"
+	ctfr -d $1 -o /home/result/sub/ctfr.txt
+	if [ $? -ne 0 ];then
+		array[8]='ctfr'
+	fi
+	sleep 3
+}
+
+function fsubfinder(){
+	echo -e "\033[3;32mstart subfinder[12/14]...\033[0m"
+	subfinder -d $1 --all -o /home/result/sub/subfinder.txt
+	if [ $? -ne 0 ];then
+		array[9]='subfinder'
+	fi
+	sleep 3
+}
+
+function fassetfinder(){
+	echo -e "\033[3;32mstart assetfinder[13/14]...\033[0m"
+	assetfinder $1 >> /home/result/sub/assetfinder.txt
+	if [ $? -ne 0 ];then
+		array[10]='assetfinder'
+	fi
+}
+
+function fdmitry(){
+	echo -e "\033[3;32mstart dmitry[14/14]...\033[0m"
+	proxychains dmitry -s $1 >> /home/result/sub/dmitry.txt
+	if [ $? -ne 0 ];then
+		array[14]='dmitry'
+	fi
+}
+
+
+
+
+function CycleArray()
+{
+	for i in ${array[*]}
+	do
+		echo $i
+	done
+}
+
+
+echo -e "\033[1;31m-----------------------------START Proxyless Subdomain Acquisition----------------------------------\033[0m"
+
+echo -e "\033[1;33minput target domain\033[0m"
+read domain
+
+#call the function 
+
+fknock $domain
+fdnsmap $domain
+ffindomain $domain
+wait
+
+foneforall $domain
+fsubdomainbrute $domain
+fksubdomain $domain
+wait
+
+fctfr $domain
+fsubfinder $domain
+fassetfinder $domain
+fesd $domain   # 一小时
+wait
+
+fdnsub $domain
+ffierce $domain
+fsublist3r $domain
+fdmitry $domain
+
+
+
+
+echo -e "\033[1;31m-----------------------------Error------------------------------------------------------------------\033[0m"
+CycleArray
+
+echo -e "\033[1;31m-----------------------------Need witch--------------------------------------------------------------\033[0m"
+echo fierce
+echo ESD
+
+echo -e "\033[1;31m-----------------------------All Tools are done!-----------------------------------------------------\033[0m"
