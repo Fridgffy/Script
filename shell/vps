@@ -1,0 +1,195 @@
+#!/usr/bin/env bash
+
+### set color variable
+GREEN='\033[3;32m'
+RED='\033[1;31m'
+YELLO='\033[1;33m'
+END='\033[0m'
+
+### errorarray function
+function ea()
+{
+	if [ $? -ne 0 ];then
+		array[${#array[*]}]="$1"
+	fi
+}
+
+### determine if the folder exists
+function floder()
+{
+	if [ -e $1 ];then
+		echo -e "${RED} $1 has exists!"
+		exit
+	else
+		mkdir $1
+	fi
+}
+
+### get the verssion number
+function version()
+{
+	### first variable is owner,second is repo
+
+	num=`curl -s https://api.github.com/repos/$1/$2/releases/latest | grep tag_name | cut -f4 -d "\""`
+	if [ ! "$num" ];then
+		echo -e "${RED} The version number was not obtained! ${END}"
+		array[${#array[*]}]="$2_version"
+		return
+	else
+		echo $num 
+	fi
+}
+
+### make new folders
+function MakeFolders()
+{
+	floder /root/ARL
+	floder /root/fscan
+	floder /root/kscan
+
+}
+
+
+### download arl
+function ARL()
+{	
+	### get version
+	num_arl=`version ki9mu ARL-plus-docker`
+
+	### download
+	mkdir /root/ARL && cd /root/ARL && wget https://github.com/ki9mu/ARL-plus-docker/archive/refs/tags/${num_arl}.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz 
+	ea 'arl'
+
+	sleep 3
+
+	### config_tool
+	cd /root/ARL && git clone https://github.com/loecho-sec/ARL-Finger-ADD > /dev/null 2>&1
+	ea 'arl_finger_tool'
+
+	sleep 3
+
+	### block config
+	cd /root/ARL/ARL-plus-docker-${num_arl} && mv config-docker.yaml config-docker.yaml.bak
+	ea 'arl_block_config'
+
+	cd /root/ARL/ARL-Finger-ADD && mv finger.json finger.json.bak
+	ea 'arl_block_finger'
+
+	sleep 3
+}
+
+
+### download vulnerability scanning tools
+function vuln()
+{	
+	### bbscan
+	echo -e "${GREEN}  download BBscan ${END}"
+	cd /root && git clone https://github.com/lijiejie/BBScan > /dev/null 2>&1
+	ea 'bbscan'
+
+	sleep 3
+
+	cd /root/BBScan && pip install -r requirements.txt > /dev/null 2>&1
+	ea 'pipbbscan'
+
+	sleep 3
+
+	### fscan
+	echo -e "${GREEN}  download fscan ${END}"
+	#### fscan version
+	num_fscan=`version shadow1ng fscan`
+
+	cd /root/fscan && wget https://github.com/shadow1ng/fscan/releases/download/${num_fscan}/fscan > /dev/null 2>&1 && chmod 744 fscan
+	ea 'fscan'
+
+	sleep 3
+}
+
+function comprehensive()
+{
+	### shuize
+	echo -e "${GREEN}  download ShuiZe ${END}"
+	cd /root && git clone https://github.com/0x727/ShuiZe_0x727 > /dev/null 2>&1 && mv ShuiZe_0x727 shuize
+	ea 'shuize'
+
+	cd /root/shuize && pip install -r requirements.txt > /dev/null 2>&1 && pip install -r requirements2.txt > /dev/null 2>&1 
+	ea 'pipshuize'
+
+	sleep 3
+	### block config
+	cd /root/shuize/iniFile && mv config.ini config.ini.bak
+	ea 'shuize_block_config'
+
+	sleep 3
+
+	### kscan
+	echo -e "${GREEN}  download kscan ${END}"
+	#### version
+	num_kscan=`version lcvvvv kscan`
+	cd /root/kscan && wget https://github.com/lcvvvv/kscan/releases/download/${num_kscan}/kscan_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip > /dev/null 2>&1 && mv kscan_linux_amd64 kscan
+	ea 'kscan'
+
+	sleep 3
+
+	### reconftw
+	echo -e "${GREEN}  download reconftw ${END}"
+
+	cd /root/ && git clone https://github.com/six2dez/reconftw > /dev/null 2>&1
+	ea 'reconftw'
+
+	cd /root/reconftw && pip install -r requirements.txt > /dev/null 2>&1
+	ea 'pipreconfitw'
+
+	sleep 3
+
+	### spiderfoot
+	echo -e "${GREEN}  download spiderfoot ${END}"
+
+	cd /root && git clone https://github.com/smicallef/spiderfoot > /dev/null 2>&1
+	ea 'spiderfoot'
+
+	sleep 3
+
+	cd /root/spiderfoot && pip install -r requirements.txt > /dev/null 2>&1
+	ea 'pipspiderfoot'
+
+	sleep 3
+}
+
+function CycleArray()
+{
+	for i in ${array[*]}
+	do
+		echo $i
+	done
+}
+
+echo -e "${YELLO}START${END}"
+MakeFolders
+
+echo -e "${YELLO} start download ARL${END}"
+ARL
+
+echo -e "${YELLO} start download vuln tools${END}"
+vuln
+
+echo -e "${YELLO} start download comprehensive tools${END}"
+comprehensive
+
+echo -e "${RED}Error ${END}"
+CycleArray
+
+
+
+echo -e "${RED}manual install${END}"
+echo -e "${GREEN}  amass${END}"
+echo -e "${GREEN}  dmitry${END}"
+echo -e "${GREEN}  reconftw${END}"
+echo -e "${GREEN}  spiderfoot${END}"
+
+
+echo -e "${RED}Configuration Tools https://github.com/Fridgffy/Configfile ${END}"
+echo -e "${GREEN}  ARL${END}"
+echo -e "${GREEN}  shuize${END}"
+echo -e "${GREEN}  amass${END}"
+echo -e "${GREEN}  spiderfoot${END}"
