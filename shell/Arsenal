@@ -29,18 +29,6 @@ function version()
 	fi
 }
 
-### configuration file
-function config()
-{
-	### first variable is command,second is configuration file
-	`$1 > /dev/null 2>&1`
-	if [ -e $2 ];then
-		echo -e "${GREEN}configuration file set successfully! ${END}"
-	else
-		echo -e "${RED}configuration file set failed! ${END}"
-		array[${#array[*]}]="$2"
-	fi
-}
 
 ### set current shell proxy
 function setproxy()
@@ -70,7 +58,7 @@ function MakeNewFolder()
 {	
 	if [ ! -e ~/Arsenals ];then
 		mkdir ~/Arsenals
-		mkdir ~/Arsenals/company
+#		mkdir ~/Arsenals/company
 		mkdir ~/Arsenals/subdomain
 		mkdir ~/Arsenals/app
 		mkdir ~/Arsenals/app/apk
@@ -100,10 +88,6 @@ function DownCompanyTools()
 	cd ~/Arsenals/company && mkdir enscan && cd enscan && proxychains wget https://github.com/wgpsec/ENScan_GO/releases/download/${num_ens}/enscan-${num_ens}-linux-amd64.tar.gz  > /dev/null 2>&1 && tar -zxvf *.tar.gz  > /dev/null 2>&1 && rm *.tar.gz && mv enscan* enscan
 	ea 'ENScan'
 
-	### configuration file
-	echo `config '/root/Arsenals/company/enscan/enscan -v' '/root/Arsenals/company/enscan/config.yaml'`
-	
-	
 	sleep 3
 }
 
@@ -152,7 +136,7 @@ function DownSubdomainTools()
 	
 	### oneforall
 	echo -e "${GREEN}  download OneForAll ${END}"
-	cd ~/Arsenals/subdomain && git clone https://github.com/shmilylty/OneForAll  > /dev/null 2>&1 && chmod 744 ~/Arsenals/subdomain/OneForAll/oneforall.py && ln -s ~/Arsenals/subdomain/OneForAll/oneforall.py /usr/bin/oneforall
+	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/shmilylty/OneForAll  > /dev/null 2>&1 && chmod 744 ~/Arsenals/subdomain/OneForAll/oneforall.py && ln -s ~/Arsenals/subdomain/OneForAll/oneforall.py /usr/bin/oneforall
 	ea 'OneForAll'
 	
 	pip install -r ~/Arsenals/subdomain/OneForAll/requirements.txt > /dev/null 2>&1
@@ -218,7 +202,7 @@ function DownSubdomainTools()
 	## subfinder
 	echo -e "${GREEN}  download subfinder${END}"
 
-	### get version
+	### get version	
 	num_sub=`version projectdiscovery subfinder`
 	num_sub_v=`echo $num_sub | cut -f2 -d "v"`
 
@@ -312,8 +296,8 @@ setproxy
 echo -e "${YELLO} start MakeNewFolder${END}"
 MakeNewFolder
 
-echo -e "${YELLO} start DownCompanyTools${END}"
-DownCompanyTools
+#echo -e "${YELLO} start DownCompanyTools${END}"
+#DownCompanyTools
 
 echo -e "${YELLO} start DownAppTools${END}"
 DownAppTools
@@ -325,3 +309,6 @@ echo -e "${YELLO}END ${END}"
 
 echo -e "${RED}Error ${END}"
 CycleArray
+
+echo -e "${RED}Configuration ${END}"
+echo -e "${GREEN}  subfinder${END}"

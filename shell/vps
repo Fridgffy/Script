@@ -46,6 +46,8 @@ function MakeFolders()
 	floder /root/ARL
 	floder /root/fscan
 	floder /root/kscan
+	floder /root/amass
+	git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 
 }
 
