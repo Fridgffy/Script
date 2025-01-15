@@ -312,3 +312,5 @@ CycleArray
 
 echo -e "${RED}Configuration ${END}"
 echo -e "${GREEN}  subfinder${END}"
+echo -e "${GREEN}  OneForAll${END}"
+echo -e "${GREEN}  Dnsub${END}"
