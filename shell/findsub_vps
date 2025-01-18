@@ -1,5 +1,173 @@
 #!/usr/bin/env bash
 
+### Tools function and terminal run
+
+### set color variable
+GREEN='\033[3;32m'
+RED='\033[1;31m'
+YELLO='\033[1;33m'
+END='\033[0m'
+SUBDOMAIN=/root/Arsenals/subdomain/
+RESULT=/root/Arsenals/result/sub/
+### ErrorArray funtion
+function ea()
+{
+	if [ $? -ne 0 ];then
+		array[${#array[*]}]="$1"
+	fi
+}
+
+### subdomain gathering function
+
+function fesd(){
+	echo -e "${GREEN}start esd${END}"
+	terminal -e "esd -d $1" -T "ESD" 2>&1 &
+	ea 'esd'
+
+}
+
+function foneforall(){
+	echo -e "${GREEN}start oneforall${END}"
+	terminal -e "oneforall --port large --brute --path ${RESULT}/oneforall.csv --target $1 run" -T "Oneforall" 2>&1 &
+	ea 'oneforall'
+
+}
+
+function fknock(){
+	echo -e "${GREEN}start knock${END}"
+	terminal -e "knock --useragent "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)" --recon --bruteforce -d $1 --save ${RESULT}knock" -T "Knock" 2>&1 &
+	ea 'knock'
+}
+
+function fsublist3r(){
+	echo -e "${GREEN}start sublist3r${END}"
+	terminal -e "sublist3r-b -v -o ${RESULT}sublist3r.txt -d $1" -T "Sublist3r" 2>&1 &
+	ea 'sublist3r'
+
+}
+
+function fsubdomainsbrute(){
+	echo -e "${GREEN}start subdomainsbrute${END}"
+	terminal -e "subdomainbrute --full $1 -o ${RESULT}subdomainbrute.txt" -T "Subdomainsbrute" 2>&1 &
+	ea 'subdomainsbrute'
+
+}
+
+function fksubdomain(){
+	echo -e "${GREEN}start ksubdomain${END}"
+	terminal -e "ksubdomain -d $1 --full --csv -o ${RESULT}ksubdomain.csv -o " -T "Ksubdomain" 2>&1 &
+	ea 'ksubdomain'
+
+}
+
+function fdnsmap(){
+	echo -e "${GREEN}start dnsmap${END}"
+	terminal -e  "dnsmap $1 -r ${RESULT}dnsmap.txt" -T "Dnsmap" 2>&1 &
+	ea 'dnsmap'
+
+}
+
+function ffindomain(){
+	echo -e "${GREEN}start findomain${END}"
+	terminal -e "findomain --ua ${SUBDOMAIN}findomain/ua  --pscan -t $1 -u ${RESULT}findomain.txt" -T "Findomain" 2>&1 &
+	ea 'findomain'
+
+}
+
+function fdnsub(){
+	echo -e "${GREEN}start dnsub${END}"
+	cd ${SUBDOMAIN}dnsub 
+	terminal -e "./dnsub -d $1 --depth 3 -o /root/dnsub.csv" -T "Dnsub" 2>&1 &
+	ea 'dnsub'
+
+	cd /home
+}
+
+function ffierce(){
+	echo -e "${GREEN}start fierce${END}"
+	terminal -H -e "fierce --wide --domain $1 > ${RESULT}fierce.1 2>&1" -T "Fierce" 2>&1 &
+	ea 'fierce'
+
+}
+
+# shell run 
+
+function fctfr(){
+	echo -e "${GREEN}start ctfr${END}"
+	ctfr -d $1 -o ${RESULT}ctfr.txt
+	ea 'ctfr'
+
+	sleep 3
+}
+
+function fsubfinder(){
+	echo -e "${GREEN}start subfinder${END}"
+	subfinder -d $1 --all -o ${RESULT}subfinder.txt
+	ea 'subfinder'
+
+	sleep 3
+}
+
+function fassetfinder(){
+	echo -e "${GREEN}start assetfinder${END}"
+	assetfinder $1 >> ${RESULT}assetfinder.txt
+	ea 'assetfinder'
+
+}
+
+function CycleArray()
+{
+	for i in ${array[*]}
+	do
+		echo $i
+	done
+}
+
+
+echo -e "${RED}START${END}"
+
+echo -e "${YELLO}input target domain${END}"
+
+### GET domain
+read domain
+
+### function 
+
+fknock $domain
+fdnsmap $domain
+ffindomain $domain
+
+foneforall $domain
+fsubdomainsbrute $domain
+fksubdomain $domain
+
+fctfr $domain
+fsubfinder $domain
+fassetfinder $domain
+fesd $domain   # 一小时
+
+fdnsub $domain
+ffierce $domain
+fsublist3r $domain
+
+
+
+
+echo -e "${RED}Error${END}"
+CycleArray
+
+echo -e "${RED}result file${END}"
+echo fierce
+echo ESD : /tmp/esd/
+echo dnsub : /root/
+
+echo -e "${RED}All Tools are done!${END}"
+
+
+
+
+#!/usr/bin/env bash
+
 # Tools function
 # terminal run
 

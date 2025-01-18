@@ -4,7 +4,7 @@
 
 ### set color variable
 GREEN='\033[3;32m'
-RED='${RED}'
+RED='\033[1;31m'
 YELLO='\033[1;33m'
 END='\033[0m'
 SUBDOMAIN=/root/Arsenals/subdomain/
@@ -19,43 +19,22 @@ function ea()
 
 ### subdomain gathering function
 
-function fesd(){
-	echo -e "${GREEN}start esd${END}"
-	terminal -e "esd -d $1" -T "ESD" 2>&1 &
-	ea 'esd'
-
-}
-
-function foneforall(){
-	echo -e "${GREEN}start oneforall${END}"
-	terminal -e "oneforall --target $1 --port large --path ${RESULT}oneforall.csv run" -T "Oneforall" 2>&1 &
-	ea 'oneforall'
-
-}
-
 function fknock(){
 	echo -e "${GREEN}start knock${END}"
-	terminal -e "knock $1 -o ${RESULT}knock" -T "Knock" 2>&1 &
+	terminal -e "knock --useragent "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)" --recon --bruteforce -d $1 --save ${RESULT}knock" -T "Knock" 2>&1 &
 	ea 'knock'
-}
-
-function fsublist3r(){
-	echo -e "${GREEN}start sublist3r${END}"
-	terminal -e "sublist3r -d $1 -b -v -o ${RESULT}sublist3r.txt" -T "Sublist3r" 2>&1 &
-	ea 'sublist3r'
-
 }
 
 function fsubdomainsbrute(){
 	echo -e "${GREEN}start subdomainsbrute${END}"
-	terminal -e "subdomainsbrute $1 --full -o ${RESULT}subdomainsbrute.txt" -T "Subdomainsbrute" 2>&1 &
+	terminal -e "subdomainbrute --full $1 -o ${RESULT}subdomainbrute.txt" -T "Subdomainsbrute" 2>&1 &
 	ea 'subdomainsbrute'
 
 }
 
 function fksubdomain(){
 	echo -e "${GREEN}start ksubdomain${END}"
-	terminal -e "ksubdomain -d $1 --full --csv -o ${RESULT}ksubdomain" -T "Ksubdomain" 2>&1 &
+	terminal -e "ksubdomain -d $1 --full --csv -o ${RESULT}ksubdomain.csv -o " -T "Ksubdomain" 2>&1 &
 	ea 'ksubdomain'
 
 }
@@ -69,7 +48,7 @@ function fdnsmap(){
 
 function ffindomain(){
 	echo -e "${GREEN}start findomain${END}"
-	terminal -e "findomain -t $1 -u ${RESULT}findomain.txt" -T "Findomain" 2>&1 &
+	terminal -e "findomain --ua ${SUBDOMAIN}findomain/ua  --pscan -t $1 -u ${RESULT}findomain.txt" -T "Findomain" 2>&1 &
 	ea 'findomain'
 
 }
@@ -77,7 +56,7 @@ function ffindomain(){
 function fdnsub(){
 	echo -e "${GREEN}start dnsub${END}"
 	cd ${SUBDOMAIN}dnsub 
-	terminal -e "./dnsub -d $1 --depth 5 -o ${RESULT}dnsub.csv" -T "Dnsub" 2>&1 &
+	terminal -e "./dnsub -d $1 --depth 3 -o /root/dnsub.csv" -T "Dnsub" 2>&1 &
 	ea 'dnsub'
 
 	cd /home
@@ -85,7 +64,7 @@ function fdnsub(){
 
 function ffierce(){
 	echo -e "${GREEN}start fierce${END}"
-	terminal -H -e "fierce --domain $1" -T "Fierce" 2>&1 &
+	terminal -H -e "fierce --wide --domain $1 > ${RESULT}fierce.1 2>&1" -T "Fierce" 2>&1 &
 	ea 'fierce'
 
 }
@@ -115,11 +94,6 @@ function fassetfinder(){
 
 }
 
-
-
-
-
-
 function CycleArray()
 {
 	for i in ${array[*]}
@@ -129,7 +103,7 @@ function CycleArray()
 }
 
 
-echo -e "${RED}START Proxyless Subdomain Acquisition${END}"
+echo -e "${RED}START${END}"
 
 echo -e "${YELLO}input target domain${END}"
 
@@ -163,6 +137,9 @@ CycleArray
 
 echo -e "${RED}result file${END}"
 echo fierce
-echo ESD
+echo ESD : /tmp/esd/
+echo dnsub : /root/
 
 echo -e "${RED}All Tools are done!${END}"
+
+

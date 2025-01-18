@@ -30,35 +30,11 @@ function version()
 }
 
 
-### set current shell proxy
-function setproxy()
-{
-	### determine whether clash is enabled
-	if [ `ps -ef | grep clash |grep -v grep | wc -l` -eq 0 ];then
-		echo -e "${RED} clash is not enabled ${END}!"
-		exit
-	else
-		echo -e "${GREEN} clash is enabled"
-	fi
-
-	### detarmine whether proxychains is set
-	if [ `cat /etc/proxychains4.conf| grep 7891 |wc -l` -eq 0 ];then
-		echo -e "${RED} proxychains is not set ${END}!"
-		exit
-	else
-		echo -e "${GREEN} proxychains is set ${END}"
-	fi
-
-	### apt updatte
-	apt update  > /dev/null 2>&1
-	sleep 3
-}
 
 function MakeNewFolder()
 {	
 	if [ ! -e ~/Arsenals ];then
 		mkdir ~/Arsenals
-#		mkdir ~/Arsenals/company
 		mkdir ~/Arsenals/subdomain
 		mkdir ~/Arsenals/app
 		mkdir ~/Arsenals/app/apk
@@ -282,6 +258,12 @@ function DownSubdomainTools()
 	
 	sleep 3
 	
+	## dnsenum
+	echo -e "${GREEN}  download dnsenum${END}"
+	apt -y install dnsenum > /dev/null 2>&1
+	ea 'dnsenum'
+
+	sleep 33
 }
 
 function CycleArray()
@@ -294,13 +276,9 @@ function CycleArray()
 
 
 echo -e "${YELLO}START${END}"
-setproxy
 
 echo -e "${YELLO} start MakeNewFolder${END}"
 MakeNewFolder
-
-#echo -e "${YELLO} start DownCompanyTools${END}"
-#DownCompanyTools
 
 echo -e "${YELLO} start DownAppTools${END}"
 DownAppTools
@@ -320,7 +298,5 @@ echo -e "${GREEN}  Dnsub${END}"
 
 echo -e "${RED}Change folders${END}"
 echo -e "${GREEN}  Dnsub${END}"
-
-echo -e "${RED}Change file${END}"
 echo -e "${GREEN}  Sublist3r${END}"
 
