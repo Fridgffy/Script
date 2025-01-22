@@ -59,8 +59,8 @@ function setproxy()
 		echo -e "${GREEN} proxychains is set ${END}"
 	fi
 
-	### apt updatte
-	apt update  > /dev/null 2>&1
+	### apt -y  updatte
+	apt -y  update  > /dev/null 2>&1
 	sleep 2
 }
 
@@ -71,7 +71,6 @@ function MakeNewFolder()
 	folder /root/app
 	folder /root/subdomain
 	folder /root/other
-	folder /root/ccdn
 	folder /root/fingerprint
 	folder /root/result
 	cd /root/ && proxychains git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
@@ -175,12 +174,12 @@ function SubdomainTools()
 
 	### sublist3r
 	echo -e "${GREEN}  download sublist3r ${END}"
-	# apt install sublist3r --upgrade > /dev/null 2>&1
+	# apt -y  install sublist3r --upgrade > /dev/null 2>&1
 	cd /root/subdomain && proxychains git clone https://github.com/aboul3la/Sublist3r  > /dev/null 2>&1 && cd Sublist3r && chmod 744 /root/subdomain/Sublist3r/sublist3r.py && ln -s /root/subdomain/Sublist3r/sublist3r.py /usr/bin/sublist3r 
 	ea 'sublist3r'
 	sleep 2
 
-	pip install -r /root/subdomain/Sublist3r/requirements.txt > /dev/null 2>&1 && pip install unicode
+	pip install -r /root/subdomain/Sublist3r/requirements.txt > /dev/null 2>&1 && pip install unicode > /dev/null 2>&1
 	ea 'Pipsublist3r'
 	sleep 2
 
@@ -196,20 +195,20 @@ function SubdomainTools()
 
 	### assetfinder
 	echo -e "${GREEN}  download assetfinder ${END}"
-	# apt install assetfinder --upgrade > /dev/null 2>&1
+	# apt -y  install assetfinder --upgrade > /dev/null 2>&1
 	cd /root/subdomain && mkdir assetfinder && cd assetfinder && proxychains wget https://github.com/tomnomnom/assetfinder/releases/download/v0.1.1/assetfinder-linux-amd64-0.1.1.tgz  > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv assetfinder /usr/bin 
 	ea 'assetfinder'
 	sleep 2
 
 	### fierce
 	echo -e "${GREEN}  download fierce ${END}"
-	apt install fierce --upgrade > /dev/null 2>&1
+	apt -y  install fierce --upgrade > /dev/null 2>&1
 	ea 'fierce'
 	sleep 2
 
 	### subfinder
 	echo -e "${GREEN}  download subfinder${END}"
-	# apt install subfinder --upgrade > /dev/null 2>&1
+	# apt -y  install subfinder --upgrade > /dev/null 2>&1
 	### get version	
 	num_subfinder=`version projectdiscovery subfinder`
 	num_subfinder_v=`echo $num_subfinder | cut -f2 -d "v"`
@@ -245,7 +244,7 @@ function SubdomainTools()
 	
 	### dnsmap
 	echo -e "${GREEN}  download dnsmap ${END}"
-	apt install dnsmap --upgrade > /dev/null 2>&1
+	apt -y  install dnsmap --upgrade > /dev/null 2>&1
 	ea 'dnsmap'
 	sleep 2
 
@@ -261,7 +260,7 @@ function SubdomainTools()
 	################################################## dns
 	### ldns-walk
 	echo -e "${GREEN}  download ldns-walk ${END}"
-	apt install ldnsutils --upgrade > /dev/null 2>&1
+	apt -y  install ldnsutils --upgrade > /dev/null 2>&1
 	ea 'ldns-walk'
 	sleep 2
 
@@ -269,7 +268,7 @@ function SubdomainTools()
 
 	################################################## altdns
 	echo -e "${GREEN}  download altdns ${END}"
-	apt install py-altdns --upgrade > /dev/null 2>&1
+	apt -y  install py-altdns --upgrade > /dev/null 2>&1
 	ea 'altdns'
 	sleep 2
 
