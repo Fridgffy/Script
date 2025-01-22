@@ -9,7 +9,7 @@ END='\033[0m'
 ### errorarray function
 function ea()
 {
-	if [ $? -ne 0 ];then
+	if [ $? -ne 0 ];thenk
 		array[${#array[*]}]="$1"
 	fi
 }
@@ -47,7 +47,10 @@ function MakeFolders()
 	folder /root/fscan
 	folder /root/kscan
 	folder /root/amass
+	folder /root/vuln
+	folder /root/subdomain
 	cd /root/ && git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
+	sleep 2
 
 }
 
@@ -89,7 +92,7 @@ function BatchTools()
 	num_dnsx_v=`echo $num_dnsx | cut -f2 -d "v"`
 
 	### download
-	cd /root/batch && mkdir dnsx && cd dnsx && proxychains wget https://github.com/projectdiscovery/dnsx/releases/download/${num_dnsx}/dnsx_${num_dnsx_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip && rm *.zip && mv dnsx /usr/bin
+	cd /root/batch && mkdir dnsx && cd dnsx && wget https://github.com/projectdiscovery/dnsx/releases/download/${num_dnsx}/dnsx_${num_dnsx_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip  > /dev/null && rm *.zip && mv dnsx /usr/bin
 	ea 'dnsx'
 	sleep 2
 
@@ -99,7 +102,7 @@ function BatchTools()
 	num_eeyes=`version EdgeSecurityTeam Eeyes`
 
 	### download
-	cd /root/batch && mkdir Eeyes && cd Eeyes && proxychains wget https://github.com/EdgeSecurityTeam/Eeyes/releases/download/${num_eeyes}/Eeyes-linux.zip > /dev/null 2>&1 && unzip *.zip && rm *.zip && chmod 744 Eeyes-linux && ln -s /root/batch/Eeyes/Eeyes-linux /usr/bin/eeyes
+	cd /root/batch && mkdir Eeyes && cd Eeyes && wget https://github.com/EdgeSecurityTeam/Eeyes/releases/download/${num_eeyes}/Eeyes-linux.zip > /dev/null 2>&1 && unzip *.zip  > /dev/null && rm *.zip && chmod 744 Eeyes-linux && ln -s /root/batch/Eeyes/Eeyes-linux /usr/bin/eeyes
 	ea 'Eyes'
 	sleep 2
 
@@ -110,11 +113,11 @@ function vuln()
 {	
 	### bbscan
 	echo -e "${GREEN}  download BBscan ${END}"
-	cd /root && git clone https://github.com/lijiejie/BBScan > /dev/null 2>&1
+	cd /root/vuln && git clone https://github.com/lijiejie/BBScan > /dev/null 2>&1
 	ea 'bbscan'
 	sleep 2
 
-	cd /root/BBScan && pip install -r requirements.txt > /dev/null 2>&1
+	cd /root/vuln/BBScan && pip install -r requirements.txt > /dev/null 2>&1
 	ea 'pipbbscan'
 	sleep 2
 
@@ -126,6 +129,22 @@ function vuln()
 	cd /root/fscan && wget https://github.com/shadow1ng/fscan/releases/download/${num_fscan}/fscan > /dev/null 2>&1 && chmod 744 fscan
 	ea 'fscan'
 	sleep 2
+
+	### w13scan
+	echo -e "${GREEN}  download w13scan ${END}"
+	cd /root/vuln && git clone https://github.com/w-digital-scanner/w13scan > /dev/null 2>&1 
+	ea 'w13scan'
+
+	cd /root/vuln/w13scan && pip install -r requirements.txt > /dev/null 2>&1
+	ea 'pipw13scan'
+
+	### vulnmap
+	echo -e "${GREEN}  download vulnmap ${END}"
+	cd /root/vuln && git clone https://github.com/zhzyker/vulmap > /dev/null 2>&1 
+	ea 'vulnmap'
+
+	cd /root/vuln/vulmap &&  pip install -r requirements.txt > /dev/null 2>&1
+	ea 'pipvulnmap'
 }
 
 function comprehensive()
@@ -141,7 +160,7 @@ function comprehensive()
 	apt install dmitry --upgrade > /dev/null 2>&1 
 	ea 'Dmitry'
 	sleep 2
-	
+
 	### shuize
 	echo -e "${GREEN}  download ShuiZe ${END}"
 	cd /root && git clone https://github.com/0x727/ShuiZe_0x727 > /dev/null 2>&1 && mv ShuiZe_0x727 shuize
@@ -167,27 +186,153 @@ function comprehensive()
 
 	### reconftw
 	echo -e "${GREEN}  download reconftw ${END}"
-
 	cd /root/ && git clone https://github.com/six2dez/reconftw > /dev/null 2>&1
 	ea 'reconftw'
+	sleep 2
 
 	cd /root/reconftw && pip install -r requirements.txt > /dev/null 2>&1
 	ea 'pipreconfitw'
-
 	sleep 2
 
 	### spiderfoot
 	echo -e "${GREEN}  download spiderfoot ${END}"
-
 	cd /root && git clone https://github.com/smicallef/spiderfoot > /dev/null 2>&1
 	ea 'spiderfoot'
-
 	sleep 2
 
 	cd /root/spiderfoot && pip install -r requirements.txt > /dev/null 2>&1
 	ea 'pipspiderfoot'
-
 	sleep 2
+}
+
+function SubdomainTools()
+{
+	### esd
+	echo -e "${GREEN}  download esd ${END}"
+	pip install esd > /dev/null 2>&1
+	ea 'esd'
+	sleep 2
+
+	### oneforall
+	echo -e "${GREEN}  download OneForAll ${END}"
+	cd /root/subdomain && git clone https://github.com/shmilylty/OneForAll  > /dev/null 2>&1 && chmod 744 /root/subdomain/OneForAll/oneforall.py && ln -s /root/subdomain/OneForAll/oneforall.py /usr/bin/oneforall
+	ea 'OneForAll'
+	sleep 2
+
+	pip install -r /root/subdomain/OneForAll/requirements.txt > /dev/null 2>&1
+	ea 'PipOneforall'
+	sleep 2
+
+	### dnsub
+	echo -e "${GREEN}  download dnsub ${END}"
+	### get version
+	num_dnsub=`version yunxu1 dnsub`
+
+	cd /root/subdomain && mkdir dnsub && cd dnsub && wget https://github.com/yunxu1/dnsub/releases/download/${num_dnsub}/dnsub_linux_amd64_${num_dnsub}.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip 
+	ea 'dnsub'
+	sleep 2
+
+	### sublist3r
+	echo -e "${GREEN}  download sublist3r ${END}"
+	# apt install sublist3r --upgrade > /dev/null 2>&1
+	cd /root/subdomain && git clone https://github.com/aboul3la/Sublist3r  > /dev/null 2>&1 && cd Sublist3r && chmod 744 /root/subdomain/Sublist3r/sublist3r.py && ln -s /root/subdomain/Sublist3r/sublist3r.py /usr/bin/sublist3r 
+	ea 'sublist3r'
+	sleep 2
+
+	pip install -r /root/subdomain/Sublist3r/requirements.txt > /dev/null 2>&1 && pip install unicode
+	ea 'Pipsublist3r'
+	sleep 2
+
+	### ctfr
+	echo -e "${GREEN}  download ctfr ${END}"
+	cd /root/subdomain && git clone https://github.com/UnaPibaGeek/ctfr  > /dev/null 2>&1 && cd ctfr && chmod 744 /root/subdomain/ctfr/ctfr.py && ln -s /root/subdomain/ctfr/ctfr.py /usr/bin/ctfr 
+	ea 'ctfr'
+	sleep 2
+
+	pip install -r /root/subdomain/ctfr/requirements.txt > /dev/null 2>&1
+	ea 'Pipctfr'
+	sleep 2
+
+	### assetfinder
+	echo -e "${GREEN}  download assetfinder ${END}"
+	# apt install assetfinder --upgrade > /dev/null 2>&1
+	cd /root/subdomain && mkdir assetfinder && cd assetfinder && wget https://github.com/tomnomnom/assetfinder/releases/download/v0.1.1/assetfinder-linux-amd64-0.1.1.tgz  > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv assetfinder /usr/bin 
+	ea 'assetfinder'
+	sleep 2
+
+	### fierce
+	echo -e "${GREEN}  download fierce ${END}"
+	apt install fierce --upgrade > /dev/null 2>&1
+	ea 'fierce'
+	sleep 2
+
+	### subfinder
+	echo -e "${GREEN}  download subfinder${END}"
+	# apt install subfinder --upgrade > /dev/null 2>&1
+	### get version	
+	num_subfinder=`version projectdiscovery subfinder`
+	num_subfinder_v=`echo $num_subfinder | cut -f2 -d "v"`
+
+	cd /root/subdomain && mkdir subfinder && cd subfinder && wget https://github.com/projectdiscovery/subfinder/releases/download/${num_subfinder}/subfinder_${num_subfinder_v}_linux_amd64.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv subfinder /usr/bin 
+	ea 'subfinder'
+	sleep 2
+
+	### knock
+	echo -e "${GREEN}  download knock ${END}"
+	cd /root/subdomain && git clone https://github.com/guelfoweb/knock  > /dev/null 2>&1 && chmod 744 /root/subdomain/knock/knockpy.py && ln -s /root/subdomain/knock/knockpy.py /usr/bin/knock
+	ea 'knock'
+	sleep 2
+
+	pip install -r /root/subdomain/knock/requirements.txt > /dev/null 2>&1
+	ea 'Pipknock'
+	sleep 2
+
+	### findomain
+	echo -e "${GREEN}  download findomain ${END}"
+	### get version
+	num_fin=`version Findomain Findomain`
+
+	cd /root/subdomain && mkdir findomain && cd findomain && wget https://github.com/Findomain/Findomain/releases/download/${num_fin}/findomain-linux.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && chmod 744 findomain && mv findomain /usr/bin
+	ea 'findomain'
+	sleep 2
+
+	### subdomainBurte
+	echo -e "${GREEN}  download subDomainsBrute ${END}"
+	cd /root/subdomain && git clone https://github.com/lijiejie/subDomainsBrute  > /dev/null 2>&1 && chmod 744 /root/subdomain/subDomainsBrute/subDomainsBrute.py && ln -s /root/subdomain/subDomainsBrute/subDomainsBrute.py /usr/bin/subdomainbrute && pip install dnspython==2.2.1 async_timeout > /dev/null 2>&1
+	ea 'subDomainsBrute'
+	sleep 2
+	
+	### dnsmap
+	echo -e "${GREEN}  download dnsmap ${END}"
+	apt install dnsmap --upgrade > /dev/null 2>&1
+	ea 'dnsmap'
+	sleep 2
+
+	### ksubdomain
+	echo -e "${GREEN}  download ksubdomain ${END}"
+	### get version
+	num_ksu=`version knownsec ksubdomain`
+
+	cd /root/subdomain && mkdir ksubdomain && cd ksubdomain && wget https://github.com/knownsec/ksubdomain/releases/download/${num_ksu}/ksubdomain_linux.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv ksubdomain /usr/bin 
+	ea 'ksubdomain'
+	sleep 2
+	
+	################################################## dns
+	### ldns-walk
+	echo -e "${GREEN}  download ldns-walk ${END}"
+	apt install ldnsutils --upgrade > /dev/null 2>&1
+	ea 'ldns-walk'
+	sleep 2
+
+	################################################## permutations
+
+	################################################## altdns
+	echo -e "${GREEN}  download altdns ${END}"
+	apt install py-altdns --upgrade > /dev/null 2>&1
+	ea 'altdns'
+	sleep 2
+
+	### Brute force
 }
 
 function CycleArray()
@@ -198,6 +343,7 @@ function CycleArray()
 	done
 }
 
+### main 
 echo -e "${YELLO}START${END}"
 MakeFolders
 
@@ -210,22 +356,26 @@ vuln
 echo -e "${YELLO} start download comprehensive tools${END}"
 comprehensive
 
+echo -e "${YELLO} start download Subdomain tools${END}"
+SubdomainTools
+
+### error
 echo -e "${RED}Error ${END}"
 CycleArray
 
 
-
+### install
 echo -e "${RED}manual install${END}"
-echo -e "${GREEN}  amass${END}"
-echo -e "${GREEN}  dmitry${END}"
 echo -e "${GREEN}  reconftw${END}"
 echo -e "${GREEN}  spiderfoot${END}"
 
-
+### configuration
 echo -e "${RED}Configuration Tools https://github.com/Fridgffy/Configfile ${END}"
 echo -e "${GREEN}  ARL${END}"
-echo -e "${GREEN}  shuize${END}"
+echo -e "${GREEN}  w13scan${END}"
+echo -e "${GREEN}  vulmap${END}"
 echo -e "${GREEN}  amass${END}"
-echo -e "${GREEN}  spiderfoot${END}"
-echo -e "${GREEN}  reconftw${END}"
+echo -e "${GREEN}  shuize${END}"
 echo -e "${GREEN}  kscan${END}"
+echo -e "${GREEN}  reconftw${END}"
+echo -e "${GREEN}  spiderfoot${END}"

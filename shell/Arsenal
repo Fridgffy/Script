@@ -89,7 +89,7 @@ function BatchTools()
 	num_dnsx_v=`echo $num_dnsx | cut -f2 -d "v"`
 
 	### download
-	cd /root/batch && mkdir dnsx && cd dnsx && proxychains wget https://github.com/projectdiscovery/dnsx/releases/download/${num_dnsx}/dnsx_${num_dnsx_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip && rm *.zip && mv dnsx /usr/bin
+	cd /root/batch && mkdir dnsx && cd dnsx && proxychains wget https://github.com/projectdiscovery/dnsx/releases/download/${num_dnsx}/dnsx_${num_dnsx_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip  > /dev/null && rm *.zip && mv dnsx /usr/bin
 	ea 'dnsx'
 	sleep 2
 
@@ -99,7 +99,7 @@ function BatchTools()
 	num_eeyes=`version EdgeSecurityTeam Eeyes`
 
 	### download
-	cd /root/batch && mkdir Eeyes && cd Eeyes && proxychains wget https://github.com/EdgeSecurityTeam/Eeyes/releases/download/${num_eeyes}/Eeyes-linux.zip > /dev/null 2>&1 && unzip *.zip && rm *.zip && chmod 744 Eeyes-linux && ln -s /root/batch/Eeyes/Eeyes-linux /usr/bin/eeyes
+	cd /root/batch && mkdir Eeyes && cd Eeyes && proxychains wget https://github.com/EdgeSecurityTeam/Eeyes/releases/download/${num_eeyes}/Eeyes-linux.zip > /dev/null 2>&1 && unzip *.zip  > /dev/null && rm *.zip && chmod 744 Eeyes-linux && ln -s /root/batch/Eeyes/Eeyes-linux /usr/bin/eeyes
 	ea 'Eyes'
 	sleep 2
 }
@@ -317,11 +317,6 @@ echo -e "${YELLO} start otherTools${END}"
 otherTools
 
 echo -e "${YELLO}END ${END}"
-
-
-
-
-
 
 
 ### error
