@@ -15,7 +15,7 @@ function ea()
 }
 
 ### determine if the folder exists
-function floder()
+function folder()
 {
 	if [ -e $1 ];then
 		echo -e "${RED} $1 has exists!"
@@ -29,7 +29,6 @@ function floder()
 function version()
 {
 	### first variable is owner,second is repo
-
 	num=`curl -s https://api.github.com/repos/$1/$2/releases/latest | grep tag_name | cut -f4 -d "\""`
 	if [ ! "$num" ];then
 		echo -e "${RED} The version number was not obtained! ${END}"
@@ -43,11 +42,12 @@ function version()
 ### make new folders
 function MakeFolders()
 {
-	floder /root/ARL
-	floder /root/fscan
-	floder /root/kscan
-	floder /root/amass
-	git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
+	folder /root/ARL
+	folder /root/batch
+	folder /root/fscan
+	folder /root/kscan
+	folder /root/amass
+	cd /root/ && git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 
 }
 
@@ -57,29 +57,53 @@ function ARL()
 {	
 	### get version
 	num_arl=`version ki9mu ARL-plus-docker`
+	num_arl_v=`echo $num_arl | cut -f2 -d "v"`
 
 	### download
-	mkdir /root/ARL && cd /root/ARL && wget https://github.com/ki9mu/ARL-plus-docker/archive/refs/tags/${num_arl}.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz 
+	mkdir /root/ARL && cd /root/ARL && wget https://github.com/ki9mu/ARL-plus-docker/archive/refs/tags/${num_arl}.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz && cd ARL-plus-docker-${num_arl_v} && mv * ../ && cd ../ && rm ARL-plus-docker-${num_arl_v} -r
 	ea 'arl'
-
-	sleep 3
+	sleep 2
 
 	### config_tool
 	cd /root/ARL && git clone https://github.com/loecho-sec/ARL-Finger-ADD > /dev/null 2>&1
 	ea 'arl_finger_tool'
-
-	sleep 3
+	sleep 2
 
 	### block config
-	cd /root/ARL/ARL-plus-docker-${num_arl} && mv config-docker.yaml config-docker.yaml.bak
+	cd /root/ARL && mv config-docker.yaml config-docker.yaml.bak
 	ea 'arl_block_config'
 
 	cd /root/ARL/ARL-Finger-ADD && mv finger.json finger.json.bak
 	ea 'arl_block_finger'
 
-	sleep 3
+	sleep 2
 }
 
+### download batch tools
+function BatchTools()
+{
+	echo -e "${GREEN}  download Dnsx ${END}"
+
+	### get version
+	num_dnsx=`version projectdiscovery dnsx`
+	num_dnsx_v=`echo $num_dnsx | cut -f2 -d "v"`
+
+	### download
+	cd /root/batch && mkdir dnsx && cd dnsx && proxychains wget https://github.com/projectdiscovery/dnsx/releases/download/${num_dnsx}/dnsx_${num_dnsx_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip && rm *.zip && mv dnsx /usr/bin
+	ea 'dnsx'
+	sleep 2
+
+	echo -e "${GREEN}  download Eeyes ${END}"
+
+	### get version
+	num_eeyes=`version EdgeSecurityTeam Eeyes`
+
+	### download
+	cd /root/batch && mkdir Eeyes && cd Eeyes && proxychains wget https://github.com/EdgeSecurityTeam/Eeyes/releases/download/${num_eeyes}/Eeyes-linux.zip > /dev/null 2>&1 && unzip *.zip && rm *.zip && chmod 744 Eeyes-linux && ln -s /root/batch/Eeyes/Eeyes-linux /usr/bin/eeyes
+	ea 'Eyes'
+	sleep 2
+
+}
 
 ### download vulnerability scanning tools
 function vuln()
@@ -88,13 +112,11 @@ function vuln()
 	echo -e "${GREEN}  download BBscan ${END}"
 	cd /root && git clone https://github.com/lijiejie/BBScan > /dev/null 2>&1
 	ea 'bbscan'
-
-	sleep 3
+	sleep 2
 
 	cd /root/BBScan && pip install -r requirements.txt > /dev/null 2>&1
 	ea 'pipbbscan'
-
-	sleep 3
+	sleep 2
 
 	### fscan
 	echo -e "${GREEN}  download fscan ${END}"
@@ -103,26 +125,37 @@ function vuln()
 
 	cd /root/fscan && wget https://github.com/shadow1ng/fscan/releases/download/${num_fscan}/fscan > /dev/null 2>&1 && chmod 744 fscan
 	ea 'fscan'
-
-	sleep 3
+	sleep 2
 }
 
 function comprehensive()
-{
+{	
+	### amass
+	echo -e "${GREEN}  download amass ${END}"
+	apt install amass --upgrade > /dev/null 2>&1 
+	ea 'amass'
+	sleep 2
+
+	### Dmitry
+	echo -e "${GREEN}  download Dmitry ${END}"
+	apt install dmitry --upgrade > /dev/null 2>&1 
+	ea 'Dmitry'
+	sleep 2
+	
 	### shuize
 	echo -e "${GREEN}  download ShuiZe ${END}"
 	cd /root && git clone https://github.com/0x727/ShuiZe_0x727 > /dev/null 2>&1 && mv ShuiZe_0x727 shuize
 	ea 'shuize'
+	sleep 2
 
 	cd /root/shuize && pip install -r requirements.txt > /dev/null 2>&1 && pip install -r requirements2.txt > /dev/null 2>&1 
 	ea 'pipshuize'
+	sleep 2
 
-	sleep 3
 	### block config
 	cd /root/shuize/iniFile && mv config.ini config.ini.bak
 	ea 'shuize_block_config'
-
-	sleep 3
+	sleep 2
 
 	### kscan
 	echo -e "${GREEN}  download kscan ${END}"
@@ -130,8 +163,7 @@ function comprehensive()
 	num_kscan=`version lcvvvv kscan`
 	cd /root/kscan && wget https://github.com/lcvvvv/kscan/releases/download/${num_kscan}/kscan_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip > /dev/null 2>&1 && mv kscan_linux_amd64 kscan
 	ea 'kscan'
-
-	sleep 3
+	sleep 2
 
 	### reconftw
 	echo -e "${GREEN}  download reconftw ${END}"
@@ -142,7 +174,7 @@ function comprehensive()
 	cd /root/reconftw && pip install -r requirements.txt > /dev/null 2>&1
 	ea 'pipreconfitw'
 
-	sleep 3
+	sleep 2
 
 	### spiderfoot
 	echo -e "${GREEN}  download spiderfoot ${END}"
@@ -150,12 +182,12 @@ function comprehensive()
 	cd /root && git clone https://github.com/smicallef/spiderfoot > /dev/null 2>&1
 	ea 'spiderfoot'
 
-	sleep 3
+	sleep 2
 
 	cd /root/spiderfoot && pip install -r requirements.txt > /dev/null 2>&1
 	ea 'pipspiderfoot'
 
-	sleep 3
+	sleep 2
 }
 
 function CycleArray()

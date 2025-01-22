@@ -14,6 +14,17 @@ function ea()
 	fi
 }
 
+### determine if the folder exists
+function folder()
+{
+	if [ -e $1 ];then
+		echo -e "${RED} $1 has exists!"
+		exit
+	else
+		mkdir $1
+	fi
+}
+
 ### get the version number
 function version()
 {	
@@ -28,7 +39,6 @@ function version()
 		echo $num 
 	fi
 }
-
 
 ### set current shell proxy
 function setproxy()
@@ -51,33 +61,51 @@ function setproxy()
 
 	### apt updatte
 	apt update  > /dev/null 2>&1
-	sleep 3
+	sleep 2
 }
 
+### create new folder
 function MakeNewFolder()
 {	
-	if [ ! -e ~/Arsenals ];then
-		mkdir ~/Arsenals
-#		mkdir ~/Arsenals/company
-		mkdir ~/Arsenals/subdomain
-		mkdir ~/Arsenals/app
-		mkdir ~/Arsenals/app/apk
-		mkdir ~/Arsenals/app/ipa
-		mkdir ~/Arsenals/fingerprint
-		mkdir ~/Arsenals/dict
-		mkdir ~/Arsenals/result
-		mkdir ~/Arsenals/result/sub
-		mkdir ~/Arsenals/dict/subdomain
-	else
-		echo -e "${RED} File or directory Arsenals is already exists! ${END}"
-		exit
-	fi
+	folder /root/batch
+	folder /root/app
+	folder /root/subdomain
+	folder /root/other
+	folder /root/ccdn
+	folder /root/fingerprint
+	folder /root/result
+	cd /root/ && proxychains git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 
-	sleep 3
+	sleep 2
 }
 
+### download batch tools
+function BatchTools()
+{
+	echo -e "${GREEN}  download Dnsx ${END}"
 
-function DownCompanyTools()
+	### get version
+	num_dnsx=`version projectdiscovery dnsx`
+	num_dnsx_v=`echo $num_dnsx | cut -f2 -d "v"`
+
+	### download
+	cd /root/batch && mkdir dnsx && cd dnsx && proxychains wget https://github.com/projectdiscovery/dnsx/releases/download/${num_dnsx}/dnsx_${num_dnsx_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip && rm *.zip && mv dnsx /usr/bin
+	ea 'dnsx'
+	sleep 2
+
+	echo -e "${GREEN}  download Eeyes ${END}"
+
+	### get version
+	num_eeyes=`version EdgeSecurityTeam Eeyes`
+
+	### download
+	cd /root/batch && mkdir Eeyes && cd Eeyes && proxychains wget https://github.com/EdgeSecurityTeam/Eeyes/releases/download/${num_eeyes}/Eeyes-linux.zip > /dev/null 2>&1 && unzip *.zip && rm *.zip && chmod 744 Eeyes-linux && ln -s /root/batch/Eeyes/Eeyes-linux /usr/bin/eeyes
+	ea 'Eyes'
+	sleep 2
+}
+
+### download company tools
+function CompanyTools()
 {
 	echo -e "${GREEN}  download ENScan_GO ${END}"
 
@@ -85,203 +113,177 @@ function DownCompanyTools()
 	num_ens=`version wgpsec ENScan_GO`
 
 	### download
-	cd ~/Arsenals/company && mkdir enscan && cd enscan && proxychains wget https://github.com/wgpsec/ENScan_GO/releases/download/${num_ens}/enscan-${num_ens}-linux-amd64.tar.gz  > /dev/null 2>&1 && tar -zxvf *.tar.gz  > /dev/null 2>&1 && rm *.tar.gz && mv enscan* enscan
+	cd /root/company && mkdir enscan && cd enscan && proxychains wget https://github.com/wgpsec/ENScan_GO/releases/download/${num_ens}/enscan-${num_ens}-linux-amd64.tar.gz  > /dev/null 2>&1 && tar -zxvf *.tar.gz  > /dev/null 2>&1 && rm *.tar.gz && mv enscan* enscan
 	ea 'ENScan'
-
-	sleep 3
+	sleep 2
 }
 
-
-function DownAppTools()
+### download company tools 
+function AppTools()
 {
 	### AppInfoScanner
 	echo -e "${GREEN}  download AppInfoScanner ${END}"
 
-	cd ~/Arsenals/app && proxychains git clone https://github.com/kelvinBen/AppInfoScanner  > /dev/null 2>&1
+	cd /root/app && proxychains git clone https://github.com/kelvinBen/AppInfoScanner  > /dev/null 2>&1
 	ea 'AppInfoScanner'
 	
-	pip install -r ~/Arsenals/app/AppInfoScanner/requirements.txt > /dev/null 2>&1
+	pip install -r /root/app/AppInfoScanner/requirements.txt > /dev/null 2>&1
 	ea 'PipAppInfoScanner'
-	
-	sleep 3
+	sleep 2
 	
 	### apkleaks
 	echo -e "${GREEN}  download apkleaks${END}"
 
 	pip install apkleaks > /dev/null 2>&1
 	ea 'apkleaks'
-	
-	sleep 3
+	sleep 2
 
 	### AppMessenger
 	echo -e "${YELLO} Download Windows software AppMessenger in https://github.com/sulab999/AppMessenger/releases/download/v4.6.3/appmsg4.6.3.zip ${END}"
 
 	pip install async_timeout > /dev/null 2>&1
 	ea 'Pipasync_timeout'
-
-	sleep 3
+	sleep 2
 }
 
-function DownSubdomainTools()
+function SubdomainTools()
 {
-	### knock
-	echo -e "${GREEN}  download knock ${END}"
-	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/guelfoweb/knock  > /dev/null 2>&1 && chmod 744 ~/Arsenals/subdomain/knock/knockpy.py && ln -s ~/Arsenals/subdomain/knock/knockpy.py /usr/bin/knock
-	ea 'knock'
-	
-	pip install -r ~/Arsenals/subdomain/knock/requirements.txt > /dev/null 2>&1
-	ea 'Pipknock'
-
-	sleep 3
-	
-	### oneforall
-	echo -e "${GREEN}  download OneForAll ${END}"
-	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/shmilylty/OneForAll  > /dev/null 2>&1 && chmod 744 ~/Arsenals/subdomain/OneForAll/oneforall.py && ln -s ~/Arsenals/subdomain/OneForAll/oneforall.py /usr/bin/oneforall
-	ea 'OneForAll'
-	
-	pip install -r ~/Arsenals/subdomain/OneForAll/requirements.txt > /dev/null 2>&1
-	ea 'PipOneforall'
-	
-	sleep 3
-	
-
-	## subdomainBurte
-	echo -e "${GREEN}  download subDomainsBrute ${END}"
-	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/lijiejie/subDomainsBrute  > /dev/null 2>&1 && chmod 744 ~/Arsenals/subdomain/subDomainsBrute/subDomainsBrute.py && ln -s ~/Arsenals/subdomain/subDomainsBrute/subDomainsBrute.py /usr/bin/subdomainbrute && pip install dnspython==2.2.1 async_timeout > /dev/null 2>&1
-	ea 'subDomainsBrute'
-
-	sleep 3
-	
-	## ksubdomain
-	echo -e "${GREEN}  download ksubdomain ${END}"
-
-	### get version
-	num_ksu=`version knownsec ksubdomain`
-
-	cd ~/Arsenals/subdomain && mkdir ksubdomain && cd ksubdomain && proxychains wget https://github.com/knownsec/ksubdomain/releases/download/${num_ksu}/ksubdomain_linux.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv ksubdomain /usr/bin 
-	ea 'ksubdomain'
-	
-	sleep 3
-	
-
-	### sublist3r
-	echo -e "${GREEN}  download sublist3r ${END}"
-	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/aboul3la/Sublist3r  > /dev/null 2>&1 && cd Sublist3r && chmod 744 ~/Arsenals/subdomain/Sublist3r/sublist3r.py && ln -s ~/Arsenals/subdomain/Sublist3r/sublist3r.py /usr/bin/sublist3r 
-	ea 'sublist3r'
-	
-	pip install -r ~/Arsenals/subdomain/Sublist3r/requirements.txt > /dev/null 2>&1
-	ea 'Pipsublist3r'
-	
-	pip install unicode
-
-	ea 'unicode'
-	sleep 3
-	
-
-	### dnsmap
-	echo -e "${GREEN}  download dnsmap ${END}"
-	apt -y install dnsmap > /dev/null 2>&1
-	ea 'dnsmap'
-	
-	sleep 3
-	
 	### esd
 	echo -e "${GREEN}  download esd ${END}"
 	pip install esd > /dev/null 2>&1
 	ea 'esd'
-	
-	sleep 3
+	sleep 2
+
+	### oneforall
+	echo -e "${GREEN}  download OneForAll ${END}"
+	cd /root/subdomain && proxychains git clone https://github.com/shmilylty/OneForAll  > /dev/null 2>&1 && chmod 744 /root/subdomain/OneForAll/oneforall.py && ln -s /root/subdomain/OneForAll/oneforall.py /usr/bin/oneforall
+	ea 'OneForAll'
+	sleep 2
+
+	pip install -r /root/subdomain/OneForAll/requirements.txt > /dev/null 2>&1
+	ea 'PipOneforall'
+	sleep 2
+
+	### dnsub
+	echo -e "${GREEN}  download dnsub ${END}"
+	### get version
+	num_dnsub=`version yunxu1 dnsub`
+
+	cd /root/subdomain && mkdir dnsub && cd dnsub && proxychains wget https://github.com/yunxu1/dnsub/releases/download/${num_dnsub}/dnsub_linux_amd64_${num_dnsub}.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip 
+	ea 'dnsub'
+	sleep 2
+
+	### sublist3r
+	echo -e "${GREEN}  download sublist3r ${END}"
+	# apt install sublist3r --upgrade > /dev/null 2>&1
+	cd /root/subdomain && proxychains git clone https://github.com/aboul3la/Sublist3r  > /dev/null 2>&1 && cd Sublist3r && chmod 744 /root/subdomain/Sublist3r/sublist3r.py && ln -s /root/subdomain/Sublist3r/sublist3r.py /usr/bin/sublist3r 
+	ea 'sublist3r'
+	sleep 2
+
+	pip install -r /root/subdomain/Sublist3r/requirements.txt > /dev/null 2>&1 && pip install unicode
+	ea 'Pipsublist3r'
+	sleep 2
 
 	### ctfr
 	echo -e "${GREEN}  download ctfr ${END}"
-	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/UnaPibaGeek/ctfr  > /dev/null 2>&1 && cd ctfr && chmod 744 ~/Arsenals/subdomain/ctfr/ctfr.py && ln -s ~/Arsenals/subdomain/ctfr/ctfr.py /usr/bin/ctfr 
+	cd /root/subdomain && proxychains git clone https://github.com/UnaPibaGeek/ctfr  > /dev/null 2>&1 && cd ctfr && chmod 744 /root/subdomain/ctfr/ctfr.py && ln -s /root/subdomain/ctfr/ctfr.py /usr/bin/ctfr 
 	ea 'ctfr'
-	
-	pip install -r ~/Arsenals/subdomain/ctfr/requirements.txt > /dev/null 2>&1
+	sleep 2
+
+	pip install -r /root/subdomain/ctfr/requirements.txt > /dev/null 2>&1
 	ea 'Pipctfr'
-	
-	sleep 3
+	sleep 2
 
-	## subfinder
-	echo -e "${GREEN}  download subfinder${END}"
-
-	### get version	
-	num_sub=`version projectdiscovery subfinder`
-	num_sub_v=`echo $num_sub | cut -f2 -d "v"`
-
-	cd ~/Arsenals/subdomain && mkdir subfinder && cd subfinder && proxychains wget https://github.com/projectdiscovery/subfinder/releases/download/${num_sub}/subfinder_${num_sub_v}_linux_amd64.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv subfinder /usr/bin 
-	ea 'subfinder'
-	
-	sleep 3
-	
-	## assetfinder
+	### assetfinder
 	echo -e "${GREEN}  download assetfinder ${END}"
-
-	cd ~/Arsenals/subdomain && mkdir assetfinder && cd assetfinder && proxychains wget https://github.com/tomnomnom/assetfinder/releases/download/v0.1.1/assetfinder-linux-amd64-0.1.1.tgz  > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv assetfinder /usr/bin 
+	# apt install assetfinder --upgrade > /dev/null 2>&1
+	cd /root/subdomain && mkdir assetfinder && cd assetfinder && proxychains wget https://github.com/tomnomnom/assetfinder/releases/download/v0.1.1/assetfinder-linux-amd64-0.1.1.tgz  > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv assetfinder /usr/bin 
 	ea 'assetfinder'
-	
-	sleep 3
-	
+	sleep 2
 
-	## findomain
+	### fierce
+	echo -e "${GREEN}  download fierce ${END}"
+	apt install fierce --upgrade > /dev/null 2>&1
+	ea 'fierce'
+	sleep 2
+
+	### subfinder
+	echo -e "${GREEN}  download subfinder${END}"
+	# apt install subfinder --upgrade > /dev/null 2>&1
+	### get version	
+	num_subfinder=`version projectdiscovery subfinder`
+	num_subfinder_v=`echo $num_subfinder | cut -f2 -d "v"`
+
+	cd /root/subdomain && mkdir subfinder && cd subfinder && proxychains wget https://github.com/projectdiscovery/subfinder/releases/download/${num_subfinder}/subfinder_${num_subfinder_v}_linux_amd64.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv subfinder /usr/bin 
+	ea 'subfinder'
+	sleep 2
+
+	### knock
+	echo -e "${GREEN}  download knock ${END}"
+	cd /root/subdomain && proxychains git clone https://github.com/guelfoweb/knock  > /dev/null 2>&1 && chmod 744 /root/subdomain/knock/knockpy.py && ln -s /root/subdomain/knock/knockpy.py /usr/bin/knock
+	ea 'knock'
+	sleep 2
+
+	pip install -r /root/subdomain/knock/requirements.txt > /dev/null 2>&1
+	ea 'Pipknock'
+	sleep 2
+
+	### findomain
 	echo -e "${GREEN}  download findomain ${END}"
-
 	### get version
 	num_fin=`version Findomain Findomain`
 
-	cd ~/Arsenals/subdomain && mkdir findomain && cd findomain && proxychains wget https://github.com/Findomain/Findomain/releases/download/${num_fin}/findomain-linux.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && chmod 744 findomain && mv findomain /usr/bin
+	cd /root/subdomain && mkdir findomain && cd findomain && proxychains wget https://github.com/Findomain/Findomain/releases/download/${num_fin}/findomain-linux.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && chmod 744 findomain && mv findomain /usr/bin
 	ea 'findomain'
-	
-	sleep 3
-	
+	sleep 2
 
-	## dnsub
-	echo -e "${GREEN}  download dnsub ${END}"
+	### subdomainBurte
+	echo -e "${GREEN}  download subDomainsBrute ${END}"
+	cd /root/subdomain && proxychains git clone https://github.com/lijiejie/subDomainsBrute  > /dev/null 2>&1 && chmod 744 /root/subdomain/subDomainsBrute/subDomainsBrute.py && ln -s /root/subdomain/subDomainsBrute/subDomainsBrute.py /usr/bin/subdomainbrute && pip install dnspython==2.2.1 async_timeout > /dev/null 2>&1
+	ea 'subDomainsBrute'
+	sleep 2
+	
+	### dnsmap
+	echo -e "${GREEN}  download dnsmap ${END}"
+	apt install dnsmap --upgrade > /dev/null 2>&1
+	ea 'dnsmap'
+	sleep 2
 
+	### ksubdomain
+	echo -e "${GREEN}  download ksubdomain ${END}"
 	### get version
-	num_dns=`version yunxu1 dnsub`
+	num_ksu=`version knownsec ksubdomain`
 
-	cd ~/Arsenals/subdomain && mkdir dnsub && cd dnsub && proxychains wget https://github.com/yunxu1/dnsub/releases/download/${num_dns}/dnsub_linux_amd64_${num_dns}.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip 
-	ea 'dnsub'
+	cd /root/subdomain && mkdir ksubdomain && cd ksubdomain && proxychains wget https://github.com/knownsec/ksubdomain/releases/download/${num_ksu}/ksubdomain_linux.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv ksubdomain /usr/bin 
+	ea 'ksubdomain'
+	sleep 2
 	
-	sleep 3
-
-	## fierce
-	echo -e "${GREEN}  download fierce ${END}"
-	pip install fierce > /dev/null 2>&1
-	ea 'fierce'
-	
-	sleep 3
-	
-	
-	## altdns
-	echo -e "${GREEN}  download altdns ${END}"
-	pip install py-altdns > /dev/null 2>&1
-	ea 'altdns'
-	
-	sleep 3
-
-	## ldns-walk
+	################################################## dns
+	### ldns-walk
 	echo -e "${GREEN}  download ldns-walk ${END}"
-	apt -y install ldnsutils --upgrade > /dev/null 2>&1
+	apt install ldnsutils --upgrade > /dev/null 2>&1
 	ea 'ldns-walk'
-	
-	sleep 3
-	
-	## virtual-host-discovery
-	echo -e "${GREEN}  download virtual-host-discovery ${END}"
-	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/jobertabma/virtual-host-discovery > /dev/null 2>&1
-	ea 'virtual-host-discovery'
-	
-	sleep 3
+	sleep 2
 
-	## domains-from-csp
-	echo -e "${GREEN}  download domains-from-csp ${END}"
-	cd ~/Arsenals/subdomain && proxychains git clone https://github.com/0xbharath/domains-from-csp > /dev/null 2>&1
-	ea 'domains-from-csp'
-	
-	sleep 3
-	
+	################################################## permutations
+
+	################################################## altdns
+	echo -e "${GREEN}  download altdns ${END}"
+	apt install py-altdns --upgrade > /dev/null 2>&1
+	ea 'altdns'
+	sleep 2
+
+	### Brute force
+}
+
+function otherTools()
+{
+	### Virtual-host
+	### virtual-host-discovery
+	echo -e "${GREEN}  download virtual-host-discovery ${END}"
+	cd /root/subdomain/other && proxychains git clone https://github.com/jobertabma/virtual-host-discovery > /dev/null 2>&1
+	ea 'virtual-host-discovery'
+	sleep 2
 }
 
 function CycleArray()
@@ -292,35 +294,44 @@ function CycleArray()
 	done
 }
 
-
+### main 
 echo -e "${YELLO}START${END}"
 setproxy
 
 echo -e "${YELLO} start MakeNewFolder${END}"
 MakeNewFolder
 
-#echo -e "${YELLO} start DownCompanyTools${END}"
-#DownCompanyTools
+echo -e "${YELLO} start BatchTools${END}"
+BatchTools
 
-echo -e "${YELLO} start DownAppTools${END}"
-DownAppTools
+#echo -e "${YELLO} start CompanyTools${END}"
+#CompanyTools
 
-echo -e "${YELLO} start DownSubdomainTools${END}"
-DownSubdomainTools
+echo -e "${YELLO} start AppTools${END}"
+AppTools
+
+echo -e "${YELLO} start SubdomainTools${END}"
+SubdomainTools
+
+echo -e "${YELLO} start otherTools${END}"
+otherTools
 
 echo -e "${YELLO}END ${END}"
 
+
+### error
 echo -e "${RED}Error ${END}"
 CycleArray
 
+### configuration
 echo -e "${RED}Configuration ${END}"
-echo -e "${GREEN}  subfinder${END}"
+
 echo -e "${GREEN}  OneForAll${END}"
 echo -e "${GREEN}  Dnsub${END}"
+echo -e "${GREEN}  subfinder${END}"
+echo -e "${GREEN}  findomain${END}"
 
-echo -e "${RED}Change folders${END}"
-echo -e "${GREEN}  Dnsub${END}"
-
+### change file
 echo -e "${RED}Change file${END}"
 echo -e "${GREEN}  Sublist3r${END}"
 
