@@ -9,7 +9,7 @@ END='\033[0m'
 ### errorarray function
 function ea()
 {
-	if [ $? -ne 0 ];thenk
+	if [ $? -ne 0 ];then
 		array[${#array[*]}]="$1"
 	fi
 }
