@@ -76,7 +76,7 @@ function MakeNewFolder()
 	cd /root/ && proxychains git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 	ea 'Dictfile'
 
-	python -m pip install pip --upgrade
+	python -m pip install pip --upgrade > /dev/null 2>&1 
 	ea 'pipupdate'
 	
 	sleep 2
