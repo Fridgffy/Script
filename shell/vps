@@ -51,6 +51,11 @@ function MakeFolders()
 	folder /root/subdomain
 	folder /root/result
 	cd /root/ && git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
+	ea 'Dictfile'
+
+	python -m pip install pip --upgrade
+	ea 'pipupdate'
+	
 	sleep 2
 
 }
@@ -240,7 +245,7 @@ function SubdomainTools()
 	ea 'sublist3r'
 	sleep 2
 
-	pip install -r /root/subdomain/Sublist3r/requirements.txt > /dev/null 2>&1 && pip install unicode
+	pip install -r /root/subdomain/Sublist3r/requirements.txt > /dev/null 2>&1 && pip install unicode > /dev/null 2>&1
 	ea 'Pipsublist3r'
 	sleep 2
 

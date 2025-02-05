@@ -74,7 +74,11 @@ function MakeNewFolder()
 	folder /root/fingerprint
 	folder /root/result
 	cd /root/ && proxychains git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
+	ea 'Dictfile'
 
+	python -m pip install pip --upgrade
+	ea 'pipupdate'
+	
 	sleep 2
 }
 
