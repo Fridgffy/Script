@@ -49,6 +49,7 @@ function MakeFolders()
 	folder /root/amass
 	folder /root/vuln
 	folder /root/subdomain
+	folder /root/result
 	cd /root/ && git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 	sleep 2
 
