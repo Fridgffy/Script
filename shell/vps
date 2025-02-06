@@ -188,6 +188,11 @@ function comprehensive()
 	num_kscan=`version lcvvvv kscan`
 	cd /root/kscan && wget https://github.com/lcvvvv/kscan/releases/download/${num_kscan}/kscan_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip > /dev/null 2>&1 && mv kscan_linux_amd64 kscan
 	ea 'kscan'
+
+	### download qqwry.dat
+	cd /root/ && kscan --download-qqwry > /dev/null 2>&1
+	ea 'kscan_qqwry.dat'
+
 	sleep 2
 
 	### reconftw
@@ -227,6 +232,8 @@ function SubdomainTools()
 
 	pip install -r /root/subdomain/OneForAll/requirements.txt > /dev/null 2>&1
 	ea 'PipOneforall'
+
+	mv /root/subdomain/OneForAll/config/api.py /root/subdomain/OneForAll/config/api.py.bak
 	sleep 2
 
 	### dnsub
@@ -334,7 +341,7 @@ function SubdomainTools()
 
 	################################################## altdns
 	echo -e "${GREEN}  download altdns ${END}"
-	apt -y  install py-altdns --upgrade > /dev/null 2>&1
+	apt -y  install --upgrade altdns > /dev/null 2>&1
 	ea 'altdns'
 	sleep 2
 
@@ -375,13 +382,24 @@ echo -e "${RED}manual install${END}"
 echo -e "${GREEN}  reconftw${END}"
 echo -e "${GREEN}  spiderfoot${END}"
 
-### configuration
+### configuration vps
 echo -e "${RED}Configuration Tools https://github.com/Fridgffy/Configfile ${END}"
 echo -e "${GREEN}  ARL${END}"
 echo -e "${GREEN}  w13scan${END}"
 echo -e "${GREEN}  vulmap${END}"
 echo -e "${GREEN}  amass${END}"
 echo -e "${GREEN}  shuize${END}"
-echo -e "${GREEN}  kscan${END}"
 echo -e "${GREEN}  reconftw${END}"
 echo -e "${GREEN}  spiderfoot${END}"
+
+### configuration subdomain
+echo -e "${RED}Configuration subdomain tools${END}"
+
+echo -e "${GREEN}  OneForAll${END}"
+echo -e "${GREEN}  Dnsub${END}"
+echo -e "${GREEN}  subfinder${END}"
+echo -e "${GREEN}  findomain${END}"
+
+### subdomain change file
+echo -e "${RED}Change file${END}"
+echo -e "${GREEN}  Sublist3r${END}"

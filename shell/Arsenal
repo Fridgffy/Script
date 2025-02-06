@@ -78,7 +78,7 @@ function MakeNewFolder()
 
 	python -m pip install pip --upgrade > /dev/null 2>&1 
 	ea 'pipupdate'
-	
+
 	sleep 2
 }
 
@@ -165,6 +165,8 @@ function SubdomainTools()
 
 	pip install -r /root/subdomain/OneForAll/requirements.txt > /dev/null 2>&1
 	ea 'PipOneforall'
+
+	mv /root/subdomain/OneForAll/config/api.py /root/subdomain/OneForAll/config/api.py.bak
 	sleep 2
 
 	### dnsub
@@ -272,7 +274,7 @@ function SubdomainTools()
 
 	################################################## altdns
 	echo -e "${GREEN}  download altdns ${END}"
-	apt -y  install py-altdns --upgrade > /dev/null 2>&1
+	apt -y  install --upgrade altdns > /dev/null 2>&1
 	ea 'altdns'
 	sleep 2
 
@@ -284,7 +286,7 @@ function otherTools()
 	### Virtual-host
 	### virtual-host-discovery
 	echo -e "${GREEN}  download virtual-host-discovery ${END}"
-	cd /root/subdomain/other && proxychains git clone https://github.com/jobertabma/virtual-host-discovery > /dev/null 2>&1
+	cd /root/other && proxychains git clone https://github.com/jobertabma/virtual-host-discovery > /dev/null 2>&1
 	ea 'virtual-host-discovery'
 	sleep 2
 }
