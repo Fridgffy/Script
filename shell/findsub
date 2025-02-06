@@ -41,20 +41,6 @@ function ea()
 # 	cd /home
 # }
 
-# function fsubdomainsbrute(){
-# 	echo -e "${GREEN}start subdomainsbrute${END}"
-# 	terminal -e "subdomainbrute --full $1 -o ${RESULT}subdomainbrute" -T "Subdomainsbrute" 2>&1 &
-# 	ea 'subdomainsbrute'
-
-# }
-
-# function fksubdomain(){
-# 	echo -e "${GREEN}start ksubdomain${END}"
-# 	terminal -e "ksubdomain -d $1 --full --csv -o ${RESULT}ksubdomain.csv -o " -T "Ksubdomain" 2>&1 &
-# 	ea 'ksubdomain'
-
-# }
-
 # function fsublist3r(){
 # 	echo -e "${GREEN}start sublist3r${END}"
 # 	terminal -e "sublist3r-b -v -o ${RESULT}sublist3r -d $1" -T "Sublist3r" 2>&1 &
@@ -98,7 +84,7 @@ function fsubfinder(){
 
 function fknock(){
 	echo -e "${GREEN}start knock${END}"
-	knock --useragent "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)" --recon --bruteforce -d $1 --save ${RESULT}knock
+	knock --useragent "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)" --recon --bruteforce -d $1 --save ${RESULT}
 	ea 'knock'
 	sleep 2
 }
@@ -110,6 +96,22 @@ function ffindomain(){
 	sleep 2
 }
 
+### Spending time
+
+
+function fsubdomainsbrute(){
+	echo -e "${GREEN}start subdomainsbrute${END}"
+	terminal -e "subdomainbrute --full $1 -o ${RESULT}subdomainbrute" -T "Subdomainsbrute" 2>&1 &
+	ea 'subdomainsbrute'
+
+}
+
+function fksubdomain(){
+	echo -e "${GREEN}start ksubdomain${END}"
+	terminal -e "ksubdomain -d $1 --full --csv -o ${RESULT}ksubdomain.csv -o " -T "Ksubdomain" 2>&1 &
+	ea 'ksubdomain'
+
+}
 
 function CycleArray()
 {
@@ -129,8 +131,6 @@ read domain
 ### function 
 
 #foneforall $domain
-#fsubdomainsbrute $domain
-#fksubdomain $domain
 #fesd $domain   # 一小时
 #fdnsub $domain
 #fsublist3r $domain
@@ -141,22 +141,17 @@ fsubfinder $domain
 ffindomain $domain
 fknock $domain
 fassetfinder $domain
+fsubdomainsbrute $domain
+fksubdomain $domain
 
 
 
 echo -e "${RED}Error${END}"
 CycleArray
 
-echo -e "${RED}result file${END}"
-echo -e "${GREEN}fierce${END}"
-echo -e "${GREEN}ESD : /tmp/esd/${END}"
-
 echo -e "${RED}Manual test${END}"
 echo -e "${GREEN}esd${END}"
 echo -e "${GREEN}OneForAll${END}"
-echo -e "${GREEN}Dnsub${END}"
-echo -e "${GREEN}subDomainsBrute${END}"
-echo -e "${GREEN}Ksubdomain${END}"
 echo -e "${GREEN}sublist3r${END}"
 echo -e "${GREEN}fierce${END}"
 
