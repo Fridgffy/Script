@@ -289,6 +289,33 @@ function otherTools()
 	cd /root/other && proxychains git clone https://github.com/jobertabma/virtual-host-discovery > /dev/null 2>&1
 	ea 'virtual-host-discovery'
 	sleep 2
+
+	### asnmap
+	echo -e "${GREEN}  download Asnmap ${END}"
+	### get version
+	num_asn=`version projectdiscovery asnmap`
+	num_asn_v=`echo $num_asn | cut -f2 -d "v"`
+	mkdir /root/other/asnmap && cd /root/other/asnmap && wget https://github.com/projectdiscovery/asnmap/releases/download/${num_asn}/asnmap_${num_asn_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE README.md && mv asnmap /usr/bin
+	ea 'asnmap'
+	sleep 2
+
+	### mapcidr
+	echo -e "${GREEN}  download mapcidr ${END}"
+	### get version
+	num_cidr=`version projectdiscovery mapcidr`
+	num_cidr_v=`echo $num_cidr | cut -f2 -d "v"`
+	mkdir /root/other/mapcidr && cd /root/other/mapcidr && wget https://github.com/projectdiscovery/mapcidr/releases/download/${num_cidr}/mapcidr_${num_cidr_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE.MD README.md && mv mapcidr /usr/bin
+	ea 'mapcidr'
+	sleep 2
+
+	### tlsx
+	echo -e "${GREEN}  download tlsx ${END}"
+	### get version
+	num_tlsx=`version projectdiscovery tlsx`
+	num_tlsx_v=`echo $num_tlsx |cut -f2 -d "v"`
+	mkdir /root/other/tlsx && cd /root/other/tlsx && wget https://github.com/projectdiscovery/tlsx/releases/download/${num_tlsx}/tlsx_${num_tlsx_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE README.md && mv tlsx /usr/bin
+	ea 'tlsx'
+	sleep 2
 }
 
 function CycleArray()
