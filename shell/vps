@@ -331,6 +331,17 @@ function SubdomainTools()
 	ea 'ksubdomain'
 	sleep 2
 	
+	### aquatone
+	echo -e "${GREEN}  download aquatone ${END}"
+	gem > /dev/null 2>&1
+	if [ $? -ne 0 ];then
+		apt -y install ruby > /dev/null 2>&1
+		ea 'ruby'
+	fi
+	gem -y install aquatone > /dev/null 2>&1
+	ea 'aquatone'
+	sleep 2
+
 	################################################## dns
 	### ldns-walk
 	echo -e "${GREEN}  download ldns-walk ${END}"
@@ -443,7 +454,9 @@ echo -e "${GREEN}  OneForAll${END}"
 echo -e "${GREEN}  Dnsub${END}"
 echo -e "${GREEN}  subfinder${END}"
 echo -e "${GREEN}  findomain${END}"
+echo -e "${GREEN}  aquatone${END}"
 
 ### subdomain change file
 echo -e "${RED}Change file${END}"
 echo -e "${GREEN}  Sublist3r${END}"
+echo -e "${GREEN}  oneforall.py${END}"

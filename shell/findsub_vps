@@ -161,6 +161,7 @@ echo -e "${GREEN}esd${END}"
 echo -e "${GREEN}OneForAll${END}"
 echo -e "${GREEN}sublist3r${END}"
 echo -e "${GREEN}fierce${END}"
+echo -e "${GREEN}aquatone${END}"
 
 
 echo -e "${RED}All Tools are done!${END}"
