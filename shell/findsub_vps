@@ -95,18 +95,25 @@ function fdnsmap(){
 	sleep 2
 }
 
+function fgithub-subdomains(){
+	echo -e "${GREEN}start fgithub-subdomains ${END}"
+	github-subdomains -t /root/subdomain/github-subdomains/.tokens -d $1 -o ${RESULT}github-subdomains
+	ea 'github-subdomains'
+	sleep 2
+}
+
 ### Spending time
 
 function fsubdomainsbrute(){
 	echo -e "${GREEN}start subdomainsbrute${END}"
-	terminal -e "subdomainbrute --full $1 -o ${RESULT}subdomainbrute" -T "Subdomainsbrute" 2>&1 &
+	subdomainbrute --full $1 -o ${RESULT}subdomainbrute
 	ea 'subdomainsbrute'
 
 }
 
 function fksubdomain(){
 	echo -e "${GREEN}start ksubdomain${END}"
-	terminal -e "ksubdomain -d $1 --full --csv -o ${RESULT}ksubdomain.csv -o " -T "Ksubdomain" 2>&1 &
+	ksubdomain -d $1 --full --csv -o ${RESULT}ksubdomain.csv
 	ea 'ksubdomain'
 
 }
@@ -114,7 +121,7 @@ function fksubdomain(){
 function fdnsub(){
 	echo -e "${GREEN}start dnsub${END}"
 	cd ${SUBDOMAIN}dnsub 
-	terminal -e "./dnsub -d $1 --depth 3 -o /root/dnsub.csv" -T "Dnsub" 2>&1 &
+	./dnsub -d $1 --depth 3 -o /root/dnsub.csv
 	ea 'dnsub'
 
 	cd /root
@@ -151,6 +158,7 @@ fdnsmap $domain
 fsubdomainsbrute $domain
 fdnsub $domain
 fksubdomain $domain
+fgithub-subdomains $domain
 
 
 echo -e "${RED}Error${END}"
@@ -162,6 +170,7 @@ echo -e "${GREEN}OneForAll${END}"
 echo -e "${GREEN}sublist3r${END}"
 echo -e "${GREEN}fierce${END}"
 echo -e "${GREEN}aquatone${END}"
+echo -e "${GREEN}chaos${END}"
 
 
 echo -e "${RED}All Tools are done!${END}"

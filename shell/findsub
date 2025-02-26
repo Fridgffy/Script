@@ -71,7 +71,6 @@ function fassetfinder(){
 	sleep 2
 }
 
-
 function fsubfinder(){
 	echo -e "${GREEN}start subfinder${END}"
 	subfinder -d $1 --all -o ${RESULT}subfinder_nodns
@@ -101,14 +100,14 @@ function ffindomain(){
 
 function fsubdomainsbrute(){
 	echo -e "${GREEN}start subdomainsbrute${END}"
-	terminal -e "subdomainbrute --full $1 -o ${RESULT}subdomainbrute" -T "Subdomainsbrute" 2>&1 &
+	subdomainbrute --full $1 -o ${RESULT}subdomainbrute
 	ea 'subdomainsbrute'
 
 }
 
 function fksubdomain(){
 	echo -e "${GREEN}start ksubdomain${END}"
-	terminal -e "ksubdomain -d $1 --full --csv -o ${RESULT}ksubdomain.csv -o " -T "Ksubdomain" 2>&1 &
+	ksubdomain -d $1 --full --csv -o ${RESULT}ksubdomain.csv
 	ea 'ksubdomain'
 
 }
@@ -155,6 +154,7 @@ echo -e "${GREEN}OneForAll${END}"
 echo -e "${GREEN}sublist3r${END}"
 echo -e "${GREEN}fierce${END}"
 echo -e "${GREEN}aquatone${END}"
+echo -e "${GREEN}chaos${END}"
 
 
 

@@ -342,6 +342,21 @@ function SubdomainTools()
 	ea 'aquatone'
 	sleep 2
 
+	### chaos
+	echo -e "${GREEN}  download chaos ${END}"
+	###get version
+	num_chaos=`version projectdiscovery chaos-client`
+	num_chaos_v=`echo $num_chaos | cut -f2 -d "v"`
+	cd /root/subdomain && mkdir chaos && cd chaos && wget https://github.com/projectdiscovery/chaos-client/releases/download/${num_chaos}/chaos-client_${num_chaos_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE.md README_CN.md README.md && mv chaos-client /usr/bin/chaos
+	ea 'chaos'
+	sleep 2
+
+	### github-subdomains
+	echo -e "${GREEN}  download github-subdomains ${END}"
+	mkdir /root/subdomain/github-subdomains && cd /root/subdomain/github-subdomains && go install github.com/gwen001/github-subdomains@latest > /dev/null 2>&1 && mv /root/go/bin/github-subdomains /usr/bin 
+	ea 'github-subdomains'
+	sleep 2
+
 	################################################## dns
 	### ldns-walk
 	echo -e "${GREEN}  download ldns-walk ${END}"
@@ -352,6 +367,7 @@ function SubdomainTools()
 	################################################## permutations
 
 	################################################## altdns
+	### altdns
 	echo -e "${GREEN}  download altdns ${END}"
 	apt -y  install --upgrade altdns > /dev/null 2>&1
 	ea 'altdns'
@@ -455,6 +471,7 @@ echo -e "${GREEN}  Dnsub${END}"
 echo -e "${GREEN}  subfinder${END}"
 echo -e "${GREEN}  findomain${END}"
 echo -e "${GREEN}  aquatone${END}"
+echo -e "${GREEN}  github-subdomains${END}"
 
 ### subdomain change file
 echo -e "${RED}Change file${END}"
