@@ -51,6 +51,7 @@ function MakeFolders()
 	folder /root/subdomain
 	folder /root/result
 	folder /root/other
+	folder /root/url
 	cd /root/ && git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 	ea 'Dictfile'
 
@@ -413,6 +414,61 @@ function otherTools()
 	sleep 2
 }
 
+function urlcrawl()
+{
+	### waybackurls
+	### getversion
+	num_waybackurls=`version tomnomnom waybackurls`
+	num_waybackurls_v=`echo $num_waybackurls | cut -f2 -d "v"`
+	mkdir /root/url/waybackurls && cd /root/url/waybackurls && wget https://github.com/tomnomnom/waybackurls/releases/download/${num_waybackurls}/waybackurls-linux-amd64-${num_waybackurls_v}.tgz > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv waybackurls /usr/bin
+	ea 'waybackurls'
+	sleep 2
+
+	### crawlergo
+	### get version
+	num_crawlergo=`version Qianlitp crawlergo`
+	mkdir /root/url/crawlergo && cd /root/url/crawlergo && wget https://github.com/Qianlitp/crawlergo/releases/download/${num_crawlergo}/crawlergo_linux_amd64  > /dev/null 2>&1 && mv crawlergo_linux_amd64 crawlergo && chmod 744 crawlergo && mv crawlergo /usr/bin
+	ea 'crawlergo'
+	sleep 2
+
+	### gau
+	### get version
+	num_gau=`version lc gau`
+	num_gau_v=`echo $num_gau | cut -f2 -d "v"`
+	mkdir /root/url/gau && cd /root/url/gau && wget https://github.com/lc/gau/releases/download/${num_gau}/gau_${num_gau_v}_linux_amd64.tar.gz > /dev/null 2>&1 && tar -zxvf gau_${num_gau_v}_linux_amd64.tar.gz > /dev/null 2>&1 && rm gau_2.2.4_linux_amd64.tar.gz  LICENSE  README.md && mv gau /usr/bin
+	ea 'gau'
+	sleep 2
+	
+	### red
+	### get version
+	num_rad_v=`version chaitin rad`
+	mkdir /root/url/rad && cd /root/url/rad && wget https://github.com/chaitin/rad/releases/download/${num_rad_v}/rad_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1  && mv rad_linux_amd64 rad && chmod 744 rad && mv /root/url/rad/rad /usr/bin && rm *.zip
+	ea 'rad'
+	sleep 2
+
+	### gospider
+	### get version
+	num_gospider=`version jaeles-project gospider`
+	mkdir /root/url/gospider && cd /root/url/gospider && wget https://github.com/jaeles-project/gospider/releases/download/${num_gospider}/gospider_${num_gospider}_linux_x86_64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip
+	ea 'gospider'
+	sleep 2
+
+	### katana
+	### get version
+	num_katana=`version projectdiscovery katana`
+	num_katana_v=`echo $num_katana | cut -f2 -d "v"`
+	mkdir /root/url/katana && cd /root/url/katana && wget https://github.com/projectdiscovery/katana/releases/download/v1.1.2/katana_1.1.2_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE.md README.md && mv katana /usr/bin 
+	ea 'katana'
+	sleep 2
+
+	### hakrawler
+	go install github.com/hakluke/hakrawler@latest > /dev/null 2>&1 && mv /root/go/bin/hakrawler /usr/bin 
+	ea 'hakrawler'
+	sleep 2
+
+
+}
+
 function CycleArray()
 {
 	for i in ${array[*]}
@@ -443,6 +499,9 @@ SubdomainTools
 echo -e "${YELLO} start otherTools${END}"
 otherTools
 
+echo -e "${YELLO} start url crawl tool${END}"
+urlcrawl
+
 ### error
 echo -e "${RED}Error ${END}"
 CycleArray
@@ -452,11 +511,13 @@ CycleArray
 echo -e "${RED}manual install${END}"
 echo -e "${GREEN}  reconftw${END}"
 echo -e "${GREEN}  spiderfoot${END}"
+echo -e "${GREEN}  google-chrome${END}"
 
 ### configuration vps
 echo -e "${RED}Configuration Tools https://github.com/Fridgffy/Configfile ${END}"
 echo -e "${GREEN}  ARL${END}"
 echo -e "${GREEN}  w13scan${END}"
+echo -e "${GREEN}  BBScan${END}"
 echo -e "${GREEN}  vulmap${END}"
 echo -e "${GREEN}  amass${END}"
 echo -e "${GREEN}  shuize${END}"
@@ -473,7 +534,13 @@ echo -e "${GREEN}  findomain${END}"
 echo -e "${GREEN}  aquatone${END}"
 echo -e "${GREEN}  github-subdomains${END}"
 
-### subdomain change file
+### configuration urlcrawl
+echo -e "${RED}Configuration urlcrawl tools${END}"
+
+echo -e "${GREEN}  rad${END}"
+
+### change file
 echo -e "${RED}Change file${END}"
 echo -e "${GREEN}  Sublist3r${END}"
 echo -e "${GREEN}  oneforall.py${END}"
+echo -e "${GREEN}  gospider${END}"
