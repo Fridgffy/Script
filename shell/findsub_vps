@@ -113,7 +113,7 @@ function fsubdomainsbrute(){
 
 function fksubdomain(){
 	echo -e "${GREEN}start ksubdomain${END}"
-	ksubdomain -d $1 --full --csv -o ${RESULT}ksubdomain.csv
+	ksubdomain -d $1 -l 6 --full --csv -o ${RESULT}ksubdomain.csv
 	ea 'ksubdomain'
 
 }
@@ -121,7 +121,7 @@ function fksubdomain(){
 function fdnsub(){
 	echo -e "${GREEN}start dnsub${END}"
 	cd ${SUBDOMAIN}dnsub 
-	./dnsub -d $1 --depth 3 -o /root/dnsub.csv
+	./dnsub -d $1 --depth 6 -o /root/dnsub.csv
 	ea 'dnsub'
 
 	cd /root

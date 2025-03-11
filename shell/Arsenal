@@ -289,6 +289,13 @@ function SubdomainTools()
 	ea 'ldns-walk'
 	sleep 2
 
+	### dnsrecon
+	echo -e "${GREEN}  download dnsrecon ${END}"
+	apt -y purge dnsrecon > /dev/null 2>&1
+	mkdir /root/subdomain/dns && cd /root/subdomain/dns && proxychains git clone https://github.com/darkoperator/dnsrecon > /dev/null 2>&1 && pip install -r requirements-dev.txt > /dev/null 2>&1 && pip install -r requirements.txt  > /dev/null 2>&1 && ln -s /root/subdomain/dns/dnsrecon/dnsrecon.py /usr/bin/dnsrecon
+	ea 'dnsrecon'
+	sleep 2
+
 	################################################## permutations
 
 	################################################## altdns
@@ -388,4 +395,5 @@ echo -e "${GREEN}  github-subdomains${END}"
 ### change file
 echo -e "${RED}Change file${END}"
 echo -e "${GREEN}  Sublist3r${END}"
+echo -e "${GREEN}  knockpy.py${END}"
 echo -e "${GREEN}  oneforall.py${END}"
