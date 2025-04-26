@@ -345,6 +345,58 @@ function otherTools()
 	sleep 2
 }
 
+function fingerprintTools()
+{
+	### Finger
+	echo -e "${GREEN}  download Finger ${END}"
+	cd /root/fingerprint && proxychains git clone https://github.com/EASY233/Finger > /dev/null 2>&1 && pip install -r requirements.txt > /dev/null 2>&1
+	ea 'Finger'
+	sleep 2
+
+	### whatweb
+	echo -e "${GREEN}  download whatweb ${END}"
+	apt -y install whatweb --upgrade > /dev/null 2>&1
+	ea 'whatweb'
+	sleep 2
+
+	### EHole
+	echo -e "${GREEN}  download EHole ${END}"
+	### get version
+	num_ehole=`version EdgeSecurityTeam EHole`
+	mkdir /root/fingerprint/EHole && cd /root/fingerprint/EHole && proxychains wget https://github.com/EdgeSecurityTeam/EHole/releases/download/${num_ehole}/EHole_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip __MACOSX -r && mv /root/fingerprint/EHole/EHole_linux_amd64/EHole_linux_amd64 /root/fingerprint/EHole/EHole && mv /root/fingerprint/EHole/EHole_linux_amd64/* /root/fingerprint/EHole/ && rm EHole_linux_amd64 -r && chmod 744 /root/fingerprint/EHole/EHole && ln -s /root/fingerprint/EHole/EHole /usr/bin/EHole
+	ea 'EHole'
+	sleep 2
+
+	### Glass
+	echo -e "${GREEN}  download Glass ${END}"
+	cd /root/fingerprint && proxychains git clone https://github.com/s7ckTeam/Glass > /dev/null 2>&1 && pip install -r requirements.txt > /dev/null 2>&1
+	ea 'Glass'
+	sleep 2
+
+	### cmseek
+	echo -e "${GREEN}  download cmseek ${END}"
+	apt -y install cmseek --upgrade > /dev/null 2>&1
+	sleep 2
+
+	### dismap
+	echo -e "${GREEN}  download dismap ${END}"
+	### get version
+	num_dismap=`version zhzyker dismap`
+	num_dismap_v=`echo $num_dismap |cut -f2 -d "v"`
+	mkdir /root/fingerprint/dismap && cd /root/fingerprint/dismap && proxychains wget https://github.com/zhzyker/dismap/releases/download/${num_dismap}/dismap-${num_dismap_v}-linux-amd64 > /dev/null 2>&1 && mv /root/fingerprint/dismap/dismap-0.4-linux-amd64 /root/fingerprint/dismap/dismap && chmod 744 /root/fingerprint/dismap/dismap
+	ea 'dismap'
+	sleep 2
+
+	### observer_ward
+	echo -e "${GREEN}  download observer_ward ${END}"
+	### get version
+	num_observer=`version emo-crab observer_ward/`
+	mkdir /root/fingerprint/observer_ward && cd /root/fingerprint/observer_ward && proxychains wget https://github.com/emo-crab/observer_ward/releases/download/${num_observer}/observer_ward_${num_observer}_x86_64-unknown-linux-musl.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz && rm LICENSE README.md *.tar.gz 
+	ea 'observer_ward'
+	sleep 2
+
+}
+
 function CycleArray()
 {
 	for i in ${array[*]}
@@ -374,6 +426,9 @@ SubdomainTools
 
 echo -e "${YELLO} start otherTools${END}"
 otherTools
+
+echo -e "${YELLO} start fingerprintTools${END}"
+fingerprintTools
 
 echo -e "${YELLO}END ${END}"
 
