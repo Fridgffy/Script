@@ -54,6 +54,10 @@ function MakeFolders()
 	folder /root/url
 	folder /root/fuzz
 	folder /root/fingerprint
+	folder /root/port
+	folder /root/workspace
+	folder /root/sensitive
+	folder /root/sensitive/path
 	cd /root/ && git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 	ea 'Dictfile'
 
@@ -370,7 +374,7 @@ function SubdomainTools()
 	### dnsrecon
 	echo -e "${GREEN}  download dnsrecon ${END}"
 	apt -y purge dnsrecon > /dev/null 2>&1
-	mkdir /root/subdomain/dns && cd /root/subdomain/dns && git clone https://github.com/darkoperator/dnsrecon > /dev/null 2>&1 && pip install -r requirements-dev.txt > /dev/null 2>&1 && pip install -r requirements.txt  > /dev/null 2>&1 && ln -s /root/subdomain/dns/dnsrecon/dnsrecon.py /usr/bin/dnsrecon
+	mkdir /root/subdomain/dns && cd /root/subdomain/dns && git clone https://github.com/darkoperator/dnsrecon > /dev/null 2>&1 && pip install -r /root/subdomain/dns/dnsrecon/requirements-dev.txt > /dev/null 2>&1 && pip install -r /root/subdomain/dns/dnsrecon/requirements.txt  > /dev/null 2>&1 && ln -s /root/subdomain/dns/dnsrecon/dnsrecon.py /usr/bin/dnsrecon
 	ea 'dnsrecon'
 	sleep 2
 
@@ -448,7 +452,7 @@ function urlcrawl()
 	ea 'gau'
 	sleep 2
 	
-	### red
+	### rad
 	### get version
 	num_rad_v=`version chaitin rad`
 	mkdir /root/url/rad && cd /root/url/rad && wget https://github.com/chaitin/rad/releases/download/${num_rad_v}/rad_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1  && mv rad_linux_amd64 rad && chmod 744 rad && mv /root/url/rad/rad /usr/bin && rm *.zip
@@ -490,7 +494,7 @@ function fuzz()
 	### get version
 	num_ffuf=`version ffuf ffuf`
 	num_ffuf_v=`echo $num_ffuf | cut -f2 -d "v"`
-	mkdir /root/fuzz/ffuf && cd /root/fuzz/ffuf && wget https://github.com/ffuf/ffuf/releases/download/v2.1.0/ffuf_2.1.0_linux_amd64.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz CHANGELOG.md LICENSE README.md && mv ffuf /usr/bin
+	mkdir /root/fuzz/ffuf && cd /root/fuzz/ffuf && wget https://github.com/ffuf/ffuf/releases/download/${num_ffuf}/ffuf_${num_ffuf_v}_linux_amd64.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz CHANGELOG.md LICENSE README.md && mv ffuf /usr/bin
 	ea 'ffuf'
 	sleep 2
 }
@@ -499,7 +503,7 @@ function fingerprintTools()
 {
 	### Finger
 	echo -e "${GREEN}  download Finger ${END}"
-	cd /root/fingerprint && git clone https://github.com/EASY233/Finger > /dev/null 2>&1 && pip install -r requirements.txt > /dev/null 2>&1
+	cd /root/fingerprint && git clone https://github.com/EASY233/Finger > /dev/null 2>&1 && pip install -r /root/fingerprint/Finger/requirements.txt > /dev/null 2>&1
 	ea 'Finger'
 	sleep 2
 
@@ -519,7 +523,7 @@ function fingerprintTools()
 
 	### Glass
 	echo -e "${GREEN}  download Glass ${END}"
-	cd /root/fingerprint && git clone https://github.com/s7ckTeam/Glass > /dev/null 2>&1 && pip install -r requirements.txt > /dev/null 2>&1
+	cd /root/fingerprint && git clone https://github.com/s7ckTeam/Glass > /dev/null 2>&1 && pip install -r /root/fingerprint/Glass/requirements.txt > /dev/null 2>&1
 	ea 'Glass'
 	sleep 2
 
@@ -540,9 +544,48 @@ function fingerprintTools()
 	### observer_ward
 	echo -e "${GREEN}  download observer_ward ${END}"
 	### get version
-	num_observer=`version emo-crab observer_ward/`
+	num_observer=`version emo-crab observer_ward`
 	mkdir /root/fingerprint/observer_ward && cd /root/fingerprint/observer_ward && wget https://github.com/emo-crab/observer_ward/releases/download/${num_observer}/observer_ward_${num_observer}_x86_64-unknown-linux-musl.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz && rm LICENSE README.md *.tar.gz 
 	ea 'observer_ward'
+	sleep 2
+
+}
+
+function portTools()
+{
+	### scaninfo
+	echo -e "${GREEN}  download scaninfo ${END}"
+	### get version
+	num_scaninfo=`version redtoolskobe scaninfo`
+	mkdir /root/port/scaninfo && cd /root/port/scaninfo && wget https://github.com/redtoolskobe/scaninfo/releases/download/${num_scaninfo}/scaninfo_linux_x64  > /dev/null 2>&1 && mv scaninfo_linux_x64 scaninfo && chmod 744 scaninfo
+	ea 'scaninfo'
+	sleep 2
+
+	### naabu
+	echo -e "${GREEN}  download naabu ${END}"
+	### get version
+	num_naabu=`version projectdiscovery naabu`
+	num_naabu_v=`echo $num_naabu |cut -f2 -d "v"`
+	mkdir /root/port/naabu && cd /root/port/naabu && wget https://github.com/projectdiscovery/naabu/releases/download/${num_naabu}/naabu_${num_naabu_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm LICENSE.md *.zip README.md
+	ea 'naabu'
+	sleep 2
+
+	### rustscan
+	echo -e "${GREEN}  download rustscan ${END}"
+	### getversion
+	num_rustscan=`version bee-san RustScan`
+	mkdir /root/port/rustscan && cd /root/port/rustscan && wget https://github.com/bee-san/RustScan/releases/download/2.4.1/x86_64-linux-rustscan.tar.gz.zip > /dev/null 2>&1 && unzip x86_64-linux-rustscan.tar.gz.zip > /dev/null 2>&1 && tar -zxvf x86_64-linux-rustscan.tar.gz > /dev/null 2>&1 && rm *.zip *.tar.gz 
+	ea 'rustscan'
+	sleep 2
+
+}
+
+function SensitiveTools()
+{
+	### path
+	echo -e "${GREEN}  download dirsearch ${END}"
+	cd /root/sensitive/path && git clone https://github.com/maurosoria/dirsearch > /dev/null 2>&1 && pip install -r /root/sensitive/path/dirsearch/requirements.txt > /dev/null 2>&1 
+	ea 'dirsearch'
 	sleep 2
 
 }
@@ -580,8 +623,11 @@ function CycleArray()
 # echo -e "${YELLO} start url crawl tool${END}"
 # urlcrawl
 
-echo -e "${YELLO} start url fingerprintTools tool${END}"
-fingerprintTools
+# echo -e "${YELLO} start url fingerprintTools ${END}"
+# fingerprintTools
+
+echo -e "${YELLO} start url SensitiveTools ${END}"
+SensitiveTools
 
 ### error
 echo -e "${RED}Error ${END}"
