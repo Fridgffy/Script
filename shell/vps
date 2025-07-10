@@ -51,13 +51,13 @@ function MakeFolders()
 	folder /root/subdomain
 	folder /root/result
 	folder /root/other
-	folder /root/url
+	folder /root/urlcrawl
 	folder /root/fuzz
 	folder /root/fingerprint
 	folder /root/port
 	folder /root/workspace
 	folder /root/sensitive
-	folder /root/sensitive/path
+	folder /root/path
 	cd /root/ && git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 	ea 'Dictfile'
 
@@ -492,9 +492,10 @@ function fuzz()
 
 	### ffuf
 	### get version
-	num_ffuf=`version ffuf ffuf`
-	num_ffuf_v=`echo $num_ffuf | cut -f2 -d "v"`
-	mkdir /root/fuzz/ffuf && cd /root/fuzz/ffuf && wget https://github.com/ffuf/ffuf/releases/download/${num_ffuf}/ffuf_${num_ffuf_v}_linux_amd64.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz CHANGELOG.md LICENSE README.md && mv ffuf /usr/bin
+	# num_ffuf=`version ffuf ffuf`
+	# num_ffuf_v=`echo $num_ffuf | cut -f2 -d "v"`
+	# mkdir /root/fuzz/ffuf && cd /root/fuzz/ffuf && wget https://github.com/ffuf/ffuf/releases/download/${num_ffuf}/ffuf_${num_ffuf_v}_linux_amd64.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz CHANGELOG.md LICENSE README.md && mv ffuf /usr/bin
+	cd /root/fuzz && git clone https://github.com/ffuf/ffuf > /dev/null 2>&1 && go get > /dev/null 2>&1 && go build > /dev/null 2>&1 && mv /root/fuzz/ffuf/ffuf /usr/bin
 	ea 'ffuf'
 	sleep 2
 }
@@ -580,13 +581,28 @@ function portTools()
 
 }
 
-function SensitiveTools()
+function PathTools()
 {
-	### path
+	### dirsearch
 	echo -e "${GREEN}  download dirsearch ${END}"
 	cd /root/sensitive/path && git clone https://github.com/maurosoria/dirsearch > /dev/null 2>&1 && pip install -r /root/sensitive/path/dirsearch/requirements.txt > /dev/null 2>&1 
 	ea 'dirsearch'
 	sleep 2
+
+	### FileSensor
+	echo -e "${GREEN}  download FileSensor ${END}"
+	cd /root/sensitive/path && git clone https://github.com/Xyntax/FileSensor > /dev/null 2>&1  && pip install -r /root/sensitive/path/FileSensor/requirements.txt > /dev/null 2>&1
+	ea 'FileSensor'
+	sleep 2
+
+	### cansina
+	echo -e "${GREEN}  download cansina ${END}"
+	pip install cansina > /dev/null 2>&1
+	ea 'cansina'
+	sleep 2
+
+	### filescan
+	echo -e "${GREEN}  download cansina ${END}"
 
 }
 
@@ -626,8 +642,8 @@ function CycleArray()
 # echo -e "${YELLO} start url fingerprintTools ${END}"
 # fingerprintTools
 
-echo -e "${YELLO} start url SensitiveTools ${END}"
-SensitiveTools
+echo -e "${YELLO} start url PathTools ${END}"
+PathTools
 
 ### error
 echo -e "${RED}Error ${END}"
