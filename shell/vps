@@ -58,6 +58,7 @@ function MakeFolders()
 	folder /root/workspace
 	folder /root/sensitive
 	folder /root/path
+	folder /root/comprehensive
 	cd /root/ && git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 	ea 'Dictfile'
 
@@ -77,20 +78,20 @@ function ARL()
 	num_arl_v=`echo $num_arl | cut -f2 -d "v"`
 
 	### download
-	mkdir /root/ARL && cd /root/ARL && wget https://github.com/ki9mu/ARL-plus-docker/archive/refs/tags/${num_arl}.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz && cd ARL-plus-docker-${num_arl_v} && mv * ../ && cd ../ && rm ARL-plus-docker-${num_arl_v} -r
+	mkdir /root/comprehensive/ARL && cd /root/ARL && wget https://github.com/ki9mu/ARL-plus-docker/archive/refs/tags/${num_arl}.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz && cd ARL-plus-docker-${num_arl_v} && mv * ../ && cd ../ && rm ARL-plus-docker-${num_arl_v} -r
 	ea 'arl'
 	sleep 2
 
 	### config_tool
-	cd /root/ARL && git clone https://github.com/loecho-sec/ARL-Finger-ADD > /dev/null 2>&1
+	cd /root/comprehensive/ARL && git clone https://github.com/loecho-sec/ARL-Finger-ADD > /dev/null 2>&1
 	ea 'arl_finger_tool'
 	sleep 2
 
 	### block config
-	cd /root/ARL && mv config-docker.yaml config-docker.yaml.bak
+	cd /root/comprehensive/ARL && mv config-docker.yaml config-docker.yaml.bak
 	ea 'arl_block_config'
 
-	cd /root/ARL/ARL-Finger-ADD && mv finger.json finger.json.bak
+	cd /root/comprehensive/ARL/ARL-Finger-ADD && mv finger.json finger.json.bak
 	ea 'arl_block_finger'
 
 	sleep 2
@@ -140,7 +141,7 @@ function vuln()
 	#### fscan version
 	num_fscan=`version shadow1ng fscan`
 
-	cd /root/fscan && wget https://github.com/shadow1ng/fscan/releases/download/${num_fscan}/fscan > /dev/null 2>&1 && chmod 744 fscan
+	cd /root/comprehensive/fscan && wget https://github.com/shadow1ng/fscan/releases/download/${num_fscan}/fscan > /dev/null 2>&1 && chmod 744 fscan
 	ea 'fscan'
 	sleep 2
 
@@ -177,16 +178,16 @@ function comprehensive()
 
 	### shuize
 	echo -e "${GREEN}  download ShuiZe ${END}"
-	cd /root && git clone https://github.com/0x727/ShuiZe_0x727 > /dev/null 2>&1 && mv ShuiZe_0x727 shuize
+	cd /root/comprehensive && git clone https://github.com/0x727/ShuiZe_0x727 > /dev/null 2>&1 && mv ShuiZe_0x727 shuize
 	ea 'shuize'
 	sleep 2
 
-	cd /root/shuize && pip install -r requirements.txt > /dev/null 2>&1 && pip install -r requirements2.txt > /dev/null 2>&1 
+	cd /root/comprehensive/shuize && pip install -r requirements.txt > /dev/null 2>&1 && pip install -r requirements2.txt > /dev/null 2>&1 
 	ea 'pipshuize'
 	sleep 2
 
 	### block config
-	cd /root/shuize/iniFile && mv config.ini config.ini.bak
+	cd /root/comprehensive/shuize/iniFile && mv config.ini config.ini.bak
 	ea 'shuize_block_config'
 	sleep 2
 
@@ -194,32 +195,32 @@ function comprehensive()
 	echo -e "${GREEN}  download kscan ${END}"
 	#### version
 	num_kscan=`version lcvvvv kscan`
-	cd /root/kscan && wget https://github.com/lcvvvv/kscan/releases/download/${num_kscan}/kscan_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip > /dev/null 2>&1 && mv kscan_linux_amd64 kscan
+	cd /root/comprehensive/kscan && wget https://github.com/lcvvvv/kscan/releases/download/${num_kscan}/kscan_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip > /dev/null 2>&1 && mv kscan_linux_amd64 kscan
 	ea 'kscan'
 
 	### download qqwry.dat
-	cd /root/kscan && kscan --download-qqwry > /dev/null 2>&1
+	cd /root/comprehensive/kscan && kscan --download-qqwry > /dev/null 2>&1
 	ea 'kscan_qqwry.dat'
 
 	sleep 2
 
 	### reconftw
 	echo -e "${GREEN}  download reconftw ${END}"
-	cd /root/ && git clone https://github.com/six2dez/reconftw > /dev/null 2>&1
+	cd /root/comprehensive/ && git clone https://github.com/six2dez/reconftw > /dev/null 2>&1
 	ea 'reconftw'
 	sleep 2
 
-	cd /root/reconftw && pip install -r requirements.txt > /dev/null 2>&1
+	cd /root/comprehensive/reconftw && pip install -r requirements.txt > /dev/null 2>&1
 	ea 'pipreconfitw'
 	sleep 2
 
 	### spiderfoot
 	echo -e "${GREEN}  download spiderfoot ${END}"
-	cd /root && git clone https://github.com/smicallef/spiderfoot > /dev/null 2>&1
+	cd /root/comprehensive/ && git clone https://github.com/smicallef/spiderfoot > /dev/null 2>&1
 	ea 'spiderfoot'
 	sleep 2
 
-	cd /root/spiderfoot && pip install -r requirements.txt > /dev/null 2>&1
+	cd /root/comprehensive/spiderfoot && pip install -r requirements.txt > /dev/null 2>&1
 	ea 'pipspiderfoot'
 	sleep 2
 }
@@ -433,14 +434,14 @@ function urlcrawl()
 	### getversion
 	num_waybackurls=`version tomnomnom waybackurls`
 	num_waybackurls_v=`echo $num_waybackurls | cut -f2 -d "v"`
-	mkdir /root/url/waybackurls && cd /root/url/waybackurls && wget https://github.com/tomnomnom/waybackurls/releases/download/${num_waybackurls}/waybackurls-linux-amd64-${num_waybackurls_v}.tgz > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv waybackurls /usr/bin
+	mkdir /root/urlcrawl/waybackurls && cd /root/urlcrawl/waybackurls && wget https://github.com/tomnomnom/waybackurls/releases/download/${num_waybackurls}/waybackurls-linux-amd64-${num_waybackurls_v}.tgz > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv waybackurls /usr/bin
 	ea 'waybackurls'
 	sleep 2
 
 	### crawlergo
 	### get version
 	num_crawlergo=`version Qianlitp crawlergo`
-	mkdir /root/url/crawlergo && cd /root/url/crawlergo && wget https://github.com/Qianlitp/crawlergo/releases/download/${num_crawlergo}/crawlergo_linux_amd64  > /dev/null 2>&1 && mv crawlergo_linux_amd64 crawlergo && chmod 744 crawlergo && mv crawlergo /usr/bin
+	mkdir /root/urlcrawl/crawlergo && cd /root/urlcrawl/crawlergo && wget https://github.com/Qianlitp/crawlergo/releases/download/${num_crawlergo}/crawlergo_linux_amd64  > /dev/null 2>&1 && mv crawlergo_linux_amd64 crawlergo && chmod 744 crawlergo && mv crawlergo /usr/bin
 	ea 'crawlergo'
 	sleep 2
 
@@ -448,21 +449,21 @@ function urlcrawl()
 	### get version
 	num_gau=`version lc gau`
 	num_gau_v=`echo $num_gau | cut -f2 -d "v"`
-	mkdir /root/url/gau && cd /root/url/gau && wget https://github.com/lc/gau/releases/download/${num_gau}/gau_${num_gau_v}_linux_amd64.tar.gz > /dev/null 2>&1 && tar -zxvf gau_${num_gau_v}_linux_amd64.tar.gz > /dev/null 2>&1 && rm gau_2.2.4_linux_amd64.tar.gz  LICENSE  README.md && mv gau /usr/bin
+	mkdir /root/urlcrawl/gau && cd /root/urlcrawl/gau && wget https://github.com/lc/gau/releases/download/${num_gau}/gau_${num_gau_v}_linux_amd64.tar.gz > /dev/null 2>&1 && tar -zxvf gau_${num_gau_v}_linux_amd64.tar.gz > /dev/null 2>&1 && rm gau_2.2.4_linux_amd64.tar.gz  LICENSE  README.md && mv gau /usr/bin
 	ea 'gau'
 	sleep 2
 	
 	### rad
 	### get version
 	num_rad_v=`version chaitin rad`
-	mkdir /root/url/rad && cd /root/url/rad && wget https://github.com/chaitin/rad/releases/download/${num_rad_v}/rad_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1  && mv rad_linux_amd64 rad && chmod 744 rad && mv /root/url/rad/rad /usr/bin && rm *.zip
+	mkdir /root/urlcrawl/rad && cd /root/urlcrawl/rad && wget https://github.com/chaitin/rad/releases/download/${num_rad_v}/rad_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1  && mv rad_linux_amd64 rad && chmod 744 rad && mv /root/urlcrawl/rad/rad /usr/bin && rm *.zip
 	ea 'rad'
 	sleep 2
 
 	### gospider
 	### get version
 	num_gospider=`version jaeles-project gospider`
-	mkdir /root/url/gospider && cd /root/url/gospider && wget https://github.com/jaeles-project/gospider/releases/download/${num_gospider}/gospider_${num_gospider}_linux_x86_64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip
+	mkdir /root/urlcrawl/gospider && cd /root/urlcrawl/gospider && wget https://github.com/jaeles-project/gospider/releases/download/${num_gospider}/gospider_${num_gospider}_linux_x86_64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip
 	ea 'gospider'
 	sleep 2
 
@@ -470,7 +471,7 @@ function urlcrawl()
 	### get version
 	num_katana=`version projectdiscovery katana`
 	num_katana_v=`echo $num_katana | cut -f2 -d "v"`
-	mkdir /root/url/katana && cd /root/url/katana && wget https://github.com/projectdiscovery/katana/releases/download/v1.1.2/katana_1.1.2_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE.md README.md && mv katana /usr/bin 
+	mkdir /root/urlcrawl/katana && cd /root/urlcrawl/katana && wget https://github.com/projectdiscovery/katana/releases/download/v1.1.2/katana_1.1.2_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE.md README.md && mv katana /usr/bin 
 	ea 'katana'
 	sleep 2
 
@@ -615,32 +616,32 @@ function CycleArray()
 }
 
 ### main 
-# echo -e "${YELLO}START${END}"
-# MakeFolders
+echo -e "${YELLO}START${END}"
+MakeFolders
 
-# echo -e "${YELLO} start download ARL${END}"
-# ARL
+echo -e "${YELLO} start download ARL${END}"
+ARL
 
-# echo -e "${YELLO} start download vuln tools${END}"
-# vuln
+echo -e "${YELLO} start download vuln tools${END}"
+vuln
 
-# echo -e "${YELLO} start download comprehensive tools${END}"
-# comprehensive
+echo -e "${YELLO} start download comprehensive tools${END}"
+comprehensive
 
-# echo -e "${YELLO} start download BatchTools tools${END}"
-# BatchTools
+echo -e "${YELLO} start download BatchTools tools${END}"
+BatchTools
 
-# echo -e "${YELLO} start download Subdomain tools${END}"
-# SubdomainTools
+echo -e "${YELLO} start download Subdomain tools${END}"
+SubdomainTools
 
-# echo -e "${YELLO} start otherTools${END}"
-# otherTools
+echo -e "${YELLO} start otherTools${END}"
+otherTools
 
-# echo -e "${YELLO} start url crawl tool${END}"
-# urlcrawl
+echo -e "${YELLO} start url crawl tool${END}"
+urlcrawl
 
-# echo -e "${YELLO} start url fingerprintTools ${END}"
-# fingerprintTools
+echo -e "${YELLO} start url fingerprintTools ${END}"
+fingerprintTools
 
 echo -e "${YELLO} start url PathTools ${END}"
 PathTools
