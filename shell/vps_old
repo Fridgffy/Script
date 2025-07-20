@@ -101,14 +101,22 @@ function ARL()
 function BatchTools()
 {
 	echo -e "${GREEN}  download Dnsx ${END}"
+
 	# ### get version
+	# num_dnsx=`version projectdiscovery dnsx`
+	# num_dnsx_v=`echo $num_dnsx | cut -f2 -d "v"`
+
+	# ### download
+	# cd /root/batch && mkdir dnsx && cd dnsx && wget https://github.com/projectdiscovery/dnsx/releases/download/${num_dnsx}/dnsx_${num_dnsx_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip  > /dev/null && rm *.zip && mv dnsx /usr/bin
 	go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest > /dev/null 2>&1 
 	ea 'dnsx'
 	sleep 2
 
 	echo -e "${GREEN}  download Eeyes ${END}"
+
 	### get version
 	num_eeyes=`version EdgeSecurityTeam Eeyes`
+
 	### download
 	cd /root/batch && mkdir Eeyes && cd Eeyes && wget https://github.com/EdgeSecurityTeam/Eeyes/releases/download/${num_eeyes}/Eeyes-linux.zip > /dev/null 2>&1 && unzip *.zip  > /dev/null && rm *.zip && chmod 744 Eeyes-linux && ln -s /root/batch/Eeyes/Eeyes-linux /usr/bin/eeyes
 	ea 'Eyes'
@@ -133,6 +141,7 @@ function vuln()
 	echo -e "${GREEN}  download fscan ${END}"
 	#### fscan version
 	num_fscan=`version shadow1ng fscan`
+
 	cd /root/comprehensive/fscan && wget https://github.com/shadow1ng/fscan/releases/download/${num_fscan}/fscan > /dev/null 2>&1 && chmod 744 fscan
 	ea 'fscan'
 	sleep 2
@@ -282,6 +291,12 @@ function SubdomainTools()
 
 	### subfinder
 	echo -e "${GREEN}  download subfinder${END}"
+	# apt -y  install subfinder --upgrade > /dev/null 2>&1
+	### get version	
+	# num_subfinder=`version projectdiscovery subfinder`
+	# num_subfinder_v=`echo $num_subfinder | cut -f2 -d "v"`
+
+	# cd /root/subdomain && mkdir subfinder && cd subfinder && wget https://github.com/projectdiscovery/subfinder/releases/download/${num_subfinder}/subfinder_${num_subfinder_v}_linux_amd64.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv subfinder /usr/bin 
 	go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest > /dev/null 2>&1
 	ea 'subfinder'
 	sleep 2
@@ -300,17 +315,15 @@ function SubdomainTools()
 	echo -e "${GREEN}  download findomain ${END}"
 	### get version
 	num_fin=`version Findomain Findomain`
+
 	cd /root/subdomain && mkdir findomain && cd findomain && wget https://github.com/Findomain/Findomain/releases/download/${num_fin}/findomain-linux.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && chmod 744 findomain && mv findomain /usr/bin
 	ea 'findomain'
 	sleep 2
 
 	### subdomainBurte
 	echo -e "${GREEN}  download subDomainsBrute ${END}"
-	cd /root/subdomain && git clone https://github.com/lijiejie/subDomainsBrute  > /dev/null 2>&1 && chmod 744 /root/subdomain/subDomainsBrute/subDomainsBrute.py && ln -s /root/subdomain/subDomainsBrute/subDomainsBrute.py /usr/bin/subdomainbrute
+	cd /root/subdomain && git clone https://github.com/lijiejie/subDomainsBrute  > /dev/null 2>&1 && chmod 744 /root/subdomain/subDomainsBrute/subDomainsBrute.py && ln -s /root/subdomain/subDomainsBrute/subDomainsBrute.py /usr/bin/subdomainbrute && pip install dnspython==2.2.1 async_timeout > /dev/null 2>&1
 	ea 'subDomainsBrute'
-
-	pip install dnspython==2.2.1 async_timeout > /dev/null 2>&1
-	ea 'pipdnspython'
 	sleep 2
 	
 	### dnsmap
@@ -323,6 +336,7 @@ function SubdomainTools()
 	echo -e "${GREEN}  download ksubdomain ${END}"
 	### get version
 	num_ksu=`version knownsec ksubdomain`
+
 	cd /root/subdomain && mkdir ksubdomain && cd ksubdomain && wget https://github.com/knownsec/ksubdomain/releases/download/${num_ksu}/ksubdomain_linux.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv ksubdomain /usr/bin 
 	ea 'ksubdomain'
 	sleep 2
@@ -341,12 +355,16 @@ function SubdomainTools()
 	### chaos
 	echo -e "${GREEN}  download chaos ${END}"
 	###get version
+	# num_chaos=`version projectdiscovery chaos-client`
+	# num_chaos_v=`echo $num_chaos | cut -f2 -d "v"`
+	# cd /root/subdomain && mkdir chaos && cd chaos && wget https://github.com/projectdiscovery/chaos-client/releases/download/${num_chaos}/chaos-client_${num_chaos_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE.md README_CN.md README.md && mv chaos-client /usr/bin/chaos
 	go install -v github.com/projectdiscovery/chaos-client/cmd/chaos@latest > /dev/null 2>&1
 	ea 'chaos'
 	sleep 2
 
 	### github-subdomains
 	echo -e "${GREEN}  download github-subdomains ${END}"
+	# mkdir /root/subdomain/github-subdomains && cd /root/subdomain/github-subdomains && go install github.com/gwen001/github-subdomains@latest > /dev/null 2>&1 && mv /root/go/bin/github-subdomains /usr/bin 
 	go install github.com/gwen001/github-subdomains@latest > /dev/null 2>&1
 	ea 'github-subdomains'
 	sleep 2
@@ -391,18 +409,30 @@ function otherTools()
 
 	### asnmap
 	echo -e "${GREEN}  download Asnmap ${END}"
+	### get version
+	# num_asn=`version projectdiscovery asnmap`
+	# num_asn_v=`echo $num_asn | cut -f2 -d "v"`
+	# mkdir /root/other/asnmap && cd /root/other/asnmap && wget https://github.com/projectdiscovery/asnmap/releases/download/${num_asn}/asnmap_${num_asn_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE README.md && mv asnmap /usr/bin
 	go install github.com/projectdiscovery/asnmap/cmd/asnmap@latest > /dev/null 2>&1
 	ea 'asnmap'
 	sleep 2
 
 	### mapcidr
 	echo -e "${GREEN}  download mapcidr ${END}"
+	### get version
+	# num_cidr=`version projectdiscovery mapcidr`
+	# num_cidr_v=`echo $num_cidr | cut -f2 -d "v"`
+	# mkdir /root/other/mapcidr && cd /root/other/mapcidr && wget https://github.com/projectdiscovery/mapcidr/releases/download/${num_cidr}/mapcidr_${num_cidr_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE.MD README.md && mv mapcidr /usr/bin
 	go install -v github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest > /dev/null 2>&1
 	ea 'mapcidr'
 	sleep 2
 
 	### tlsx
 	echo -e "${GREEN}  download tlsx ${END}"
+	### get version
+	# num_tlsx=`version projectdiscovery tlsx`
+	# num_tlsx_v=`echo $num_tlsx |cut -f2 -d "v"`
+	# mkdir /root/other/tlsx && cd /root/other/tlsx && wget https://github.com/projectdiscovery/tlsx/releases/download/${num_tlsx}/tlsx_${num_tlsx_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE README.md && mv tlsx /usr/bin
 	go install github.com/projectdiscovery/tlsx/cmd/tlsx@latest > /dev/null 2>&1
 	ea 'tlsx'
 	sleep 2
@@ -414,6 +444,10 @@ function otherTools()
 function urlcrawl()
 {
 	### waybackurls
+	### getversion
+	# num_waybackurls=`version tomnomnom waybackurls`
+	# num_waybackurls_v=`echo $num_waybackurls | cut -f2 -d "v"`
+	# mkdir /root/urlcrawl/waybackurls && cd /root/urlcrawl/waybackurls && wget https://github.com/tomnomnom/waybackurls/releases/download/${num_waybackurls}/waybackurls-linux-amd64-${num_waybackurls_v}.tgz > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv waybackurls /usr/bin
 	go install github.com/tomnomnom/waybackurls@latest > /dev/null 2>&1
 	ea 'waybackurls'
 	sleep 2
@@ -426,6 +460,10 @@ function urlcrawl()
 	sleep 2
 
 	### gau
+	### get version
+	# num_gau=`version lc gau`
+	# num_gau_v=`echo $num_gau | cut -f2 -d "v"`
+	# mkdir /root/urlcrawl/gau && cd /root/urlcrawl/gau && wget https://github.com/lc/gau/releases/download/${num_gau}/gau_${num_gau_v}_linux_amd64.tar.gz > /dev/null 2>&1 && tar -zxvf gau_${num_gau_v}_linux_amd64.tar.gz > /dev/null 2>&1 && rm gau_2.2.4_linux_amd64.tar.gz  LICENSE  README.md && mv gau /usr/bin
 	go install github.com/lc/gau/v2/cmd/gau@latest > /dev/null 2>&1
 	ea 'gau'
 	sleep 2
@@ -438,11 +476,18 @@ function urlcrawl()
 	sleep 2
 
 	### gospider
+	### get version
+	# num_gospider=`version jaeles-project gospider`
+	# mkdir /root/urlcrawl/gospider && cd /root/urlcrawl/gospider && wget https://github.com/jaeles-project/gospider/releases/download/${num_gospider}/gospider_${num_gospider}_linux_x86_64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip
 	go install github.com/jaeles-project/gospider@latest > /dev/null 2>&1
 	ea 'gospider'
 	sleep 2
 
 	### katana
+	### get version
+	# num_katana=`version projectdiscovery katana`
+	# num_katana_v=`echo $num_katana | cut -f2 -d "v"`
+	# mkdir /root/urlcrawl/katana && cd /root/urlcrawl/katana && wget https://github.com/projectdiscovery/katana/releases/download/v1.1.2/katana_1.1.2_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip LICENSE.md README.md && mv katana /usr/bin 
 	go install github.com/projectdiscovery/katana/cmd/katana@latest > /dev/null 2>&1
 	ea 'katana'
 	sleep 2
@@ -457,11 +502,18 @@ function urlcrawl()
 function fuzz()
 {
 	### gobuster
+	### get version
+	# num_fuzz=`version OJ gobuster`
+	# mkdir /root/fuzz/gobuster && cd /root/fuzz/gobuster && wget https://github.com/OJ/gobuster/releases/download/${num_fuzz}/gobuster_Linux_x86_64.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz LICENSE README.md && mv gobuster /usr/bin
 	go install github.com/OJ/gobuster/v3@latest  > /dev/null 2>&1
 	ea 'gobuster'
 	sleep 2
 
 	### ffuf
+	### get version
+	# num_ffuf=`version ffuf ffuf`
+	# num_ffuf_v=`echo $num_ffuf | cut -f2 -d "v"`
+	# mkdir /root/fuzz/ffuf && cd /root/fuzz/ffuf && wget https://github.com/ffuf/ffuf/releases/download/${num_ffuf}/ffuf_${num_ffuf_v}_linux_amd64.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz CHANGELOG.md LICENSE README.md && mv ffuf /usr/bin
 	cd /root/fuzz && git clone https://github.com/ffuf/ffuf > /dev/null 2>&1 && go get > /dev/null 2>&1 && go build > /dev/null 2>&1 && mv /root/fuzz/ffuf/ffuf /usr/bin
 	ea 'ffuf'
 	sleep 2
@@ -471,11 +523,8 @@ function fingerprintTools()
 {
 	### Finger
 	echo -e "${GREEN}  download Finger ${END}"
-	cd /root/fingerprint && git clone https://github.com/EASY233/Finger > /dev/null 2>&1
+	cd /root/fingerprint && git clone https://github.com/EASY233/Finger > /dev/null 2>&1 && pip install -r /root/fingerprint/Finger/requirements.txt > /dev/null 2>&1
 	ea 'Finger'
-
-	pip install -r /root/fingerprint/Finger/requirements.txt > /dev/null 2>&1
-	ea 'pipFinger'
 	sleep 2
 
 	### whatweb
@@ -494,11 +543,8 @@ function fingerprintTools()
 
 	### Glass
 	echo -e "${GREEN}  download Glass ${END}"
-	cd /root/fingerprint && git clone https://github.com/s7ckTeam/Glass > /dev/null 2>&1
+	cd /root/fingerprint && git clone https://github.com/s7ckTeam/Glass > /dev/null 2>&1 && pip install -r /root/fingerprint/Glass/requirements.txt > /dev/null 2>&1
 	ea 'Glass'
-
-	pip install -r /root/fingerprint/Glass/requirements.txt > /dev/null 2>&1
-	ea 'pipGlass'
 	sleep 2
 
 	### cmseek
@@ -537,6 +583,10 @@ function portTools()
 
 	### naabu
 	echo -e "${GREEN}  download naabu ${END}"
+	### get version
+	# num_naabu=`version projectdiscovery naabu`
+	# num_naabu_v=`echo $num_naabu |cut -f2 -d "v"`
+	# mkdir /root/port/naabu && cd /root/port/naabu && wget https://github.com/projectdiscovery/naabu/releases/download/${num_naabu}/naabu_${num_naabu_v}_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm LICENSE.md *.zip README.md
 	go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest > /dev/null 2>&1
 	ea 'naabu'
 	sleep 2
@@ -555,20 +605,14 @@ function PathTools()
 {
 	### dirsearch
 	echo -e "${GREEN}  download dirsearch ${END}"
-	cd /root/path && git clone https://github.com/maurosoria/dirsearch > /dev/null 2>&1
+	cd /root/path && git clone https://github.com/maurosoria/dirsearch > /dev/null 2>&1 && pip install -r /root/path/dirsearch/requirements.txt > /dev/null 2>&1 
 	ea 'dirsearch'
-
-	pip install -r /root/path/dirsearch/requirements.txt > /dev/null 2>&1 
-	ea 'pipdirsearch'
 	sleep 2
 
 	### FileSensor
 	echo -e "${GREEN}  download FileSensor ${END}"
-	cd /root/path && git clone https://github.com/Xyntax/FileSensor > /dev/null 2>&1  
+	cd /root/path && git clone https://github.com/Xyntax/FileSensor > /dev/null 2>&1  && pip install -r /root/path/FileSensor/requirements.txt > /dev/null 2>&1
 	ea 'FileSensor'
-
-	pip install -r /root/path/FileSensor/requirements.txt > /dev/null 2>&1
-	ea 'pipFileSensor'
 	sleep 2
 
 	### cansina
@@ -579,11 +623,8 @@ function PathTools()
 
 	### dirmap
 	echo -e "${GREEN}  download dirmap ${END}"
-	cd /root/path && git clone https://github.com/H4ckForJob/dirmap > /dev/null 2>&1
+	cd /root/path && git clone https://github.com/H4ckForJob/dirmap > /dev/null 2>&1 && pip install -r /root/path/dirmap/requirement.txt > /dev/null 2>&1
 	ea 'dirmap'
-
-	pip install -r /root/path/dirmap/requirement.txt > /dev/null 2>&1
-	ea 'pipdirmap'
 	sleep 2
 
 	### dirb
@@ -622,11 +663,8 @@ function SensitiveTools()
 {
 	### Linkfinder
 	echo -e "${GREEN}  download Linkfinder ${END}"
-	cd /root/sensitive && git clone https://github.com/GerbenJavado/LinkFinder > /dev/null 2>&1 
+	cd /root/sensitive && git clone https://github.com/GerbenJavado/LinkFinder > /dev/null 2>&1 && pip install -r /root/sensitive/LinkFinder/requirements.txt > /dev/null 2>&1
 	ea 'Linkfinder'
-
-	pip install -r /root/sensitive/LinkFinder/requirements.txt > /dev/null 2>&1
-	ea 'pipLinkfinder'
 	sleep 2
 
 	### jsfinder
@@ -645,11 +683,8 @@ function SensitiveTools()
 
 	### JSINFO-SCAN
 	echo -e "${GREEN}  download JSINFO-SCAN ${END}"
-	cd /root/sensitive && git clone https://github.com/p1g3/JSINFO-SCAN > /dev/null 2>&1  
+	cd /root/sensitive && git clone https://github.com/p1g3/JSINFO-SCAN > /dev/null 2>&1 &&  pip install -r /root/sensitive/JSINFO-SCAN/requirements.txt > /dev/null 2>&1 
 	ea 'JSINFO-SCAN'
-	
-	pip install -r /root/sensitive/JSINFO-SCAN/requirements.txt > /dev/null 2>&1 
-	ea 'pipJSINFO-SCAN'
 	sleep 2
 
 	### JSFScan.sh 
