@@ -42,11 +42,7 @@ function version()
 ### make new folders
 function MakeFolders()
 {
-	folder /root/ARL
 	folder /root/batch
-	folder /root/fscan
-	folder /root/kscan
-	folder /root/amass
 	folder /root/vuln
 	folder /root/subdomain
 	folder /root/result
@@ -133,7 +129,9 @@ function vuln()
 	echo -e "${GREEN}  download fscan ${END}"
 	#### fscan version
 	num_fscan=`version shadow1ng fscan`
-	mkdir /root/comprehensive/fscan && cd /root/comprehensive/fscan && wget https://github.com/shadow1ng/fscan/releases/download/${num_fscan}/fscan > /dev/null 2>&1 && chmod 744 fscan
+	num_fscan_v=`echo $num_fscan | cut -f2 -d "v"`
+	
+	mkdir /root/comprehensive/fscan && cd /root/comprehensive/fscan && wget https://github.com/shadow1ng/fscan/releases/download/${num_fscan}/FScan_${num_fscan_v}_linux_x64 > /dev/null 2>&1 && mv FScan_${num_fscan_v}_linux_x64 fscan && chmod 744 fscan
 	ea 'fscan'
 	sleep 2
 
@@ -158,7 +156,7 @@ function comprehensive()
 {	
 	### amass
 	echo -e "${GREEN}  download amass ${END}"
-	apt -y  install amass --upgrade > /dev/null 2>&1 
+	mkdir /root/comprehensive/amass && apt -y  install amass --upgrade > /dev/null 2>&1 
 	ea 'amass'
 	sleep 2
 
@@ -191,7 +189,7 @@ function comprehensive()
 	ea 'kscan'
 
 	### download qqwry.dat
-	cd /root/comprehensive/kscan && kscan --download-qqwry > /dev/null 2>&1
+	cd /root/comprehensive/kscan && mv ./kscan /usr/bin && kscan --download-qqwry > /dev/null 2>&1
 	ea 'kscan_qqwry.dat'
 
 	sleep 2
@@ -200,10 +198,6 @@ function comprehensive()
 	echo -e "${GREEN}  download reconftw ${END}"
 	cd /root/comprehensive/ && git clone https://github.com/six2dez/reconftw > /dev/null 2>&1
 	ea 'reconftw'
-	sleep 2
-
-	cd /root/comprehensive/reconftw && pip install -r requirements.txt > /dev/null 2>&1
-	ea 'pipreconfitw'
 	sleep 2
 
 	### spiderfoot
@@ -334,7 +328,7 @@ function SubdomainTools()
 		apt -y install ruby > /dev/null 2>&1
 		ea 'ruby'
 	fi
-	gem -y install aquatone > /dev/null 2>&1
+	gem install aquatone > /dev/null 2>&1
 	ea 'aquatone'
 	sleep 2
 
@@ -361,11 +355,8 @@ function SubdomainTools()
 	### dnsrecon
 	echo -e "${GREEN}  download dnsrecon ${END}"
 	apt -y purge dnsrecon > /dev/null 2>&1
-	mkdir /root/subdomain/dns && cd /root/subdomain/dns && git clone https://github.com/darkoperator/dnsrecon > /dev/null 2>&1 
+	mkdir /root/subdomain/dns && cd /root/subdomain/dns && git clone https://github.com/darkoperator/dnsrecon > /dev/null 2>&1 && ln -s /root/subdomain/dns/dnsrecon/dnsrecon.py /usr/bin/dnsrecon
 	ea 'dnsrecon'
-
-	pip install -r /root/subdomain/dns/dnsrecon/requirements-dev.txt > /dev/null 2>&1 && pip install -r /root/subdomain/dns/dnsrecon/requirements.txt  > /dev/null 2>&1 && ln -s /root/subdomain/dns/dnsrecon/dnsrecon.py /usr/bin/dnsrecon
-	ea 'pipdnsrecon'
 	sleep 2
 
 	################################################## permutations
@@ -612,7 +603,7 @@ function PathTools()
 
 	### ParamSpider
 	echo -e "${GREEN}  download ParamSpider ${END}"
-	cd /root/path && git clone https://github.com/devanshbatham/ParamSpider  > /dev/null 2>&1 && python /root/path/ParamSpider/setup.py  > /dev/null 2>&1
+	cd /root/path && git clone https://github.com/devanshbatham/ParamSpider  > /dev/null 2>&1 && python /root/path/ParamSpider/setup.py install > /dev/null 2>&1
 	ea 'ParamSpider'
 	sleep 2
 
