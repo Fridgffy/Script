@@ -78,7 +78,7 @@ function ARL()
 	num_arl_v=`echo $num_arl | cut -f2 -d "v"`
 
 	### download
-	mkdir /root/comprehensive/ARL && cd /root/ARL && wget https://github.com/ki9mu/ARL-plus-docker/archive/refs/tags/${num_arl}.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz && cd ARL-plus-docker-${num_arl_v} && mv * ../ && cd ../ && rm ARL-plus-docker-${num_arl_v} -r
+	mkdir /root/comprehensive/ARL && cd /root/comprehensive/ARL && wget https://github.com/ki9mu/ARL-plus-docker/archive/refs/tags/${num_arl}.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm *.tar.gz && cd ARL-plus-docker-${num_arl_v} && mv * ../ && cd ../ && rm ARL-plus-docker-${num_arl_v} -r
 	ea 'arl'
 	sleep 2
 
@@ -133,7 +133,7 @@ function vuln()
 	echo -e "${GREEN}  download fscan ${END}"
 	#### fscan version
 	num_fscan=`version shadow1ng fscan`
-	cd /root/comprehensive/fscan && wget https://github.com/shadow1ng/fscan/releases/download/${num_fscan}/fscan > /dev/null 2>&1 && chmod 744 fscan
+	mkdir /root/comprehensive/fscan && cd /root/comprehensive/fscan && wget https://github.com/shadow1ng/fscan/releases/download/${num_fscan}/fscan > /dev/null 2>&1 && chmod 744 fscan
 	ea 'fscan'
 	sleep 2
 
@@ -187,7 +187,7 @@ function comprehensive()
 	echo -e "${GREEN}  download kscan ${END}"
 	#### version
 	num_kscan=`version lcvvvv kscan`
-	cd /root/comprehensive/kscan && wget https://github.com/lcvvvv/kscan/releases/download/${num_kscan}/kscan_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip > /dev/null 2>&1 && mv kscan_linux_amd64 kscan
+	mkdir /root/comprehensive/kscan && cd /root/comprehensive/kscan && wget https://github.com/lcvvvv/kscan/releases/download/${num_kscan}/kscan_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip > /dev/null 2>&1 && mv kscan_linux_amd64 kscan
 	ea 'kscan'
 
 	### download qqwry.dat
@@ -669,7 +669,7 @@ function CycleArray()
 }
 
 ### main 
-echo -e "${YELLO}START${END}"
+echo -e "${RED}START${END}"
 MakeFolders
 
 echo -e "${YELLO} start download ARL${END}"
