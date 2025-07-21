@@ -448,7 +448,7 @@ function urlcrawl()
 	sleep 2
 
 	### hakrawler
-	go install github.com/hakluke/hakrawler@latest > /dev/null 2>&1 && mv /root/go/bin/hakrawler /usr/bin 
+	go install github.com/hakluke/hakrawler@latest > /dev/null 2>&1
 	ea 'hakrawler'
 	sleep 2
 
@@ -519,7 +519,7 @@ function fingerprintTools()
 	echo -e "${GREEN}  download observer_ward ${END}"
 	### get version
 	num_observer=`version emo-crab observer_ward`
-	mkdir /root/fingerprint/observer_ward && cd /root/fingerprint/observer_ward && wget https://github.com/emo-crab/observer_ward/releases/download/${num_observer}/observer_ward_${num_observer}_x86_64-unknown-linux-musl.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz && rm LICENSE README.md *.tar.gz 
+	mkdir /root/fingerprint/observer_ward && cd /root/fingerprint/observer_ward && wget https://github.com/emo-crab/observer_ward/releases/download/${num_observer}/observer_ward_${num_observer}_x86_64-unknown-linux-musl.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm LICENSE README.md *.tar.gz 
 	ea 'observer_ward'
 	sleep 2
 
