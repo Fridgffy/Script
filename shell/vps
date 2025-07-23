@@ -229,6 +229,7 @@ function SubdomainTools()
 	ea 'PipOneforall'
 
 	mv /root/subdomain/OneForAll/config/api.py /root/subdomain/OneForAll/config/api.py.bak
+	mv /root/subdomain/OneForAll/config/setting.py /root/subdomain/OneForAll/config/setting.py.bak
 	sleep 2
 
 	### dnsub
@@ -329,6 +330,7 @@ function SubdomainTools()
 		ea 'ruby'
 	fi
 	gem install aquatone > /dev/null 2>&1
+	mkdir /root/subdomain/aquatone
 	ea 'aquatone'
 	sleep 2
 
@@ -342,6 +344,7 @@ function SubdomainTools()
 	### github-subdomains
 	echo -e "${GREEN}  download github-subdomains ${END}"
 	go install github.com/gwen001/github-subdomains@latest > /dev/null 2>&1
+	mkdir /root/subdomain/github-subdomains
 	ea 'github-subdomains'
 	sleep 2
 
