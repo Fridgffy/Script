@@ -172,7 +172,7 @@ function comprehensive()
 	ea 'shuize'
 	sleep 2
 
-	cd /root/comprehensive/shuize && pip install -r requirements.txt > /dev/null 2>&1 && pip install -r requirements2.txt > /dev/null 2>&1 
+	cd /root/comprehensive/shuize && python38 -m pip install -r requirements.txt > /dev/null 2>&1 && python38 -m pip install -r requirements2.txt > /dev/null 2>&1 
 	ea 'pipshuize'
 	sleep 2
 
@@ -573,7 +573,7 @@ function PathTools()
 	cd /root/path && git clone https://github.com/H4ckForJob/dirmap > /dev/null 2>&1
 	ea 'dirmap'
 
-	pip install -r /root/path/dirmap/requirement.txt > /dev/null 2>&1
+	python38 -m pip install -r /root/path/dirmap/requirement.txt > /dev/null 2>&1
 	ea 'pipdirmap'
 	sleep 2
 
@@ -603,7 +603,7 @@ function PathTools()
 
 	### ParamSpider
 	echo -e "${GREEN}  download ParamSpider ${END}"
-	cd /root/path && git clone https://github.com/devanshbatham/ParamSpider  > /dev/null 2>&1 && python /root/path/ParamSpider/setup.py install > /dev/null 2>&1
+	cd /root/path && git clone https://github.com/devanshbatham/ParamSpider  > /dev/null 2>&1 && cd /root/path/ParamSpider/ &&python setup.py install > /dev/null 2>&1
 	ea 'ParamSpider'
 	sleep 2
 
