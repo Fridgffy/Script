@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+GREEN='\033[3;32m'
+RED='\033[1;31m'
+YELLO='\033[1;33m'
+END='\033[0m'
+
+if [ $# -eq 0 ];then
+	echo -e "${RED}Require one port${END}"
+else
+	for i in $@
+	do
+		iptables -A INPUT -p TCP --dport $i -j ACCEPT
+		if [ $? -eq 0 ];then
+			echo -e "${GREEN}Port ${i} is already opened!${END}"
+		fi
+	done
+	iptables -L INPUT --line-numbers
+fi

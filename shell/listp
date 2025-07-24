@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+iptables -L INPUT --line-number
