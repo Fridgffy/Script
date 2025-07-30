@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+GREEN='\033[3;32m'
+RED='\033[1;31m'
+YELLO='\033[1;33m'
+END='\033[0m'
+
+for i in $@
+do
+        kill -9 $i
+        echo -e "${RED}$i has been killd!${END}"
+done

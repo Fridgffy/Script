@@ -3,13 +3,35 @@
 RED='\033[1;31m'
 END='\033[0m'
 
+p='False'
 if [ $# -eq 0 ];then
-	echo -e "${RED}Please enter the parameters!${END}"
-	exit
+        echo -e "${RED}Please enter the parameters!${END}"
+        exit
 fi
 
-for i in $@
-do
-	echo -e "${RED}${i}${END}"
-	echo "$(ps -ef |grep ${i} |grep -v grep|grep -v getps)"
+while getopts ":p" opts;do
+        case $opts in
+                p)
+                        p='True'
+                        ;;
+                \?)
+                        echo -e "${RED}Invalid option: -${OPTARG} ${END}" >&2
+                        ;;
+                :)
+                        ;;
+        esac
 done
+shift $((OPTIND - 1))
+if [ $p = 'False' ];then
+        for i in $@
+        do
+                echo -e "${RED}${i}${END}"
+                echo "$(ps -ef | grep ${i} | grep -v grep | grep -v getps)"
+        done
+elif [ $p = 'True' ];then
+        for i in $@
+        do
+                echo -e "${RED}${i}${END}"
+                echo "$(ps -ef | grep ${i} | grep -v grep | grep -v getps | awk '{print $2}' | tr '\n' ' ')"
+        done
+fi
