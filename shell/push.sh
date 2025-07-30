@@ -3,7 +3,7 @@ RED='\033[1;31m'
 END='\033[0m'
 
 echo -e "${RED} Check Status ${END}"
-status_start=`git status`
+status_start="$(git status)"
 if echo "$status_start" | grep -q "nothing to commit";then
 	echo -e "${GREEN}This is the latest!${END}"
 else

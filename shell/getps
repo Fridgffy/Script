@@ -11,5 +11,5 @@ fi
 for i in $@
 do
 	echo -e "${RED}${i}${END}"
-	echo `ps -ef |grep ${i} |grep -v grep|grep -v getps`
+	echo "$(ps -ef |grep ${i} |grep -v grep|grep -v getps)"
 done
