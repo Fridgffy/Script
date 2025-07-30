@@ -7,7 +7,7 @@ status_start="$(git status)"
 if echo "$status_start" | grep -q "nothing to commit";then
 	echo -e "${GREEN}This is the latest!${END}"
 else
-	echo $status_start
+	echo "$status_start"
 	sleep 1
 	echo -e "${GREEN} Start add ${END}"
 	git add .
