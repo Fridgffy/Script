@@ -72,7 +72,7 @@ function BatchTools()
 	### get version
 	num_eeyes=`version EdgeSecurityTeam Eeyes`
 	### download
-	cd /root/batch && mkdir Eeyes && cd Eeyes && wget https://github.com/EdgeSecurityTeam/Eeyes/releases/download/${num_eeyes}/Eeyes-linux.zip > /dev/null 2>&1 && unzip *.zip  > /dev/null && rm *.zip && chmod 744 Eeyes-linux && ln -s /root/batch/Eeyes/Eeyes-linux /usr/bin/eeyes
+	cd /root/batch && mkdir Eeyes && cd Eeyes && proxychains wget  https://github.com/EdgeSecurityTeam/Eeyes/releases/download/${num_eeyes}/Eeyes-linux.zip > /dev/null 2>&1 && unzip *.zip  > /dev/null && rm *.zip && chmod 744 Eeyes-linux && ln -s /root/batch/Eeyes/Eeyes-linux /usr/bin/eeyes
 	ea 'Eyes'
 	sleep 2
 
@@ -124,7 +124,7 @@ function SubdomainTools()
 	### assetfinder
 	echo -e "${GREEN}  download assetfinder ${END}"
 	# apt -y  install assetfinder --upgrade > /dev/null 2>&1
-	cd /root/subdomain && mkdir assetfinder && cd assetfinder && wget https://github.com/tomnomnom/assetfinder/releases/download/v0.1.1/assetfinder-linux-amd64-0.1.1.tgz  > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv assetfinder /usr/bin 
+	cd /root/subdomain && mkdir assetfinder && cd assetfinder && proxychains wget  https://github.com/tomnomnom/assetfinder/releases/download/v0.1.1/assetfinder-linux-amd64-0.1.1.tgz  > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv assetfinder /usr/bin 
 	ea 'assetfinder'
 	sleep 2
 
@@ -164,7 +164,7 @@ function SubdomainTools()
 	echo -e "${GREEN}  download ksubdomain ${END}"
 	### get version
 	num_ksu=`version knownsec ksubdomain`
-	cd /root/subdomain && mkdir ksubdomain && cd ksubdomain && wget https://github.com/knownsec/ksubdomain/releases/download/${num_ksu}/ksubdomain_linux.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv ksubdomain /usr/bin 
+	cd /root/subdomain && mkdir ksubdomain && cd ksubdomain && proxychains wget  https://github.com/knownsec/ksubdomain/releases/download/${num_ksu}/ksubdomain_linux.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv ksubdomain /usr/bin 
 	ea 'ksubdomain'
 	sleep 2
 	
@@ -293,7 +293,7 @@ function fingerprintTools()
 	echo -e "${GREEN}  download EHole ${END}"
 	### get version
 	num_ehole=`version EdgeSecurityTeam EHole`
-	mkdir /root/fingerprint/EHole && cd /root/fingerprint/EHole && wget https://github.com/EdgeSecurityTeam/EHole/releases/download/${num_ehole}/EHole_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip __MACOSX -r && mv /root/fingerprint/EHole/EHole_linux_amd64/EHole_linux_amd64 /root/fingerprint/EHole/EHole && mv /root/fingerprint/EHole/EHole_linux_amd64/* /root/fingerprint/EHole/ && rm EHole_linux_amd64 -r && chmod 744 /root/fingerprint/EHole/EHole && ln -s /root/fingerprint/EHole/EHole /usr/bin/EHole
+	mkdir /root/fingerprint/EHole && cd /root/fingerprint/EHole && proxychains wget  https://github.com/EdgeSecurityTeam/EHole/releases/download/${num_ehole}/EHole_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip __MACOSX -r && mv /root/fingerprint/EHole/EHole_linux_amd64/EHole_linux_amd64 /root/fingerprint/EHole/EHole && mv /root/fingerprint/EHole/EHole_linux_amd64/* /root/fingerprint/EHole/ && rm EHole_linux_amd64 -r && chmod 744 /root/fingerprint/EHole/EHole && ln -s /root/fingerprint/EHole/EHole /usr/bin/EHole
 	ea 'EHole'
 	sleep 2
 
@@ -316,7 +316,7 @@ function fingerprintTools()
 	### get version
 	num_dismap=`version zhzyker dismap`
 	num_dismap_v=`echo $num_dismap |cut -f2 -d "v"`
-	mkdir /root/fingerprint/dismap && cd /root/fingerprint/dismap && wget https://github.com/zhzyker/dismap/releases/download/${num_dismap}/dismap-${num_dismap_v}-linux-amd64 > /dev/null 2>&1 && mv /root/fingerprint/dismap/dismap-0.4-linux-amd64 /root/fingerprint/dismap/dismap && chmod 744 /root/fingerprint/dismap/dismap
+	mkdir /root/fingerprint/dismap && cd /root/fingerprint/dismap && proxychains wget  https://github.com/zhzyker/dismap/releases/download/${num_dismap}/dismap-${num_dismap_v}-linux-amd64 > /dev/null 2>&1 && mv /root/fingerprint/dismap/dismap-0.4-linux-amd64 /root/fingerprint/dismap/dismap && chmod 744 /root/fingerprint/dismap/dismap
 	ea 'dismap'
 	sleep 2
 
@@ -324,7 +324,7 @@ function fingerprintTools()
 	echo -e "${GREEN}  download observer_ward ${END}"
 	### get version
 	num_observer=`version emo-crab observer_ward`
-	mkdir /root/fingerprint/observer_ward && cd /root/fingerprint/observer_ward && wget https://github.com/emo-crab/observer_ward/releases/download/${num_observer}/observer_ward_${num_observer}_x86_64-unknown-linux-musl.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm LICENSE README.md *.tar.gz 
+	mkdir /root/fingerprint/observer_ward && cd /root/fingerprint/observer_ward && proxychains wget  https://github.com/emo-crab/observer_ward/releases/download/${num_observer}/observer_ward_${num_observer}_x86_64-unknown-linux-musl.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm LICENSE README.md *.tar.gz 
 	ea 'observer_ward'
 	sleep 2
 
@@ -336,7 +336,7 @@ function portTools()
 	echo -e "${GREEN}  download scaninfo ${END}"
 	### get version
 	num_scaninfo=`version redtoolskobe scaninfo`
-	mkdir /root/port/scaninfo && cd /root/port/scaninfo && wget https://github.com/redtoolskobe/scaninfo/releases/download/${num_scaninfo}/scaninfo_linux_x64  > /dev/null 2>&1 && mv scaninfo_linux_x64 scaninfo && chmod 744 scaninfo
+	mkdir /root/port/scaninfo && cd /root/port/scaninfo && proxychains wget  https://github.com/redtoolskobe/scaninfo/releases/download/${num_scaninfo}/scaninfo_linux_x64  > /dev/null 2>&1 && mv scaninfo_linux_x64 scaninfo && chmod 744 scaninfo
 	ea 'scaninfo'
 	sleep 2
 
@@ -350,7 +350,7 @@ function portTools()
 	echo -e "${GREEN}  download rustscan ${END}"
 	### getversion
 	num_rustscan=`version bee-san RustScan`
-	mkdir /root/port/rustscan && cd /root/port/rustscan && wget https://github.com/bee-san/RustScan/releases/download/${num_rustscan}/x86_64-linux-rustscan.tar.gz.zip > /dev/null 2>&1 && unzip x86_64-linux-rustscan.tar.gz.zip > /dev/null 2>&1 && tar -zxvf x86_64-linux-rustscan.tar.gz > /dev/null 2>&1 && rm *.zip *.tar.gz 
+	mkdir /root/port/rustscan && cd /root/port/rustscan && proxychains wget  https://github.com/bee-san/RustScan/releases/download/${num_rustscan}/x86_64-linux-rustscan.tar.gz.zip > /dev/null 2>&1 && unzip x86_64-linux-rustscan.tar.gz.zip > /dev/null 2>&1 && tar -zxvf x86_64-linux-rustscan.tar.gz > /dev/null 2>&1 && rm *.zip *.tar.gz 
 	ea 'rustscan'
 	sleep 2
 
@@ -411,7 +411,7 @@ function PathTools()
 
 	### waybackurls
 	echo -e "${GREEN}  download waybackurls ${END}"
-	go install github.com/tomnomnom/waybackurls@latest
+	go install github.com/tomnomnom/waybackurls@latest > /dev/null 2>&1
 	ea 'waybackurls'
 	sleep 2
 
@@ -444,7 +444,7 @@ function SensitiveTools()
 	echo -e "${GREEN}  download URLFinder ${END}"
 	### getversion
 	num_urlfinder=`version pingc0y URLFinder`
-	cd /root/sensitive && mkdir /root/sensitive/URLFinder && wget https://github.com/pingc0y/URLFinder/releases/download/${num_urlfinder}/URLFinder_Linux_x86_64.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm rm LICENSE README.md && rm *.gz
+	cd /root/sensitive && mkdir /root/sensitive/URLFinder && proxychains wget  https://github.com/pingc0y/URLFinder/releases/download/${num_urlfinder}/URLFinder_Linux_x86_64.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm rm LICENSE README.md && rm *.gz
 	ea 'URLFinder'
 	sleep 2
 
@@ -498,23 +498,11 @@ PathTools
 echo -e "${RED}Error ${END}"
 CycleArray
 
-
-### configuration vps
-echo -e "${RED}Configuration Tools https://github.com/Fridgffy/Configfile ${END}"
-echo -e "${GREEN}  w13scan${END}"
-echo -e "${GREEN}  BBScan${END}"
-echo -e "${GREEN}  vulmap${END}"
-echo -e "${GREEN}  amass${END}"
-echo -e "${GREEN}  shuize${END}"
-echo -e "${GREEN}  reconftw${END}"
-echo -e "${GREEN}  spiderfoot${END}"
-
 ### configuration subdomain
 echo -e "${RED}Configuration subdomain tools${END}"
 
 echo -e "${GREEN}  OneForAll${END}"
 echo -e "${GREEN}  subfinder${END}"
-echo -e "${GREEN}  findomain${END}"
 echo -e "${GREEN}  aquatone${END}"
 
 
