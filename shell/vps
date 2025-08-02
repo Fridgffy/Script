@@ -721,6 +721,8 @@ echo -e "${GREEN}  amass${END}"
 echo -e "${GREEN}  shuize${END}"
 echo -e "${GREEN}  reconftw${END}"
 echo -e "${GREEN}  spiderfoot${END}"
+echo -e "${GREEN}  BBScan${END}"
+echo -e "${GREEN}  dirmap${END}"
 
 ### configuration subdomain
 echo -e "${RED}Configuration subdomain tools${END}"
@@ -742,4 +744,3 @@ echo -e "${RED}Change file${END}"
 echo -e "${GREEN}  Sublist3r${END}"
 echo -e "${GREEN}  oneforall.py${END}"
 echo -e "${GREEN}  knockpy.py${END}"
-echo -e "${GREEN}  gospider${END}"
