@@ -168,7 +168,7 @@ function comprehensive()
 	ea 'shuize'
 	sleep 2
 
-	cd /root/comprehensive/shuize && python38 -m pip install -r requirements.txt > /dev/null 2>&1 && python38 -m pip install -r requirements2.txt > /dev/null 2>&1 
+	cd /root/comprehensive/shuize && python -m pip install -r requirements.txt > /dev/null 2>&1 && python -m pip install -r requirements2.txt > /dev/null 2>&1 
 	ea 'pipshuize'
 	sleep 2
 
@@ -409,7 +409,7 @@ function otherTools()
 	echo -e "${GREEN}  download tld_scanner ${END}"
 	cd /root/other && git clone https://github.com/ozzi-/tld_scanner > /dev/null 2>&1
 	ea 'tld_scanner'
-	python38 -m pip install -r /root/other/tld_scanner/requirements.txt > /dev/null 2>&1
+	python -m pip install -r /root/other/tld_scanner/requirements.txt > /dev/null 2>&1
 	ea 'piptld_scanner'
 	sleep 2
 
@@ -586,7 +586,7 @@ function PathTools()
 	cd /root/path && git clone https://github.com/H4ckForJob/dirmap > /dev/null 2>&1
 	ea 'dirmap'
 
-	python38 -m pip install -r /root/path/dirmap/requirement.txt > /dev/null 2>&1
+	python -m pip install -r /root/path/dirmap/requirement.txt > /dev/null 2>&1
 	ea 'pipdirmap'
 	sleep 2
 
@@ -715,11 +715,8 @@ echo -e "${GREEN}  spiderfoot${END}"
 echo -e "${GREEN}  google-chrome${END}"
 
 ### configuration vps
-echo -e "${RED}Configuration Tools https://github.com/Fridgffy/Configfile ${END}"
+echo -e "${RED}Configuration Tools ${END}"
 echo -e "${GREEN}  ARL${END}"
-echo -e "${GREEN}  w13scan${END}"
-echo -e "${GREEN}  BBScan${END}"
-echo -e "${GREEN}  vulmap${END}"
 echo -e "${GREEN}  amass${END}"
 echo -e "${GREEN}  shuize${END}"
 echo -e "${GREEN}  reconftw${END}"
