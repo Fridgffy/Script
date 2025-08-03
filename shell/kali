@@ -509,5 +509,7 @@ echo -e "${YELLOW}  aquatone${END}"
 echo -e "${RED}Change file${END}"
 echo -e "${YELLOW}  Sublist3r${END}"
 echo -e "${YELLOW}  oneforall.py${END}"
+
+### chage shebang
 echo -e "${YELLOW}  knockpy.py${END}"
-echo -e "${YELLOW}  gospider${END}"
+echo -e "${YELLOW}  ctfr${END}"

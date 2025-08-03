@@ -327,8 +327,8 @@ function SubdomainTools()
 		ea 'ruby'
 	fi
 	gem install aquatone > /dev/null 2>&1
-	mkdir /root/subdomain/aquatone
 	ea 'aquatone'
+	mkdir /root/subdomain/aquatone
 	sleep 2
 
 	### chaos
@@ -736,11 +736,13 @@ echo -e "${YELLOW}  Dnsub${END}"
 echo -e "${YELLOW}  subfinder${END}"
 echo -e "${YELLOW}  findomain${END}"
 echo -e "${YELLOW}  aquatone${END}"
-echo -e "${YELLOW}  github-subdomains${END}"
 echo -e "${YELLOW}  rad${END}"
 
 ### change file
 echo -e "${RED}Change file${END}"
 echo -e "${YELLOW}  Sublist3r${END}"
 echo -e "${YELLOW}  oneforall.py${END}"
+
+### chage shebang
 echo -e "${YELLOW}  knockpy.py${END}"
+echo -e "${YELLOW}  ctfr${END}"
