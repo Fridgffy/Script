@@ -355,7 +355,7 @@ function SubdomainTools()
 	### dnsrecon
 	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dnsrecon... ${END}"
 	apt -y purge dnsrecon > /dev/null 2>&1
-	mkdir /root/subdomain/dns && cd /root/subdomain/dns && git clone https://github.com/darkoperator/dnsrecon > /dev/null 2>&1 && ln -s /root/subdomain/dns/dnsrecon/dnsrecon.py /usr/bin/dnsrecon
+	cd /root/subdomain/ && git clone https://github.com/darkoperator/dnsrecon > /dev/null 2>&1 && ln -s /root/subdomain/dnsrecon/dnsrecon.py /usr/bin/dnsrecon
 	ea 'dnsrecon'
 	sleep 2
 
@@ -748,3 +748,5 @@ echo -e "${YELLOW}  oneforall.py${END}"
 echo -e "${RED}Change shebang${END}"
 echo -e "${YELLOW}  knockpy.py${END}"
 echo -e "${YELLOW}  ctfr${END}"
+echo -e "${YELLOW}  dnsrecon${END}"
+
