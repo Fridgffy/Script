@@ -16,7 +16,7 @@ def get_coordinate():
     xy_array = []
     while True:
         if count == 0:
-            print('[Hint]: 用5秒钟时间把鼠标移动到开始位置')
+            print('[Hint] 用5秒钟时间把鼠标移动到开始位置')
             time.sleep(5)
 
             # 获取鼠标当前位置的坐标
@@ -26,7 +26,7 @@ def get_coordinate():
             xy_array.append(y)
             count += 1
         elif count == 1:
-            print('[Hint]: 再用5秒钟时间把鼠标移动到结束位置')
+            print('[Hint] 再用5秒钟时间把鼠标移动到结束位置')
             time.sleep(5)
 
             # 获取鼠标当前位置的坐标
@@ -94,7 +94,7 @@ if __name__ == '__main__':
                                                                                                                           
 """
     print(logo)
-    print("[Notice]: 别忘了把1.mp3放到C盘根目录")
+    print("[Notice] 别忘了把1.mp3放到C盘根目录")
 
     COORDINATE = get_coordinate()
     Monitor(COORDINATE)

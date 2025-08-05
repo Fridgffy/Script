@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 
-GREEN='\033[3;32m'
+# set color contants
+GREEN='\033[1;32m'
 RED='\033[1;31m'
 YELLO='\033[1;33m'
 END='\033[0m'
 
 if [ $# -eq 0 ];then
-	echo -e "${RED}Require a list number!${END}"
+	echo -e "${RED}[ Error ] Require list numbers!\n${END}"
 else
 	for i in $@
 	do
 		iptables -D INPUT $i
-		echo -e "${GREEN}list number $i is already delete${END}"
+		echo -e "${GREEN}[ Success ] List number $i is already delete!\n${END}"
 	done
+	echo -e "${YELLO}[ iptables INPUT list ]${END}"
 	iptables -L INPUT --line-numbers
 fi

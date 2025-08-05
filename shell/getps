@@ -1,38 +1,45 @@
 #!/usr/bin/env bash
 
+# set color contants
+GREEN='\033[1;32m'
 RED='\033[1;31m'
+YELLO='\033[1;33m'
 END='\033[0m'
 
 p='False'
 if [ $# -eq 0 ];then
-        echo -e "${RED}Please enter parameters!${END}"
-        exit
+        echo -e "${RED}[ Error ] Please enter parameters!\n${END}"
+        exit 1
 fi
 
-while getopts ":p:" opts;do
+while getopts ":p" opts;do
         case $opts in
                 p)
                         p='True'
                         ;;
                 \?)
-                        echo -e "${RED}Invalid option: -${OPTARG} ${END}" >&2
+                        echo -e "${RED}[ Error ] Invalid option: -${OPTARG} \n${END}" >&2
+                        exit 1
                         ;;
                 :)
-                        echo -e "${RED}Option -p need a value!${END}" >&2
+                        echo -e "${RED}[ Error ] Option -p need a value!\n${END}" >&2
+                        exit 1
                         ;;
         esac
 done
+
 shift $((OPTIND - 1))
+
 if [ $p = 'False' ];then
         for i in $@
         do
-                echo -e "${RED}${i}${END}"
-                echo "$(ps -ef | grep ${i} | grep -v grep | grep -v getps)"
+                echo -e "${RED}[ ${i} ]${END}\n"
+                echo -e "$(ps -ef | grep ${i} | grep -v grep | grep -v getps)\n"
         done
 elif [ $p = 'True' ];then
         for i in $@
         do
-                echo -e "${RED}${i}${END}"
-                echo "$(ps -ef | grep ${i} | grep -v grep | grep -v getps | awk '{print $2}' | tr '\n' ' ')"
+                echo -e "${RED}[ ${i} ]${END}\n"
+                echo -e "$(ps -ef | grep ${i} | grep -v grep | grep -v getps | awk '{print $2}' | tr '\n' ' ')\n"
         done
 fi
