@@ -96,21 +96,48 @@ function CycleArray()
 	done
 }
 
+cat << 'EOF'
+______ _           _           _     
+|  ___(_)         | |         | |    
+| |_   _ _ __   __| |___ _   _| |__  
+|  _| | | '_ \ / _` / __| | | | '_ \ 
+| |   | | | | | (_| \__ \ |_| | |_) |
+\_|   |_|_| |_|\__,_|___/\__,_|_.__/ 
 
+EOF
 
+if [ $# -eq 0 ];then
+	echo -e "${RED}[ Error ]: Enter the paramter -d! \n${END}"
+	exit 1
+fi
 
+while getopts  ":d:" opt;do
+	case $opt in
+		d)
+			echo -e "${GREEN}[ Notice ]: Target domain: ${OPTARG} \n${END}"
+			domain=${OPTARG}
+			;;
+		\?)
+			echo -e "${RED}[ Error ]: Invalid option -${OPTARG}! \n${END}"
+			exit 1
+			;;
+		:)
+			echo -e "${RED}[ Error ]: Provide a target domain name! \n${END}"
+			exit 1
+			;;
+	esac
+done
 
+echo -e "${RED}Start subdimain gathering... \n${END}"
 
-echo -e "${YELLO}[ Notice ]: Input target target domain: ${END}"
-read domain
-
-echo -e "${RED}START${END}"
 gathering $domain
 
 
+if [ ${#array[*]} -ne 0 ];then
+	echo -e "${RED}Error...\n${END}"
+	CycleArray
+fi
 
-echo -e "${RED}Error${END}"
-CycleArray
 
+echo -e "${RED}\nEight tools testing completed \n${END}"
 
-echo -e "${RED}All tools testing completed${END}"

@@ -681,7 +681,7 @@ function CycleArray()
 }
 
 ### main 
-echo -e "${RED}START${END}"
+echo -e "${RED}Start Download Tools...${END}"
 MakeFolders
 
 echo -e "${YELLO} start download ARL${END}"
@@ -712,7 +712,7 @@ echo -e "${YELLO} start url PathTools ${END}"
 PathTools
 
 ### error
-echo -e "${RED}Error ${END}"
+echo -e "${RED}Error... ${END}"
 CycleArray
 
 
