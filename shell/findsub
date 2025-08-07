@@ -45,7 +45,7 @@ function gathering(){
 
 	sleep 2
 
-	### subfinder
+	### subfinder_nodns
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start subfinder_nodns ${END}"
 	subfinder -d $1 --all -o ${RESULT}subfinder_nodns >> ${RESULT}output 2>&1
 	ea 'subfinder_nodns'
