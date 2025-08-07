@@ -124,5 +124,5 @@ if [ ${#array[*]} -ne 0 ];then
 fi
 
 
-echo -e "${RED}\nSeven tools testing completed! \n${END}"
+echo -e "${RED}\nSix tools testing completed! \n${END}"
 

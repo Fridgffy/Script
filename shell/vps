@@ -350,7 +350,6 @@ function SubdomainTools()
 	ea 'github-subdomains'
 	sleep 2
 
-	################################################## dns
 	### ldns-walk
 	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ldns-walk ${END}"
 	apt -y  install ldnsutils --upgrade > /dev/null 2>&1
@@ -370,8 +369,6 @@ function SubdomainTools()
 	ea 'dnsenum'
 	sleep 2
 
-
-	################################################## altdns
 	### altdns
 	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download altdns ${END}"
 	apt -y  install --upgrade altdns > /dev/null 2>&1

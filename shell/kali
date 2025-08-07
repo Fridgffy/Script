@@ -159,6 +159,13 @@ function SubdomainTools()
 	ea 'pipdnspython'
 	sleep 2
 	
+		### findomain
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download findomain ${END}"
+	### get version
+	num_fin=`version Findomain Findomain`
+	cd /root/subdomain && mkdir findomain && cd findomain && proxychains wget https://github.com/Findomain/Findomain/releases/download/${num_fin}/findomain-linux.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && chmod 744 findomain && mv findomain /usr/bin
+	ea 'findomain'
+	sleep 2
 
 	### ksubdomain
 	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ksubdomain ${END}"
@@ -187,7 +194,6 @@ function SubdomainTools()
 	ea 'chaos'
 	sleep 2
 
-	################################################## dns
 	### ldns-walk
 	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ldns-walk ${END}"
 	apt -y  install ldnsutils --upgrade > /dev/null 2>&1
@@ -207,7 +213,6 @@ function SubdomainTools()
 	ea 'dnsenum'
 	sleep 2
 
-	################################################## altdns
 	### altdns
 	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download altdns ${END}"
 	apt -y  install --upgrade altdns > /dev/null 2>&1
@@ -505,6 +510,7 @@ echo -e "${RED}Configuration tools${END}"
 echo -e "${YELLOW}  OneForAll${END}"
 echo -e "${YELLOW}  subfinder${END}"
 echo -e "${YELLOW}  aquatone${END}"
+echo -e "${YELLOW}  findomain${END}"
 
 
 ### change file
