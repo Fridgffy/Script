@@ -65,7 +65,7 @@ function MakeFolders()
 ### Download arl
 function ARL()
 {	
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ARL... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ARL ${END}"
 	### get version
 	num_arl=`version ki9mu ARL-plus-docker`
 	num_arl_v=`echo $num_arl | cut -f2 -d "v"`
@@ -93,18 +93,23 @@ function ARL()
 ### Download batch tools
 function BatchTools()
 {
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Dnsx... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Dnsx ${END}"
 	# ### get version
 	go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest > /dev/null 2>&1 
 	ea 'dnsx'
 	sleep 2
 
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Eeyes... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Eeyes ${END}"
 	### get version
 	num_eeyes=`version EdgeSecurityTeam Eeyes`
 	### Download
 	cd /root/batch && mkdir Eeyes && cd Eeyes && wget https://github.com/EdgeSecurityTeam/Eeyes/releases/download/${num_eeyes}/Eeyes-linux.zip > /dev/null 2>&1 && unzip *.zip  > /dev/null && rm *.zip && chmod 744 Eeyes-linux && ln -s /root/batch/Eeyes/Eeyes-linux /usr/bin/eeyes
 	ea 'Eyes'
+	sleep 2
+
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download httpx ${END}"
+	go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest > /dev/null 2>&1 
+	ea 'httpx'
 	sleep 2
 
 }
@@ -113,7 +118,7 @@ function BatchTools()
 function vuln()
 {	
 	### bbscan
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download BBscan... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download BBscan ${END}"
 	cd /root/vuln && git clone https://github.com/lijiejie/BBScan > /dev/null 2>&1
 	ea 'bbscan'
 	sleep 2
@@ -123,7 +128,7 @@ function vuln()
 	sleep 2
 
 	### fscan
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download fscan... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download fscan ${END}"
 	#### fscan version
 	num_fscan=`version shadow1ng fscan`
 	num_fscan_v=`echo $num_fscan | cut -f2 -d "v"`
@@ -133,7 +138,7 @@ function vuln()
 	sleep 2
 
 	### w13scan
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download w13scan... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download w13scan ${END}"
 	cd /root/vuln && git clone https://github.com/w-digital-scanner/w13scan > /dev/null 2>&1 
 	ea 'w13scan'
 
@@ -141,7 +146,7 @@ function vuln()
 	ea 'pipw13scan'
 
 	### vulnmap
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download vulnmap... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download vulnmap ${END}"
 	cd /root/vuln && git clone https://github.com/zhzyker/vulmap > /dev/null 2>&1 
 	ea 'vulnmap'
 
@@ -152,19 +157,19 @@ function vuln()
 function comprehensive()
 {	
 	### amass
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download amass... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download amass ${END}"
 	mkdir /root/comprehensive/amass && apt -y  install amass --upgrade > /dev/null 2>&1 
 	ea 'amass'
 	sleep 2
 
 	### Dmitry
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Dmitry... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Dmitry ${END}"
 	apt -y  install dmitry --upgrade > /dev/null 2>&1 
 	ea 'Dmitry'
 	sleep 2
 
 	### shuize
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ShuiZe... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ShuiZe ${END}"
 	cd /root/comprehensive && git clone https://github.com/0x727/ShuiZe_0x727 > /dev/null 2>&1 && mv ShuiZe_0x727 shuize
 	ea 'shuize'
 	sleep 2
@@ -179,7 +184,7 @@ function comprehensive()
 	sleep 2
 
 	### kscan
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download kscan... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download kscan ${END}"
 	#### version
 	num_kscan=`version lcvvvv kscan`
 	mkdir /root/comprehensive/kscan && cd /root/comprehensive/kscan && wget https://github.com/lcvvvv/kscan/releases/download/${num_kscan}/kscan_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip > /dev/null 2>&1 && mv kscan_linux_amd64 kscan
@@ -192,13 +197,13 @@ function comprehensive()
 	sleep 2
 
 	### reconftw
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download reconftw... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download reconftw ${END}"
 	cd /root/comprehensive/ && git clone https://github.com/six2dez/reconftw > /dev/null 2>&1
 	ea 'reconftw'
 	sleep 2
 
 	### spiderfoot
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download spiderfoot... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download spiderfoot ${END}"
 	cd /root/comprehensive/ && git clone https://github.com/smicallef/spiderfoot > /dev/null 2>&1
 	ea 'spiderfoot'
 	sleep 2
@@ -211,13 +216,13 @@ function comprehensive()
 function SubdomainTools()
 {
 	### esd
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download esd... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download esd ${END}"
 	pip install esd > /dev/null 2>&1
 	ea 'esd'
 	sleep 2
 
 	### oneforall
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download OneForAll... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download OneForAll ${END}"
 	cd /root/subdomain && git clone https://github.com/shmilylty/OneForAll  > /dev/null 2>&1 && chmod 744 /root/subdomain/OneForAll/oneforall.py
 	ea 'OneForAll'
 	sleep 2
@@ -230,7 +235,7 @@ function SubdomainTools()
 	sleep 2
 
 	### dnsub
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dnsub... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dnsub ${END}"
 	### get version
 	num_dnsub=`version yunxu1 dnsub`
 
@@ -239,7 +244,7 @@ function SubdomainTools()
 	sleep 2
 
 	### sublist3r
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download sublist3r... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download sublist3r ${END}"
 	# apt -y  install sublist3r --upgrade > /dev/null 2>&1
 	cd /root/subdomain && git clone https://github.com/aboul3la/Sublist3r  > /dev/null 2>&1 && cd Sublist3r && chmod 744 /root/subdomain/Sublist3r/sublist3r.py 
 	ea 'sublist3r'
@@ -250,7 +255,7 @@ function SubdomainTools()
 	sleep 2
 
 	### ctfr
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ctfr... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ctfr ${END}"
 	cd /root/subdomain && git clone https://github.com/UnaPibaGeek/ctfr  > /dev/null 2>&1 && cd ctfr && chmod 744 /root/subdomain/ctfr/ctfr.py && ln -s /root/subdomain/ctfr/ctfr.py /usr/bin/ctfr 
 	ea 'ctfr'
 	sleep 2
@@ -260,26 +265,26 @@ function SubdomainTools()
 	sleep 2
 
 	### assetfinder
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download assetfinder... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download assetfinder ${END}"
 	# apt -y  install assetfinder --upgrade > /dev/null 2>&1
 	cd /root/subdomain && mkdir assetfinder && cd assetfinder && wget https://github.com/tomnomnom/assetfinder/releases/download/v0.1.1/assetfinder-linux-amd64-0.1.1.tgz  > /dev/null 2>&1 && tar -zxvf *.tgz > /dev/null 2>&1 && rm *.tgz && mv assetfinder /usr/bin 
 	ea 'assetfinder'
 	sleep 2
 
 	### fierce
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download fierce... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download fierce ${END}"
 	apt -y  install fierce --upgrade > /dev/null 2>&1
 	ea 'fierce'
 	sleep 2
 
 	### subfinder
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download subfinder... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download subfinder ${END}"
 	go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest > /dev/null 2>&1
 	ea 'subfinder'
 	sleep 2
 
 	### knock
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download knock... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download knock ${END}"
 	cd /root/subdomain && git clone https://github.com/guelfoweb/knock  > /dev/null 2>&1 && chmod 744 /root/subdomain/knock/knockpy.py && ln -s /root/subdomain/knock/knockpy.py /usr/bin/knock
 	ea 'knock'
 	sleep 2
@@ -289,7 +294,7 @@ function SubdomainTools()
 	sleep 2
 
 	### findomain
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download findomain... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download findomain ${END}"
 	### get version
 	num_fin=`version Findomain Findomain`
 	cd /root/subdomain && mkdir findomain && cd findomain && wget https://github.com/Findomain/Findomain/releases/download/${num_fin}/findomain-linux.zip  > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && chmod 744 findomain && mv findomain /usr/bin
@@ -297,7 +302,7 @@ function SubdomainTools()
 	sleep 2
 
 	### subdomainBurte
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download subDomainsBrute... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download subDomainsBrute ${END}"
 	cd /root/subdomain && git clone https://github.com/lijiejie/subDomainsBrute  > /dev/null 2>&1 && chmod 744 /root/subdomain/subDomainsBrute/subDomainsBrute.py && ln -s /root/subdomain/subDomainsBrute/subDomainsBrute.py /usr/bin/subdomainbrute
 	ea 'subDomainsBrute'
 
@@ -306,13 +311,13 @@ function SubdomainTools()
 	sleep 2
 	
 	### dnsmap
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dnsmap... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dnsmap ${END}"
 	apt -y  install dnsmap --upgrade > /dev/null 2>&1
 	ea 'dnsmap'
 	sleep 2
 
 	### ksubdomain
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ksubdomain... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ksubdomain ${END}"
 	### get version
 	num_ksu=`version knownsec ksubdomain`
 	cd /root/subdomain && mkdir ksubdomain && cd ksubdomain && wget https://github.com/knownsec/ksubdomain/releases/download/${num_ksu}/ksubdomain_linux.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip && mv ksubdomain /usr/bin 
@@ -320,7 +325,7 @@ function SubdomainTools()
 	sleep 2
 	
 	### aquatone
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download aquatone... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download aquatone ${END}"
 	gem > /dev/null 2>&1
 	if [ $? -ne 0 ];then
 		apt -y install ruby > /dev/null 2>&1
@@ -332,14 +337,14 @@ function SubdomainTools()
 	sleep 2
 
 	### chaos
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download chaos... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download chaos ${END}"
 	###get version
 	go install -v github.com/projectdiscovery/chaos-client/cmd/chaos@latest > /dev/null 2>&1
 	ea 'chaos'
 	sleep 2
 
 	### github-subdomains
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download github-subdomains... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download github-subdomains ${END}"
 	go install github.com/gwen001/github-subdomains@latest > /dev/null 2>&1
 	mkdir /root/subdomain/github-subdomains
 	ea 'github-subdomains'
@@ -347,20 +352,20 @@ function SubdomainTools()
 
 	################################################## dns
 	### ldns-walk
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ldns-walk... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ldns-walk ${END}"
 	apt -y  install ldnsutils --upgrade > /dev/null 2>&1
 	ea 'ldns-walk'
 	sleep 2
 
 	### dnsrecon
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dnsrecon... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dnsrecon ${END}"
 	apt -y purge dnsrecon > /dev/null 2>&1
 	cd /root/subdomain/ && git clone https://github.com/darkoperator/dnsrecon > /dev/null 2>&1 && ln -s /root/subdomain/dnsrecon/dnsrecon.py /usr/bin/dnsrecon
 	ea 'dnsrecon'
 	sleep 2
 
 	### dnsenum
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dnsenum... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dnsenum ${END}"
 	apt -y install dnsenum > /dev/null 2>&1 
 	ea 'dnsenum'
 	sleep 2
@@ -368,7 +373,7 @@ function SubdomainTools()
 
 	################################################## altdns
 	### altdns
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download altdns... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download altdns ${END}"
 	apt -y  install --upgrade altdns > /dev/null 2>&1
 	ea 'altdns'
 	sleep 2
@@ -379,32 +384,32 @@ function otherTools()
 {
 	### Virtual-host
 	### virtual-host-discovery
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download virtual-host-discovery... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download virtual-host-discovery ${END}"
 	cd /root/other && git clone https://github.com/jobertabma/virtual-host-discovery > /dev/null 2>&1
 	ea 'virtual-host-discovery'
 	sleep 2
 
 	### asnmap
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Asnmap... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Asnmap ${END}"
 	go install github.com/projectdiscovery/asnmap/cmd/asnmap@latest > /dev/null 2>&1
 	ea 'asnmap'
 	sleep 2
 
 	### mapcidr
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download mapcidr... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download mapcidr ${END}"
 	go install -v github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest > /dev/null 2>&1
 	ea 'mapcidr'
 	sleep 2
 
 	### tlsx
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download tlsx... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download tlsx ${END}"
 	go install github.com/projectdiscovery/tlsx/cmd/tlsx@latest > /dev/null 2>&1
 	ea 'tlsx'
 	sleep 2
 	### bypass-403
 
 	### tld_scanner
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download tld_scanner... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download tld_scanner ${END}"
 	cd /root/other && git clone https://github.com/ozzi-/tld_scanner > /dev/null 2>&1
 	ea 'tld_scanner'
 	python -m pip install -r /root/other/tld_scanner/requirements.txt > /dev/null 2>&1
@@ -416,13 +421,13 @@ function otherTools()
 function urlcrawl()
 {
 	### waybackurls
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download waybackurls... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download waybackurls ${END}"
 	go install github.com/tomnomnom/waybackurls@latest > /dev/null 2>&1
 	ea 'waybackurls'
 	sleep 2
 
 	### crawlergo
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download crawlergo... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download crawlergo ${END}"
 	### get version
 	num_crawlergo=`version Qianlitp crawlergo`
 	mkdir /root/urlcrawl/crawlergo && cd /root/urlcrawl/crawlergo && wget https://github.com/Qianlitp/crawlergo/releases/download/${num_crawlergo}/crawlergo_linux_amd64  > /dev/null 2>&1 && mv crawlergo_linux_amd64 crawlergo && chmod 744 crawlergo && mv crawlergo /usr/bin
@@ -430,13 +435,13 @@ function urlcrawl()
 	sleep 2
 
 	### gau
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download gau... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download gau ${END}"
 	go install github.com/lc/gau/v2/cmd/gau@latest > /dev/null 2>&1
 	ea 'gau'
 	sleep 2
 	
 	### rad
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download rad... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download rad ${END}"
 	### get version
 	num_rad_v=`version chaitin rad`
 	mkdir /root/urlcrawl/rad && cd /root/urlcrawl/rad && wget https://github.com/chaitin/rad/releases/download/${num_rad_v}/rad_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1  && mv rad_linux_amd64 rad && chmod 744 rad && mv /root/urlcrawl/rad/rad /usr/bin && rm *.zip
@@ -444,19 +449,19 @@ function urlcrawl()
 	sleep 2
 
 	### gospider
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download gospider... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download gospider ${END}"
 	go install github.com/jaeles-project/gospider@latest > /dev/null 2>&1
 	ea 'gospider'
 	sleep 2
 
 	### katana
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download katana... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download katana ${END}"
 	go install github.com/projectdiscovery/katana/cmd/katana@latest > /dev/null 2>&1
 	ea 'katana'
 	sleep 2
 
 	### hakrawler
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download hakrawler... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download hakrawler ${END}"
 	go install github.com/hakluke/hakrawler@latest > /dev/null 2>&1
 	ea 'hakrawler'
 	sleep 2
@@ -466,13 +471,13 @@ function urlcrawl()
 function fuzz()
 {
 	### gobuster
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download gobuster... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download gobuster ${END}"
 	go install github.com/OJ/gobuster/v3@latest  > /dev/null 2>&1
 	ea 'gobuster'
 	sleep 2
 
 	### ffuf
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ffuf... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ffuf ${END}"
 	cd /root/fuzz && git clone https://github.com/ffuf/ffuf > /dev/null 2>&1 && go get > /dev/null 2>&1 && go build > /dev/null 2>&1 && mv /root/fuzz/ffuf/ffuf /usr/bin
 	ea 'ffuf'
 	sleep 2
@@ -481,7 +486,7 @@ function fuzz()
 function fingerprintTools()
 {
 	### Finger
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Finger... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Finger ${END}"
 	cd /root/fingerprint && git clone https://github.com/EASY233/Finger > /dev/null 2>&1
 	ea 'Finger'
 
@@ -490,21 +495,21 @@ function fingerprintTools()
 	sleep 2
 
 	### whatweb
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download whatweb... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download whatweb ${END}"
 	apt -y install whatweb --upgrade > /dev/null 2>&1
 	ea 'whatweb'
 	sleep 2
 
 	### EHole
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download EHole... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download EHole ${END}"
 	### get version
 	num_ehole=`version EdgeSecurityTeam EHole`
-	mkdir /root/fingerprint/EHole && cd /root/fingerprint/EHole && wget https://github.com/EdgeSecurityTeam/EHole/releases/download/${num_ehole}/EHole_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip __MACOSX -r && mv /root/fingerprint/EHole/EHole_linux_amd64/EHole_linux_amd64 /root/fingerprint/EHole/EHole && mv /root/fingerprint/EHole/EHole_linux_amd64/* /root/fingerprint/EHole/ && rm EHole_linux_amd64 -r && chmod 744 /root/fingerprint/EHole/EHole && ln -s /root/fingerprint/EHole/EHole /usr/bin/EHole
+	mkdir /root/fingerprint/EHole && cd /root/fingerprint/EHole && wget https://github.com/EdgeSecurityTeam/EHole/releases/download/${num_ehole}/EHole_linux_amd64.zip > /dev/null 2>&1 && unzip *.zip > /dev/null 2>&1 && rm *.zip __MACOSX -r && mv /root/fingerprint/EHole/EHole_linux_amd64/EHole_linux_amd64 /root/fingerprint/EHole/EHole && mv /root/fingerprint/EHole/EHole_linux_amd64/* /root/fingerprint/EHole/ && rm EHole_linux_amd64 -r && chmod 744 /root/fingerprint/EHole/EHole && ln -s /root/fingerprint/EHole/EHole /usr/bin/ehole
 	ea 'EHole'
 	sleep 2
 
 	### Glass
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Glass... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Glass ${END}"
 	cd /root/fingerprint && git clone https://github.com/s7ckTeam/Glass > /dev/null 2>&1
 	ea 'Glass'
 
@@ -513,12 +518,12 @@ function fingerprintTools()
 	sleep 2
 
 	### cmseek
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download cmseek... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download cmseek ${END}"
 	apt -y install cmseek --upgrade > /dev/null 2>&1
 	sleep 2
 
 	### dismap
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dismap... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dismap ${END}"
 	### get version
 	num_dismap=`version zhzyker dismap`
 	num_dismap_v=`echo $num_dismap |cut -f2 -d "v"`
@@ -527,7 +532,7 @@ function fingerprintTools()
 	sleep 2
 
 	### observer_ward
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download observer_ward... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download observer_ward ${END}"
 	### get version
 	num_observer=`version emo-crab observer_ward`
 	mkdir /root/fingerprint/observer_ward && cd /root/fingerprint/observer_ward && wget https://github.com/emo-crab/observer_ward/releases/download/${num_observer}/observer_ward_${num_observer}_x86_64-unknown-linux-musl.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm LICENSE README.md *.tar.gz 
@@ -539,7 +544,7 @@ function fingerprintTools()
 function portTools()
 {
 	### scaninfo
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download scaninfo... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download scaninfo ${END}"
 	### get version
 	num_scaninfo=`version redtoolskobe scaninfo`
 	mkdir /root/port/scaninfo && cd /root/port/scaninfo && wget https://github.com/redtoolskobe/scaninfo/releases/download/${num_scaninfo}/scaninfo_linux_x64  > /dev/null 2>&1 && mv scaninfo_linux_x64 scaninfo && chmod 744 scaninfo
@@ -547,13 +552,13 @@ function portTools()
 	sleep 2
 
 	### naabu
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download naabu... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download naabu ${END}"
 	go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest > /dev/null 2>&1
 	ea 'naabu'
 	sleep 2
 
 	### rustscan
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download rustscan... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download rustscan ${END}"
 	### getversion
 	num_rustscan=`version bee-san RustScan`
 	mkdir /root/port/rustscan && cd /root/port/rustscan && wget https://github.com/bee-san/RustScan/releases/download/${num_rustscan}/x86_64-linux-rustscan.tar.gz.zip > /dev/null 2>&1 && unzip x86_64-linux-rustscan.tar.gz.zip > /dev/null 2>&1 && tar -zxvf x86_64-linux-rustscan.tar.gz > /dev/null 2>&1 && rm *.zip *.tar.gz 
@@ -565,7 +570,7 @@ function portTools()
 function PathTools()
 {
 	### dirsearch
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dirsearch... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dirsearch ${END}"
 	cd /root/path && git clone https://github.com/maurosoria/dirsearch > /dev/null 2>&1
 	ea 'dirsearch'
 
@@ -574,7 +579,7 @@ function PathTools()
 	sleep 2
 
 	### FileSensor
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download FileSensor... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download FileSensor ${END}"
 	cd /root/path && git clone https://github.com/Xyntax/FileSensor > /dev/null 2>&1  
 	ea 'FileSensor'
 
@@ -583,13 +588,13 @@ function PathTools()
 	sleep 2
 
 	### cansina
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download cansina... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download cansina ${END}"
 	pip install cansina > /dev/null 2>&1
 	ea 'cansina'
 	sleep 2
 
 	### dirmap
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dirmap... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dirmap ${END}"
 	cd /root/path && git clone https://github.com/H4ckForJob/dirmap > /dev/null 2>&1
 	ea 'dirmap'
 
@@ -598,31 +603,31 @@ function PathTools()
 	sleep 2
 
 	### dirb
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dirmap... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download dirmap ${END}"
 	cd /root/path && apt install dirb > /dev/null 2>&1
 	ea 'dirb'
 	sleep 2
 
 	###ihoneyBakFileScan
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ihoneyBakFileScan... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ihoneyBakFileScan ${END}"
 	cd /root/path && git clone https://github.com/sry309/ihoneyBakFileScan  > /dev/null 2>&1
 	ea 'ihoneyBakFileScan'
 	sleep 2
 
 	### afuzz
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download afuzz... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download afuzz ${END}"
 	pip install afuzz > /dev/null 2>&1
 	ea 'afuzz'
 	sleep 2
 
 	### waybackurls
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download waybackurls... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download waybackurls ${END}"
 	go install github.com/tomnomnom/waybackurls@latest
 	ea 'waybackurls'
 	sleep 2
 
 	### ParamSpider
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ParamSpider... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download ParamSpider ${END}"
 	cd /root/path && git clone https://github.com/devanshbatham/ParamSpider  > /dev/null 2>&1 && cd /root/path/ParamSpider/ &&python setup.py install > /dev/null 2>&1
 	ea 'ParamSpider'
 	sleep 2
@@ -632,7 +637,7 @@ function PathTools()
 function SensitiveTools()
 {
 	### Linkfinder
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Linkfinder... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download Linkfinder ${END}"
 	cd /root/sensitive && git clone https://github.com/GerbenJavado/LinkFinder > /dev/null 2>&1 
 	ea 'Linkfinder'
 
@@ -641,13 +646,13 @@ function SensitiveTools()
 	sleep 2
 
 	### jsfinder
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download jsfinder... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download jsfinder ${END}"
 	cd /root/sensitive && git clone https://github.com/Threezh1/JSFinder > /dev/null 2>&1
 	ea 'jsfinder'
 	sleep 2
 
 	### URLFinder
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download URLFinder... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download URLFinder ${END}"
 	### getversion
 	num_urlfinder=`version pingc0y URLFinder`
 	cd /root/sensitive && mkdir /root/sensitive/URLFinder && wget https://github.com/pingc0y/URLFinder/releases/download/${num_urlfinder}/URLFinder_Linux_x86_64.tar.gz > /dev/null 2>&1 && tar -zxvf *.tar.gz > /dev/null 2>&1 && rm rm LICENSE README.md && rm *.gz
@@ -655,7 +660,7 @@ function SensitiveTools()
 	sleep 2
 
 	### JSINFO-SCAN
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download JSINFO-SCAN... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download JSINFO-SCAN ${END}"
 	cd /root/sensitive && git clone https://github.com/p1g3/JSINFO-SCAN > /dev/null 2>&1  
 	ea 'JSINFO-SCAN'
 	
@@ -664,7 +669,7 @@ function SensitiveTools()
 	sleep 2
 
 	### JSFScan.sh 
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download JSFScan.sh... ${END}"
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download JSFScan.sh ${END}"
 	cd /root/sensitive && git clone https://github.com/KathanP19/JSFScan.sh  > /dev/null 2>&1 && chmod 744 /root/sensitive/JSFScan.sh/JSFScan.sh
 	ea 'JSFScan.sh'
 	sleep 2
@@ -680,7 +685,7 @@ function CycleArray()
 }
 
 ### main 
-echo -e "${RED}Start Download Tools...${END}"
+echo -e "${RED}Start Download Tools${END}"
 MakeFolders
 
 echo -e "${YELLO}  Start download ARL${END}"
@@ -712,7 +717,7 @@ PathTools
 
 ### error
 if [ ${#array[*]} -ne 0 ];then
-	echo -e "${RED}Error...\n${END}"
+	echo -e "${RED}Error\n${END}"
 	CycleArray
 fi
 

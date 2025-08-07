@@ -113,13 +113,13 @@ while getopts  ":d:" opt;do
 done
 shift $((OPTIND - 1))
 
-echo -e "${RED}Start subdimain gathering... \n${END}"
+echo -e "${RED}Start subdimain gathering \n${END}"
 
 gathering $domain
 
 
 if [ ${#array[*]} -ne 0 ];then
-	echo -e "${RED}Error...\n${END}"
+	echo -e "${RED}Error\n${END}"
 	CycleArray
 fi
 
