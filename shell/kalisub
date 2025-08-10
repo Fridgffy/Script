@@ -23,7 +23,7 @@ function ea()
 function gathering(){
 	### ctfr
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start ctfr ${END}"
-	ctfr -d $1 -o ${RESULT}ctfr >> ${RESULT}output 2>&1
+	ctfr -d $1 -o ${RESULT}ctfr_kali >> ${RESULT}output 2>&1
 	ea 'ctfr'
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish ctfr \n${END}"
 
@@ -31,7 +31,7 @@ function gathering(){
 
 	### assetfinder
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start assetfinder ${END}"
-	assetfinder $1 >> ${RESULT}assetfinder 2>&1
+	assetfinder $1 >> ${RESULT}assetfinder_kali 2>&1
 	ea 'assetfinder'
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish assetfinder \n${END}"
 
@@ -39,7 +39,7 @@ function gathering(){
 
 	### subfinder
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start subfinder_nodns ${END}"
-	subfinder -d $1 --all -o ${RESULT}subfinder_nodns >> ${RESULT}output 2>&1
+	subfinder -d $1 --all -o ${RESULT}subfinder_nodns_kali >> ${RESULT}output 2>&1
 	ea 'subfinder_nodns'
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish subfinder_nodns \n${END}"
 
@@ -47,7 +47,7 @@ function gathering(){
 
 	### subfinder_dns
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start subfinder_dns ${END}"
-	subfinder -d $1 --all -o ${RESULT}subfinder_dns -r 8.8.8.8,223.6.6.6,180.76.76.76,1.1.1.1 >> ${RESULT}output 2>&1
+	subfinder -d $1 --all -o ${RESULT}subfinder_dns_kali -r 8.8.8.8,223.6.6.6,180.76.76.76,1.1.1.1 >> ${RESULT}output 2>&1
 	ea 'subfinder'
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish subfinder_dns \n${END}"
 
@@ -63,7 +63,7 @@ function gathering(){
 
 	### findomain
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start findomain ${END}"
-	findomain --ua ${SUBDOMAIN}findomain/ua  --pscan -t $1 -u ${RESULT}findomain >> ${RESULT}output 2>&1
+	findomain --ua ${SUBDOMAIN}findomain/ua  --pscan -t $1 -u ${RESULT}findomain_kali >> ${RESULT}output 2>&1
 	ea 'findomain'
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish findomain \n${END}"
 

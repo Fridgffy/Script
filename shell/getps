@@ -34,12 +34,12 @@ if [ $p = 'False' ];then
         for i in $@
         do
                 echo -e "${RED}[ ${i} ]${END}\n"
-                echo -e "$(ps -ef | grep ${i} | grep -v grep | grep -v getps)\n"
+                echo -e "$(ps -ef | grep -i ${i} | grep -v grep | grep -v getps)\n"
         done
 elif [ $p = 'True' ];then
         for i in $@
         do
                 echo -e "${RED}[ ${i} ]${END}\n"
-                echo -e "$(ps -ef | grep ${i} | grep -v grep | grep -v getps | awk '{print $2}' | tr '\n' ' ')\n"
+                echo -e "$(ps -ef | grep -i ${i} | grep -v grep | grep -v getps | awk '{print $2}' | tr '\n' ' ')\n"
         done
 fi

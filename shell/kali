@@ -76,6 +76,10 @@ function BatchTools()
 	ea 'Eyes'
 	sleep 2
 
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download httpx ${END}"
+	go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest > /dev/null 2>&1 
+	ea 'httpx'
+	sleep 2
 }
 
 
@@ -175,18 +179,6 @@ function SubdomainTools()
 	ea 'ksubdomain'
 	sleep 2
 	
-	### aquatone
-	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download aquatone ${END}"
-	gem > /dev/null 2>&1
-	if [ $? -ne 0 ];then
-		apt -y install ruby > /dev/null 2>&1
-		ea 'ruby'
-	fi
-	gem install aquatone > /dev/null 2>&1
-	mkdir /root/subdomain/aquatone
-	ea 'aquatone'
-	sleep 2
-
 	### chaos
 	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download chaos ${END}"
 	###get version
