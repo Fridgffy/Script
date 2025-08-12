@@ -22,12 +22,12 @@ function ea()
 
 function gathering(){
 	### fierce
-	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start fierce ${END}"
-	fierce --wide --domain $1 >> ${RESULT}fierce 2>&1
-	ea 'fierce'
-	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish fierce \n${END}"
+	# echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start fierce ${END}"
+	# fierce --wide --domain $1 >> ${RESULT}fierce 2>&1
+	# ea 'fierce'
+	# echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish fierce \n${END}"
 	
-	sleep 2
+	# sleep 2
 
 	### ctfr
 	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start ctfr ${END}"
@@ -140,5 +140,5 @@ if [ ${#array[*]} -ne 0 ];then
 fi
 
 
-echo -e "${RED}\nEight tools testing completed! \n${END}"
+echo -e "${RED}\nSeven tools testing completed! \n${END}"
 
