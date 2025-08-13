@@ -211,6 +211,13 @@ function comprehensive()
 	cd /root/comprehensive/spiderfoot && pip install -r requirements.txt > /dev/null 2>&1
 	ea 'pipspiderfoot'
 	sleep 2
+
+	### bbot
+	echo -e "${GREEN}    [ $(date +'%Y-%m-%d %H:%M:%S') ] Download bbot ${END}"
+	mkdir /root/comprehensive/bbot
+	pipx install bbot  > /dev/null 2>&1
+	ea 'bbot'
+	sleep 2
 }
 
 function SubdomainTools()
