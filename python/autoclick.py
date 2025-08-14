@@ -35,7 +35,7 @@ def main():
 	except Exception as e:
 		print(str(e))
 	except KeyboardInterrupt:
-		sys.stdout.write("\n\n谁把我程序给中断了！\n")
+		sys.stdout.write("\n\n谁把我程序给停了！\n")
 
 if __name__ == '__main__':
 	logo = r'''
