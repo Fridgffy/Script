@@ -4,12 +4,13 @@ import re
 import time
 import json
 import csv
+import yaml
 
 # {domain: {CNAME: cname, IP: ip, PORT: port}}
 # deal with value
 def processing(**kwargs):
-	global allvalue
 	try:
+		global allvalue
 		# {'domain':'domain','ip':'ip'}
 		if kwargs.get('domain'):
 			domain = kwargs.get('domain')
@@ -70,19 +71,23 @@ def processing(**kwargs):
 					else:
 						domain_value['port'].append(port_value)
 		else:
-			print(f'Error,no domain value')
+			print(f'[ Error ] kwargs no domain value')
 	except Exception as e:
-		print('Processing: ' + str(e))
+		print('[ Error ] Processing: ' + str(e))
 
 
 # esd
 def esd(path):
-	global alltools
-	if 'ESD' not in alltools:
-		alltools.append('ESD')
-
-	print(f'[ Notice ] ESD: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		# put the processed filename into allfiles
+		allfiles.append(path)
+
+		# put the executed function into alltools
+		if 'ESD' not in alltools:
+			alltools.append('ESD')
+
 		with open(path,'r') as file:
 			for raw in file:
 				data = re.sub(r' +','--',raw.strip())
@@ -97,16 +102,18 @@ def esd(path):
 				processing(**value_dic)
 
 	except Exception as e:
-		print('esd: ' + str(e))
+		print('[ Error ] esd: ' + str(e))
 
 # subdomainbrute
 def subdomainbrute(path):
-	global alltools
-	if 'subdomainbrute' not in alltools:
-		alltools.append('subdomainbrute')
-
-	print(f'[ Notice ] subdomainbrute: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'subdomainbrute' not in alltools:
+			alltools.append('subdomainbrute')
+
 		with open(path,'r') as file:
 			for raw in file:
 				data = re.sub(r' +','--',raw.strip())
@@ -120,16 +127,18 @@ def subdomainbrute(path):
 				value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('subdomainbrute: ' + str(e))
+		print('[ Error ] subdomainbrute: ' + str(e))
 
 # aquatone
 def aquatone(path):
-	global alltools
-	if 'aquatone' not in alltools:
-		alltools.append('aquatone')
-
-	print(f'[ Notice ] aquatone: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'aquatone' not in alltools:
+			alltools.append('aquatone')
+
 		with open(path,'r') as file:
 			data = json.load(file)
 			for domain in data.keys():
@@ -139,16 +148,18 @@ def aquatone(path):
 				processing(**value_dic)
 
 	except Exception as e:
-		print('aquatone: ' + str(e))
+		print('[ Error ] aquatone: ' + str(e))
 
 # fierce
 def fierce(path):
-	global alltools
-	if 'fierce' not in alltools:
-		alltools.append('fierce')
-
-	print(f'[ Notice ] fierce: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'fierce' not in alltools:
+			alltools.append('fierce')
+
 		with open(path,'r') as file:
 			for raw in file:
 				if 'Found' in raw:
@@ -165,15 +176,17 @@ def fierce(path):
 				else:
 					pass
 	except Exception as e:
-		print('fierce: ' + str(e))
+		print('[ Error ] fierce: ' + str(e))
 
 def findomain(path):
-	global alltools
-	if 'findomain' not in alltools:
-		alltools.append('findomain')
-
-	print(f'[ Notice ] findomain: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'findomain' not in alltools:
+			alltools.append('findomain')
+
 		with open(path,'r') as file:
 			for raw in file:
 				data = raw.strip().replace(']','').split(',[')
@@ -187,15 +200,17 @@ def findomain(path):
 				processing(**value_dic)
 							
 	except Exception as e:
-		print('findomain: ' + str(e))
+		print('[ Error ] findomain: ' + str(e))
 
 def chaos(path):
-	global alltools
-	if 'chaos' not in alltools:
-		alltools.append('chaos')
-
-	print(f'[ Notice ] chaos: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'chaos' not in alltools:
+			alltools.append('chaos')
+
 		with open(path,'r') as file:
 			for raw in file:
 				domain = raw.strip().replace('*.','')
@@ -203,15 +218,17 @@ def chaos(path):
 				value_dic = {'domain': domain.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('chaos: ' + str(e))
+		print('[ Error ] chaos: ' + str(e))
 
 def assetfinder(path):
-	global alltools
-	if 'assetfinder' not in alltools:
-		alltools.append('assetfinder')
-
-	print(f'[ Notice ] assetfinder: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'assetfinder' not in alltools:
+			alltools.append('assetfinder')
+
 		with open(path,'r') as file:
 			for raw in file:
 				domain = raw.strip().replace('*.','')
@@ -219,15 +236,17 @@ def assetfinder(path):
 				value_dic = {'domain': domain.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('assetfinder: ' + str(e))
+		print('[ Error ] assetfinder: ' + str(e))
 
 def ctfr(path):
-	global alltools
-	if 'ctfr' not in alltools:
-		alltools.append('ctfr')
-
-	print(f'[ Notice ] ctfr: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'ctfr' not in alltools:
+			alltools.append('ctfr')
+
 		with open(path,'r') as file:
 			for raw in file:
 				domain = raw.strip().replace('*.','')
@@ -235,15 +254,17 @@ def ctfr(path):
 				value_dic = {'domain': domain.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('ctfr: ' + str(e))
+		print('[ Error ] ctfr: ' + str(e))
 
 def github_subdomains(path):
-	global alltools
-	if 'github_subdomains' not in alltools:
-		alltools.append('github_subdomains')
-
-	print(f'[ Notice ] github_subdomains: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'github_subdomains' not in alltools:
+			alltools.append('github_subdomains')
+
 		with open(path,'r') as file:
 			for raw in file:
 				domain = raw.strip().replace('*.','')
@@ -251,15 +272,17 @@ def github_subdomains(path):
 				value_dic = {'domain': domain.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('github_subdomains: ' + str(e))
+		print('[ Error ] github_subdomains: ' + str(e))
 
 def knock(path):
-	global alltools
-	if 'knock' not in alltools:
-		alltools.append('knock')
-
-	print(f'[ Notice ] knock: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'knock' not in alltools:
+			alltools.append('knock')
+
 		with open(path,'r') as file:
 			raw_all = json.load(file)
 			for data in raw_all:
@@ -274,15 +297,47 @@ def knock(path):
 				processing(**value_dic)
 
 	except Exception as e:
-		print('knock: ' + str(e))
+		print('[ Error ] knock: ' + str(e))
+
+def dnsmap(path):
+	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'dnsmap' not in alltools:
+			alltools.append('dnsmap')
+
+		with open(path,'r') as file:
+			raw_all = file.read()
+			raw = re.sub(r'\nIP(|v6) address #\d: ',' ',raw_all)
+			raw = re.sub(r'^\n','',raw)
+			raw_list = raw.split('\n')
+			domain = raw_list[0]
+			for data in raw_list:
+				if data:
+					if 'warning' not in data:
+						data_list = data.split(' ')
+						domain = data_list[0]
+						if len(data_list) > 2:
+							ip = ','.join(data_list[1:])
+						else:
+						 	ip = data_list[1]
+						# dict data
+						value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
+						processing(**value_dic)
+	except Exception as e:
+		print('[ Error ] dnsmap: ' + str(e))
 
 def ksubdomain(path):
-	global alltools
-	if 'ksubdomain' not in alltools:
-		alltools.append('ksubdomain')
-
-	print(f'[ Notice ] ksubdomain: processing file ** {path} **')
 	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+
+		if 'ksubdomain' not in alltools:
+			alltools.append('ksubdomain')
+
 		with open(path, 'r', encoding='utf-8') as file:
 			file = csv.reader(file)
 
@@ -320,88 +375,105 @@ def ksubdomain(path):
 				processing(**value_dic)
 
 	except Exception as e:
-		print('ksubdomain: ' + str(e))
+		print('[ Error ] ksubdomain: ' + str(e))
 
-
-
-def dnsmap(path):
-	global alltools
-	if 'dnsmap' not in alltools:
-		alltools.append('dnsmap')
-
-	print(f'[ Notice ] dnsmap: processing file ** {path} **')
+def subfinder(path):
 	try:
-		with open(path,'r') as file:
-			raw_all = file.read()
-			raw = re.sub(r'\nIP(|v6) address #\d: ',' ',raw_all)
-			raw = re.sub(r'^\n','',raw)
-			raw_list = raw.split('\n')
-			domain = raw_list[0]
-			for data in raw_list:
-				if data:
-					if 'warning' not in data:
-						data_list = data.split(' ')
-						domain = data_list[0]
-						if len(data_list) > 2:
-							ip = ','.join(data_list[1:])
-						else:
-						 	ip = data_list[1]
-						# dict data
-						value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
-						processing(**value_dic)
+		global alltools
+		global allfiles
+		allfiles.append(path)
+		if 'subfinder' not in alltools:
+			alltools.append('subfinder')
+
+		second = []
+		with open(path,'r')as file:
+			for d_all in file:
+				d_list = d_all.strip().replace('.shisu.edu.cn','').split('.')
+				second.append(d_list[-1])
+			for sedomain in set(second):
+				domain = sedomain + '.shisu.edu.cn'
+				# dict data
+				value_dic = {'domain': domain.strip()}
+				processing(**value_dic)
 	except Exception as e:
-		print('dnsmap: ' + str(e))
+		print('[ Error ] subfinder: ' + str(e))
+
+def dnsub(path):
+	try:
+		global alltools
+		global allfiles
+		allfiles.append(path)
+		if 'dnsub' not in alltools:
+			alltools.append('dnsub')
+
+		with open(path, 'r', encoding='utf-8') as file:
+			data_list = csv.reader(file)
+			for i in data_list:
+				domain = i[0].strip()
+				ip = i[1].strip()
+				cname = i[2].strip()
+				# dict data
+				value_dic = {'domain': domain.strip('\ufeff'), 'ip': ip.strip(), 'cname': cname.strip()}
+				processing(**value_dic)
+	except Exception as e:
+		print(f"[ Error ] dnsub: " + str(e))
 
 def tools(ROOT):
 	try:
 		for filename in os.listdir(ROOT):
 			path = os.path.join(ROOT, filename)
-			
-			# judgement file extension
-			name, extension = os.path.splitext(filename)
+			# if filename is file, not a dir
+			if os.path.isfile(path):
+				# judgement file extension
+				name, extension = os.path.splitext(filename)
 
-			if '.esd' in filename:
-				esd(path)
+				if '.esd' in filename:
+					esd(path)
 
-			if 'assetfinder' in filename:
-				assetfinder(path)
+				if 'assetfinder' in filename:
+					assetfinder(path)
 
-			if 'ctfr' in filename:
-				ctfr(path)
+				if 'ctfr' in filename:
+					ctfr(path)
 
-			if 'chaos' in filename:
-				chaos(path)
+				if 'chaos' in filename:
+					chaos(path)
 
-			if 'dnsmap' in filename:
-				dnsmap(path)
+				if 'dnsmap' in filename:
+					dnsmap(path)
 
-			if 'fierce' in filename:
-				fierce(path)
+				if 'fierce' in filename:
+					fierce(path)
 
-			if 'findomain' in filename:
-				findomain(path)
+				if 'findomain' in filename:
+					findomain(path)
 
-			if 'github_subdomains' in filename:
-				github_subdomains(path)
+				if 'github_subdomains' in filename:
+					github_subdomains(path)
 
-			if 'hosts' in filename:
-				aquatone(path)
+				if 'hosts' in filename:
+					aquatone(path)
 
-			if 'subdomainbrute' in filename:
-				subdomainbrute(path)
+				if 'subdomainbrute' in filename:
+					subdomainbrute(path)
 
-			if re.search(r'\d{4}_(\d{2}_)*\d{2}\.json',filename):
-				knock(path)
+				if re.search(r'\d{4}_(\d{2}_)*\d{2}\.json',filename):
+					knock(path)
 
-			if 'ksubdomain' in filename and extension == '.csv':
-				ksubdomain(path)
+				if 'ksubdomain' in filename and extension == '.csv':
+					ksubdomain(path)
+
+				if 'subfinder' in filename:
+					subfinder(path)
+				if 'dnsub' in filename:
+					dnsub(path)
+
 	except Exception as e:
-		print('Tools: ' + str(e))
+		print('[ Error ] Tools: ' + str(e))
 
 def write_in(path):
-	global allvalue
-
 	try:
+		global allvalue
 		with open(path,'w+', newline='') as file:
 			file_write = csv.writer(file)
 			file_write.writerow(['Domain', 'CNAME', 'IP', 'Ports'])
@@ -445,42 +517,25 @@ def write_in(path):
 
 
 	except Exception as e:
-		print('write: ' + str(e))
+		print('[ Error ]  write_in: ' + str(e))
 
-if __name__ == '__main__':
+def main(result,r_file):
 	# {domain: {CNAME: cname, IP: ip, PORT: port}}
+	global alltools
+	global allvalue
+	global allfiles  
 
-	logo = r"""
-______                _ _  ______ _ _      
-| ___ \              | | | |  ___(_) |     
-| |_/ /___  ___ _   _| | |_| |_   _| | ___ 
-|    // _ \/ __| | | | | __|  _| | | |/ _ \
-| |\ \  __/\__ \ |_| | | |_| |   | | |  __/
-\_| \_\___||___/\__,_|_|\__\_|   |_|_|\___|   A total of 12 
-                                           
-                                           
-"""
-                                
-	print(logo)
 	try:
 		allvalue = {}
 		alltools = []
+		allfiles = []
 
-		ROOT = "C:\\Users\\DC\\Desktop\\result\\"
-		result = "C:\\Users\\DC\\Desktop\\"
-		if os.path.exists(ROOT):
-			print('Start subdomain result file processing...\n')
-			
-			tools(ROOT)
-			write_in(result + 'result.csv')
+		tools(result)
+		write_in(r_file)
 
-			print(f'\n[ SUCCESS ] All files has been processed, a total of {len(alltools)} : \n\t{alltools} \n')
-			print(f"[ OUTPUT ] Save csv output  to {result}result.csv): \n")
-		else:
-			print("[ Error ] Result file does not exists")
-			sys.exit(1)
+		return alltools,allfiles
 	except Exception as e:
-		print('Main: ' + str(e))
+		print('[ Error ]  Main: ' + str(e))
 	except KeyboardInterrupt:
 		sys.stdout.write("\n\nWho stopped my program!\n")
 	
