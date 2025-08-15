@@ -65,25 +65,21 @@ def runtools_config_value(config_pathname):
 		print('[ Error ]  main -> main_config_value: ' + str(e))
 		sys.exit(1)
 
-# determine result dir is empty
-# def judge_result_dir(result):
-# 	try:
-# 		# if result dir not empty
-# 		if not os.listdir(result):
-# 			return True
-# 		else:
-# 			print('[ Error ] result dir is not empty!')
-# 			sys.exit(1)
-# 	except Exception as e:
-# 		print('[ Error ] main -> judge_result_dir: ' + str(e))
-# 		sys.exit(1)
-
 # call module Toolsdata and deal with result data
-def Runtool(interval, r_path, o_path):
+def Runtool(interval, r_path, o_path, shell_path):
 	try:
-		Runtools.main(interval, r_path, o_path)
+		if os.path.exists(shell_path):
+			# if result dir not empty
+			if not os.listdir(r_path):
+				Runtools.main(interval, r_path, o_path, shell_path)
+			else:
+				print('[ Error ] result dir is not empty')
+				sys.exit(1)
+		else:
+			print('[ Error ] shell dir does not exists')
+			sys.exit(1)
 	except Exception as e:
-		print('[ Error ] main -> runtool: ' + str(e))
+		print('[ Error ] main -> Runtool: ' + str(e))
 
 # call module Toolsdata and deal with result data
 def Toolsdataprocess(r_path):
@@ -109,21 +105,27 @@ def Toolsdataprocess(r_path):
 		print('[ Error ] main -> Toolsdataprocess: ' + str(e))
 
 def output_file(r_pathname):
-	# write in result file
-	output.write_in(r_pathname)
+	try:
+		# write in result file
+		output.write_in(r_pathname)
+	except Exception as e:
+		print('[ Error ] main -> output_file: ' + str(e))
 
 if __name__ == '__main__':
 	try:
 		# get path configuration
 		config_pathname = './configs/config.yml'
-		if judge_config_pathname(config_pathname):
-			# r_path: result path; o_path: output path; r_name: result file name; r_pathname: result path + filename
-			r_path, o_path, r_name = main_config_value(config_pathname)
-			r_pathname = os.path.join(o_path, r_name)
+		judge_config_pathname(config_pathname)
 
-			interval = runtools_config_value(config_pathname)
+		### output value
+		# r_path: result path; o_path: output path; r_name: result file name; r_pathname: result path + filename
+		r_path, o_path, r_name = main_config_value(config_pathname)
+		r_pathname = os.path.join(o_path, r_name)
 
-			Runtools.main(interval, r_path, o_path)
+		### tools value
+		interval = runtools_config_value(config_pathname)
+		shell_path = './shell/'
+		Runtool(interval, r_path, o_path, shell_path)
 
 		# Toolsdataprocess(r_path)
 
