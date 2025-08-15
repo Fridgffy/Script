@@ -66,6 +66,6 @@ def process(**kwargs):
 					else:
 						domain_value['port'].append(port_value)
 		else:
-			print(f' [ Error ] process -> kwargs no domain value')
+			print(f' [ Error ] processdata -> kwargs no domain value')
 	except Exception as e:
-		print(' [ Error ] Processing -> process: ' + str(e))
+		print(' [ Error ] processdata -> process: ' + str(e))

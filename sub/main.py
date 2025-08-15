@@ -5,11 +5,22 @@ from modules import Toolsdata, Runtools, output
 
 
 # determine configuration file and configuration value
-def judgement(path):
+def judge_config_pathname(config_pathname):
 	try:
 		# if config file exists
-		if os.path.exists(path):
-			with open(path,'r')as config_file:
+		if os.path.exists(config_pathname):
+			return True
+		else:
+			print('[ Error ] File config.yml does not exist')
+			sys.exit(1)
+	except Exception as e:
+		print('[ Error ]  main -> judge_config_pathname: ' + str(e))
+		sys.exit(1)
+
+# get configuration -> main
+def main_config_value(config_pathname):
+	try:
+		with open(config_pathname,'r')as config_file:
 				config_dict = yaml.safe_load(config_file)
 				config = config_dict.get('main')
 				r_path = config.get('r_path')
@@ -26,22 +37,51 @@ def judgement(path):
 							print('[ Error ] The result file must be .csv')
 							sys.exit(1)
 					else:
-						print('[ Error ] The result or output configuration value does not exist')
+						print('[ Error ] The "result" or "output" configuration value does not exist')
 						sys.exit(1)
 				else:
-					print('[ Error ] Output/result must be configurd！')
+					print('[ Error ] "Output" or "result" must be configurd！')
 					sys.exit(1)
-		else:
-			print('[ Error ] File config.yml does not exist')
-			sys.exit(1)
 	except Exception as e:
-		print('[ Error ]  main -> judgement: ' + str(e))
+		print('[ Error ]  main -> main_config_value: ' + str(e))
 		sys.exit(1)
 
-# call module Toolsdata and deal with result data
-def Runtool(result):
+# get configuration -> Runtools
+def runtools_config_value(config_pathname):
 	try:
-		Runtools.main(result)
+		with open(config_pathname,'r')as config_file:
+			config_dict = yaml.safe_load(config_file)
+			config = config_dict.get('Runtools')
+
+			interval = config.get('interval')
+
+			# determine configuration value
+			if interval:
+				return interval
+			else:
+				print('[ Error ] "interval" must be configurd！')
+				sys.exit(1)
+	except Exception as e:
+		print('[ Error ]  main -> main_config_value: ' + str(e))
+		sys.exit(1)
+
+# determine result dir is empty
+# def judge_result_dir(result):
+# 	try:
+# 		# if result dir not empty
+# 		if not os.listdir(result):
+# 			return True
+# 		else:
+# 			print('[ Error ] result dir is not empty!')
+# 			sys.exit(1)
+# 	except Exception as e:
+# 		print('[ Error ] main -> judge_result_dir: ' + str(e))
+# 		sys.exit(1)
+
+# call module Toolsdata and deal with result data
+def Runtool(interval, r_path, o_path):
+	try:
+		Runtools.main(interval, r_path, o_path)
 	except Exception as e:
 		print('[ Error ] main -> runtool: ' + str(e))
 
@@ -75,26 +115,20 @@ def output_file(r_pathname):
 if __name__ == '__main__':
 	try:
 		# get path configuration
-		config_path = './configs/config.yml'
-		# judgement and get configuration value
-		'''
-		r_path: result path
-		o_path: output path
-		r_name: result file name
-		r_pathname: result path + filename
+		config_pathname = './configs/config.yml'
+		if judge_config_pathname(config_pathname):
+			# r_path: result path; o_path: output path; r_name: result file name; r_pathname: result path + filename
+			r_path, o_path, r_name = main_config_value(config_pathname)
+			r_pathname = os.path.join(o_path, r_name)
 
-		'''
-		r_path, o_path, r_name = judgement(config_path)
-		r_pathname = os.path.join(o_path, r_name)
+			interval = runtools_config_value(config_pathname)
 
+			Runtools.main(interval, r_path, o_path)
 
-		# Runtools.main(result)
-		
-		
-		Toolsdataprocess(r_path)
+		# Toolsdataprocess(r_path)
 
 		# call module output
-		output_file(r_pathname)
+		# output_file(r_pathname)
 
 	except Exception as e:
 		print('[ Error ] main -> main: ' + str(e))

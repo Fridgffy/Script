@@ -4,3 +4,6 @@ main:
  r_path: C:\Users\DC\Desktop\result\
  #r_path: /root/result/
  r_name: result.csv
+
+Runtools:
+  interval: 3

@@ -1,0 +1,1 @@
+@echo 1 > C:\\users\\dc\\desktop\\2
