@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+
+### set color variable
+GREEN='\033[1;32m'
+RED='\033[1;31m'
+YELLO='\033[1;33m'
+END='\033[0m'
+
+### Set Constants
+SUBDOMAIN=/root/subdomain/
+RESULT=/root/result/
+
+### ErrorArray funtion
+function ea()
+{
+	if [ $? -ne 0 ];then
+		array[${#array[*]}]="$1"
+	fi
+}
+
+### subdomain gathering function
+
+function gathering(){
+	### fierce
+	# echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start fierce ${END}"
+	# fierce --wide --domain $1 >> ${RESULT}fierce 2>&1
+	# ea 'fierce'
+	# echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish fierce \n${END}"
+	
+	# sleep 2
+
+	### ctfr
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start ctfr ${END}"
+	ctfr -d $1 -o ${RESULT}ctfr >> ${RESULT}output 2>&1
+	ea 'ctfr'
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish ctfr \n${END}"
+
+	sleep 2
+
+	### assetfinder
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start assetfinder ${END}"
+	assetfinder $1 >> ${RESULT}assetfinder 2>&1
+	ea 'assetfinder'
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish assetfinder \n${END}"
+
+	sleep 2
+
+	### subfinder_nodns
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start subfinder_nodns ${END}"
+	subfinder -d $1 --all -o ${RESULT}subfinder_nodns >> ${RESULT}output 2>&1
+	ea 'subfinder_nodns'
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish subfinder_nodns \n${END}"
+
+	sleep 2
+
+	### subfinder_dns
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start subfinder_dns ${END}"
+	subfinder -d $1 --all -o ${RESULT}subfinder_dns -r 8.8.8.8,223.6.6.6,180.76.76.76,1.1.1.1 >> ${RESULT}output 2>&1
+	ea 'subfinder'
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish subfinder_dns \n${END}"
+
+	sleep 2
+
+	### knock
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start knock ${END}"
+	knock --useragent "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)" --recon --bruteforce -d $1 --save ${RESULT} >> ${RESULT}output 2>&1
+	ea 'knock'
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish knock \n${END}"
+
+	sleep 2
+
+	### findomain
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start findomain ${END}"
+	findomain --ua ${SUBDOMAIN}findomain/ua  --pscan -t $1 -u ${RESULT}findomain >> ${RESULT}output 2>&1
+	ea 'findomain'
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish findomain \n${END}"
+
+	sleep 2
+
+	### dnsmap
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Start dnsmap ${END}"
+	dnsmap $1 -r ${RESULT}dnsmap >> ${RESULT}output 2>&1
+	ea 'dnsmap'
+	echo -e "${GREEN}[ $(date +'%Y-%m-%d %H:%M:%S') ] Finish dnsmap \n${END}"
+
+	sleep 2
+}
+
+
+
+function CycleArray()
+{
+	for i in ${array[*]}
+	do
+		echo $i
+	done
+}
+
+cat << 'EOF'
+______ _           _           _     
+|  ___(_)         | |         | |    
+| |_   _ _ __   __| |___ _   _| |__  
+|  _| | | '_ \ / _` / __| | | | '_ \ 
+| |   | | | | | (_| \__ \ |_| | |_) |
+\_|   |_|_| |_|\__,_|___/\__,_|_.__/ 
+
+EOF
+
+if [ $# -eq 0 ];then
+	echo -e "${RED}[ Error ]: Enter the paramter -d! \n${END}"
+	exit 1
+fi
+
+while getopts  ":d:" opt;do
+	case $opt in
+		d)
+			echo -e "${YELLO}[ Notice ]: Target domain: ${OPTARG} \n${END}"
+			domain=${OPTARG}
+			;;
+		\?)
+			echo -e "${RED}[ Error ]: Invalid option -${OPTARG}! \n${END}"
+			exit 1
+			;;
+		:)
+			echo -e "${RED}[ Error ]: Provide a target domain name! \n${END}"
+			exit 1
+			;;
+	esac
+done
+shift $((OPTIND - 1))
+
+echo -e "${RED}Start subdimain gathering \n${END}"
+
+gathering $domain
+
+
+if [ ${#array[*]} -ne 0 ];then
+	echo -e "${RED}Error \n${END}"
+	CycleArray
+fi
+
+
+echo -e "${RED}\nSeven tools testing completed! \n${END}"
+

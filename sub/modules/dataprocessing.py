@@ -71,9 +71,9 @@ def processing(**kwargs):
 					else:
 						domain_value['port'].append(port_value)
 		else:
-			print(f'[ Error ] kwargs no domain value')
+			print(f' [ Error ] dataprocessing -> kwargs no domain value')
 	except Exception as e:
-		print('[ Error ] Processing: ' + str(e))
+		print(' [ Error ] dataprocessing -> Processing: ' + str(e))
 
 
 # esd
@@ -102,7 +102,7 @@ def esd(path):
 				processing(**value_dic)
 
 	except Exception as e:
-		print('[ Error ] esd: ' + str(e))
+		print(' [ Error ] dataprocessing -> esd: ' + str(e))
 
 # subdomainbrute
 def subdomainbrute(path):
@@ -127,7 +127,7 @@ def subdomainbrute(path):
 				value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('[ Error ] subdomainbrute: ' + str(e))
+		print(' [ Error ] dataprocessing -> subdomainbrute: ' + str(e))
 
 # aquatone
 def aquatone(path):
@@ -148,7 +148,7 @@ def aquatone(path):
 				processing(**value_dic)
 
 	except Exception as e:
-		print('[ Error ] aquatone: ' + str(e))
+		print(' [ Error ] dataprocessing -> aquatone: ' + str(e))
 
 # fierce
 def fierce(path):
@@ -176,7 +176,7 @@ def fierce(path):
 				else:
 					pass
 	except Exception as e:
-		print('[ Error ] fierce: ' + str(e))
+		print(' [ Error ] dataprocessing -> fierce: ' + str(e))
 
 def findomain(path):
 	try:
@@ -200,7 +200,7 @@ def findomain(path):
 				processing(**value_dic)
 							
 	except Exception as e:
-		print('[ Error ] findomain: ' + str(e))
+		print(' [ Error ] dataprocessing -> findomain: ' + str(e))
 
 def chaos(path):
 	try:
@@ -218,7 +218,7 @@ def chaos(path):
 				value_dic = {'domain': domain.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('[ Error ] chaos: ' + str(e))
+		print(' [ Error ] dataprocessing -> chaos: ' + str(e))
 
 def assetfinder(path):
 	try:
@@ -236,7 +236,7 @@ def assetfinder(path):
 				value_dic = {'domain': domain.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('[ Error ] assetfinder: ' + str(e))
+		print(' [ Error ] dataprocessing -> assetfinder: ' + str(e))
 
 def ctfr(path):
 	try:
@@ -254,7 +254,7 @@ def ctfr(path):
 				value_dic = {'domain': domain.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('[ Error ] ctfr: ' + str(e))
+		print(' [ Error ] dataprocessing -> ctfr: ' + str(e))
 
 def github_subdomains(path):
 	try:
@@ -272,7 +272,7 @@ def github_subdomains(path):
 				value_dic = {'domain': domain.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('[ Error ] github_subdomains: ' + str(e))
+		print(' [ Error ] dataprocessing -> github_subdomains: ' + str(e))
 
 def knock(path):
 	try:
@@ -297,7 +297,7 @@ def knock(path):
 				processing(**value_dic)
 
 	except Exception as e:
-		print('[ Error ] knock: ' + str(e))
+		print(' [ Error ] dataprocessing -> knock: ' + str(e))
 
 def dnsmap(path):
 	try:
@@ -327,7 +327,7 @@ def dnsmap(path):
 						value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
 						processing(**value_dic)
 	except Exception as e:
-		print('[ Error ] dnsmap: ' + str(e))
+		print(' [ Error ] dataprocessing -> dnsmap: ' + str(e))
 
 def ksubdomain(path):
 	try:
@@ -375,7 +375,7 @@ def ksubdomain(path):
 				processing(**value_dic)
 
 	except Exception as e:
-		print('[ Error ] ksubdomain: ' + str(e))
+		print(' [ Error ] dataprocessing -> ksubdomain: ' + str(e))
 
 def subfinder(path):
 	try:
@@ -396,7 +396,7 @@ def subfinder(path):
 				value_dic = {'domain': domain.strip()}
 				processing(**value_dic)
 	except Exception as e:
-		print('[ Error ] subfinder: ' + str(e))
+		print(' [ Error ] dataprocessing -> subfinder: ' + str(e))
 
 def dnsub(path):
 	try:
@@ -469,7 +469,7 @@ def tools(ROOT):
 					dnsub(path)
 
 	except Exception as e:
-		print('[ Error ] Tools: ' + str(e))
+		print(' [ Error ] dataprocessing -> Tools: ' + str(e))
 
 def write_in(path):
 	try:
@@ -517,10 +517,11 @@ def write_in(path):
 
 
 	except Exception as e:
-		print('[ Error ]  write_in: ' + str(e))
+		print(' [ Error ] dataprocessing ->  write_in: ' + str(e))
 
 def main(result,r_file):
 	# {domain: {CNAME: cname, IP: ip, PORT: port}}
+	# global variables
 	global alltools
 	global allvalue
 	global allfiles  
@@ -530,12 +531,14 @@ def main(result,r_file):
 		alltools = []
 		allfiles = []
 
+		# perform tools function 
 		tools(result)
+		# write in result file
 		write_in(r_file)
 
 		return alltools,allfiles
 	except Exception as e:
-		print('[ Error ]  Main: ' + str(e))
+		print(' [ Error ] dataprocessing ->  Main: ' + str(e))
 	except KeyboardInterrupt:
 		sys.stdout.write("\n\nWho stopped my program!\n")
 	

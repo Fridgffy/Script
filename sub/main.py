@@ -1,10 +1,14 @@
 import sys
 import os
 import yaml
-import dataprocessing
+from modules import dataprocessing
+from modules import runtools
 
+
+# determine configuration file and configuration value
 def judgement(path):
 	try:
+		# if config file exists
 		if os.path.exists(path):
 			with open(path,'r')as config_file:
 				config = yaml.safe_load(config_file)
@@ -13,6 +17,7 @@ def judgement(path):
 				output = dadaprocessing_config.get('output')
 				r_name = dadaprocessing_config.get('result_filename')
 
+				# determine configuration value
 				if result and output and r_name:
 					if os.path.exists(result) and os.path.exists(output):
 						name,extension = os.path.splitext(r_name)
@@ -31,14 +36,10 @@ def judgement(path):
 			print('[ Error ] File config.yml does not exist')
 			sys.exit(1)
 	except Exception as e:
-		print(str(e))
+		print('[ Error ]  main.py -> judgement: ' + str(e))
 		sys.exit(1)
-
-if __name__ == '__main__':
+def processing(result,result_file):
 	try:
-		config_path = './config.yml'
-		result,output,r_name = judgement(config_path)
-		result_file = os.path.join(output, r_name)
 		alltools,allfiles = dataprocessing.main(result, result_file)
 		total = len(alltools)
 		if total == 14:
@@ -55,6 +56,29 @@ if __name__ == '__main__':
 					if 'is not in list' in str(e):
 						print(f'[ Error ] {t} an error occurred')
 	except Exception as e:
-		print(str(e))
+		print('[ Error ] main.py -> processing: ' + str(e))
+
+def runtool(result):
+	try:
+		runtools.main(result)
+	except Exception as e:
+		print('[ Error ] main.py -> runtool: ' + str(e))
+
+
+if __name__ == '__main__':
+	try:
+		# get path configuration
+		config_path = './config.yml'
+		# judgement and get value
+		result,output,r_name = judgement(config_path)
+		result_file = os.path.join(output, r_name)
+
+		# processing function
+		processing(result,result_file)
+		
+		# runtools function 
+		# runtools.main(result)
+	except Exception as e:
+		print('[ Error ] main.py -> main: ' + str(e))
 		sys.exit(1)
 
