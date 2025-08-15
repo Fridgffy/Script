@@ -1,12 +1,10 @@
 import sys
 import os
 import re
-import time
 import json
 import csv
-import yaml
 
-# {domain: {CNAME: cname, IP: ip, PORT: port}}
+# allvalue: {domain: {'cname': [cname], 'ip': [ip], 'port': [port]},}
 # deal with value
 def processing(**kwargs):
 	try:
@@ -471,55 +469,7 @@ def tools(ROOT):
 	except Exception as e:
 		print(' [ Error ] dataprocessing -> Tools: ' + str(e))
 
-def write_in(path):
-	try:
-		global allvalue
-		with open(path,'w+', newline='') as file:
-			file_write = csv.writer(file)
-			file_write.writerow(['Domain', 'CNAME', 'IP', 'Ports'])
-			# format data
-			for domain in allvalue.keys():
-				value_dic = allvalue.get(domain)
-				cips = []
-				for keys in value_dic.keys():
-					cips.append(keys)
-				all_value = ''.join(cips)
-				if 'ip' in all_value:
-					if value_dic.get('ip'):
-						ip = value_dic.get('ip')
-						ip = ','.join(set(ip))
-					else:
-						ip = ''
-				else:
-					ip = ''
-				if 'cname' in all_value:
-					if value_dic.get('cname'):
-						cname = value_dic.get('cname')
-						cname = ','.join(set(cname))
-					else:
-						cname = ''
-				else:
-					cname = ''
-				if 'port' in all_value:
-					if value_dic.get('port'):
-						port = value_dic.get('port')
-						port = ','.join(set(port))
-					else:
-						port = ''
-				else:
-					port = ''
-				
-				write_data = [domain, cname, ip, port]
-
-				# write data
-				file_write.writerow(write_data)
-				# print(write_data)
-
-
-	except Exception as e:
-		print(' [ Error ] dataprocessing ->  write_in: ' + str(e))
-
-def main(result,r_file):
+def main(r_path):
 	# {domain: {CNAME: cname, IP: ip, PORT: port}}
 	# global variables
 	global alltools
@@ -532,11 +482,9 @@ def main(result,r_file):
 		allfiles = []
 
 		# perform tools function 
-		tools(result)
-		# write in result file
-		write_in(r_file)
+		tools(r_path)
 
-		return alltools,allfiles
+		return alltools, allfiles, allvalue
 	except Exception as e:
 		print(' [ Error ] dataprocessing ->  Main: ' + str(e))
 	except KeyboardInterrupt:

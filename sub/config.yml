@@ -1,6 +1,0 @@
-dataprocessing:
- output: C:\Users\DC\Desktop\
- #output: /root/
- result: C:\Users\DC\Desktop\result\
- #result: /root/result/
- result_filename: result.csv

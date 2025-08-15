@@ -1,8 +1,7 @@
 import sys
 import os
 import yaml
-from modules import dataprocessing
-from modules import runtools
+from modules import dataprocessing, runtools, output
 
 
 # determine configuration file and configuration value
@@ -11,18 +10,18 @@ def judgement(path):
 		# if config file exists
 		if os.path.exists(path):
 			with open(path,'r')as config_file:
-				config = yaml.safe_load(config_file)
-				dadaprocessing_config = config.get('dataprocessing')
-				result = dadaprocessing_config.get('result')
-				output = dadaprocessing_config.get('output')
-				r_name = dadaprocessing_config.get('result_filename')
+				config_dict = yaml.safe_load(config_file)
+				config = config_dict.get('main')
+				r_path = config.get('r_path')
+				o_path = config.get('o_path')
+				r_name = config.get('r_name')
 
 				# determine configuration value
-				if result and output and r_name:
-					if os.path.exists(result) and os.path.exists(output):
+				if r_path and o_path and r_name:
+					if os.path.exists(r_path) and os.path.exists(o_path):
 						name,extension = os.path.splitext(r_name)
 						if extension == ".csv":
-							return result,output,r_name
+							return r_path, o_path, r_name
 						else:
 							print('[ Error ] The result file must be .csv')
 							sys.exit(1)
@@ -36,13 +35,22 @@ def judgement(path):
 			print('[ Error ] File config.yml does not exist')
 			sys.exit(1)
 	except Exception as e:
-		print('[ Error ]  main.py -> judgement: ' + str(e))
+		print('[ Error ]  main -> judgement: ' + str(e))
 		sys.exit(1)
-def processing(result,result_file):
+
+def runtool(result):
 	try:
-		alltools,allfiles = dataprocessing.main(result, result_file)
+		runtools.main(result)
+	except Exception as e:
+		print('[ Error ] main -> runtool: ' + str(e))
+
+def processing(r_path):
+	try:
+		alltools, allfiles, allvalue = dataprocessing.main(r_path)
 		total = len(alltools)
+		# determine all tools perform
 		if total == 14:
+			# print processed files
 			print('[ Processing files ]')
 			for file in allfiles:
 				print(file)
@@ -55,30 +63,40 @@ def processing(result,result_file):
 				except Exception as e:
 					if 'is not in list' in str(e):
 						print(f'[ Error ] {t} an error occurred')
+		# return dict data
+		return allvalue
 	except Exception as e:
-		print('[ Error ] main.py -> processing: ' + str(e))
+		print('[ Error ] main -> processing: ' + str(e))
 
-def runtool(result):
-	try:
-		runtools.main(result)
-	except Exception as e:
-		print('[ Error ] main.py -> runtool: ' + str(e))
-
+def output_file(r_pathname,allvalue):
+	# write in result file
+	output.write_in(r_pathname,allvalue)
 
 if __name__ == '__main__':
 	try:
 		# get path configuration
-		config_path = './config.yml'
-		# judgement and get value
-		result,output,r_name = judgement(config_path)
-		result_file = os.path.join(output, r_name)
+		config_path = './config/config.yml'
+		# judgement and get configuration value
+		'''
+		r_path: result path
+		o_path: output path
+		r_name: result file name
+		r_pathname: result path + filename
 
-		# processing function
-		processing(result,result_file)
-		
-		# runtools function 
+		'''
+		r_path, o_path, r_name = judgement(config_path)
+		r_pathname = os.path.join(o_path, r_name)
+
+		# call module dataprocessing and deal with result data
 		# runtools.main(result)
+		
+		# call module dataprocessing and deal with result data
+		allvalue = processing(r_path)
+		print(allvalue)
+		# call module output
+		# output_file(r_pathname,allvalue)
+
 	except Exception as e:
-		print('[ Error ] main.py -> main: ' + str(e))
+		print('[ Error ] main -> main: ' + str(e))
 		sys.exit(1)
 

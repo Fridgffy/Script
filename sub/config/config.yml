@@ -1,0 +1,6 @@
+main:
+ o_path: C:\Users\DC\Desktop\
+ #o_path: /root/
+ r_path: C:\Users\DC\Desktop\result\
+ #r_path: /root/result/
+ r_name: result.csv
