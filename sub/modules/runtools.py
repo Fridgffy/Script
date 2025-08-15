@@ -38,7 +38,7 @@ def start(shell_file, interval, r_path, o_path, p_path, shell_path, target):
 # main
 def main(interval, r_path, o_path, p_path, target):
 	try:
-		shell_path = os.path.join(p_path, 'shell')
+		shell_path = os.path.join(p_path, 'shells')
 		for shell_file in os.listdir(shell_path):
 			start(shell_file, interval, r_path, o_path, p_path, shell_path, target)
 		# start function 
