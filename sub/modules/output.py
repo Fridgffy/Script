@@ -1,7 +1,9 @@
 import csv
+from . import allvalue_dict
 
-def write_in(r_pathname, allvalue):
+def write_in(r_pathname,):
 	try:
+		allvalue = allvalue_dict.allvalue
 		with open(r_pathname,'w+', newline='') as file:
 			file_write = csv.writer(file)
 			file_write.writerow(['Domain', 'CNAME', 'IP', 'Ports'])

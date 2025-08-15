@@ -1,7 +1,7 @@
 import sys
 import os
 import yaml
-from modules import dataprocessing, runtools, output
+from modules import Toolsdata, Runtools, output
 
 
 # determine configuration file and configuration value
@@ -38,15 +38,17 @@ def judgement(path):
 		print('[ Error ]  main -> judgement: ' + str(e))
 		sys.exit(1)
 
-def runtool(result):
+# call module Toolsdata and deal with result data
+def Runtool(result):
 	try:
-		runtools.main(result)
+		Runtools.main(result)
 	except Exception as e:
 		print('[ Error ] main -> runtool: ' + str(e))
 
-def processing(r_path):
+# call module Toolsdata and deal with result data
+def Toolsdataprocess(r_path):
 	try:
-		alltools, allfiles, allvalue = dataprocessing.main(r_path)
+		alltools, allfiles = Toolsdata.main(r_path)
 		total = len(alltools)
 		# determine all tools perform
 		if total == 14:
@@ -63,19 +65,17 @@ def processing(r_path):
 				except Exception as e:
 					if 'is not in list' in str(e):
 						print(f'[ Error ] {t} an error occurred')
-		# return dict data
-		return allvalue
 	except Exception as e:
-		print('[ Error ] main -> processing: ' + str(e))
+		print('[ Error ] main -> Toolsdataprocess: ' + str(e))
 
-def output_file(r_pathname,allvalue):
+def output_file(r_pathname):
 	# write in result file
-	output.write_in(r_pathname,allvalue)
+	output.write_in(r_pathname)
 
 if __name__ == '__main__':
 	try:
 		# get path configuration
-		config_path = './config/config.yml'
+		config_path = './configs/config.yml'
 		# judgement and get configuration value
 		'''
 		r_path: result path
@@ -87,14 +87,14 @@ if __name__ == '__main__':
 		r_path, o_path, r_name = judgement(config_path)
 		r_pathname = os.path.join(o_path, r_name)
 
-		# call module dataprocessing and deal with result data
-		# runtools.main(result)
+
+		# Runtools.main(result)
 		
-		# call module dataprocessing and deal with result data
-		allvalue = processing(r_path)
-		print(allvalue)
+		
+		Toolsdataprocess(r_path)
+
 		# call module output
-		# output_file(r_pathname,allvalue)
+		output_file(r_pathname)
 
 	except Exception as e:
 		print('[ Error ] main -> main: ' + str(e))

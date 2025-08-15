@@ -3,76 +3,7 @@ import os
 import re
 import json
 import csv
-
-# allvalue: {domain: {'cname': [cname], 'ip': [ip], 'port': [port]},}
-# deal with value
-def processing(**kwargs):
-	try:
-		global allvalue
-		# {'domain':'domain','ip':'ip'}
-		if kwargs.get('domain'):
-			domain = kwargs.get('domain')
-			# if domain exists, dict remains unchanged, otherwise create it
-			allvalue.setdefault(domain,{})
-
-			# determine whether there is specific key
-			if 'cname' in kwargs.keys():
-				# if cname exists, do nothing ,otherwise assign a empty list
-				domain_value = allvalue[domain]
-				domain_value.setdefault('cname',[])
-				cname_value = kwargs['cname'].replace('CNAME ','')
-				if cname_value.strip():
-					if ',' in cname_value:
-						cnames = cname_value.strip().split(',')
-						for cname in cnames:
-							# if new cname value in the list
-							if cname:
-								if cname in domain_value['cname']:
-									pass
-								else:
-									domain_value['cname'].append(cname)
-					else:
-						domain_value['cname'].append(cname_value)
-
-			if 'ip' in kwargs.keys():
-				domain_value = allvalue[domain]
-				domain_value.setdefault('ip',[])
-				ip_value = kwargs['ip']
-				# determine if ip in kwargs is a list
-				if ip_value:
-					if ',' in ip_value.strip():
-						ips = ip_value.strip().split(',')
-						for ip in ips:
-							if ip:
-								if ip in domain_value['ip']:
-									pass
-								else:
-									domain_value['ip'].append(ip.strip())
-
-					# ip in kwargs is a string
-					else:
-						domain_value['ip'].append(ip_value)
-
-			if 'port' in kwargs.keys():
-				domain_value = allvalue[domain]
-				domain_value.setdefault('port',[])
-				port_value = kwargs['port']
-				if port_value.strip():
-					if ',' in port_value:
-						ports = port_value.strip().split(',')
-						for port in ports:
-							if port:
-								if port in domain_value['port']:
-									pass
-								else:
-									domain_value['port'].append(port)
-					else:
-						domain_value['port'].append(port_value)
-		else:
-			print(f' [ Error ] dataprocessing -> kwargs no domain value')
-	except Exception as e:
-		print(' [ Error ] dataprocessing -> Processing: ' + str(e))
-
+from . import processdata
 
 # esd
 def esd(path):
@@ -97,10 +28,10 @@ def esd(path):
 					ip = data_list[1]
 				# dict data
 				value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> esd: ' + str(e))
+		print(' [ Error ] Toolsdata -> esd: ' + str(e))
 
 # subdomainbrute
 def subdomainbrute(path):
@@ -123,9 +54,9 @@ def subdomainbrute(path):
 					ip = data_list[1]
 				# dict data
 				value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> subdomainbrute: ' + str(e))
+		print(' [ Error ] Toolsdata -> subdomainbrute: ' + str(e))
 
 # aquatone
 def aquatone(path):
@@ -143,10 +74,10 @@ def aquatone(path):
 				ip = data[domain]
 				# dict data
 				value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> aquatone: ' + str(e))
+		print(' [ Error ] Toolsdata -> aquatone: ' + str(e))
 
 # fierce
 def fierce(path):
@@ -170,11 +101,11 @@ def fierce(path):
 						ip = data[1]
 					# dict data
 					value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
-					processing(**value_dic)
+					processdata.process(**value_dic)
 				else:
 					pass
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> fierce: ' + str(e))
+		print(' [ Error ] Toolsdata -> fierce: ' + str(e))
 
 def findomain(path):
 	try:
@@ -195,10 +126,10 @@ def findomain(path):
 					port = data[1]
 				# dict data
 				value_dic = {'domain': domain.strip(), 'port': port.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 							
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> findomain: ' + str(e))
+		print(' [ Error ] Toolsdata -> findomain: ' + str(e))
 
 def chaos(path):
 	try:
@@ -214,9 +145,9 @@ def chaos(path):
 				domain = raw.strip().replace('*.','')
 				# dict data
 				value_dic = {'domain': domain.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> chaos: ' + str(e))
+		print(' [ Error ] Toolsdata -> chaos: ' + str(e))
 
 def assetfinder(path):
 	try:
@@ -232,9 +163,9 @@ def assetfinder(path):
 				domain = raw.strip().replace('*.','')
 				# dict data
 				value_dic = {'domain': domain.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> assetfinder: ' + str(e))
+		print(' [ Error ] Toolsdata -> assetfinder: ' + str(e))
 
 def ctfr(path):
 	try:
@@ -250,9 +181,9 @@ def ctfr(path):
 				domain = raw.strip().replace('*.','')
 				# dict data
 				value_dic = {'domain': domain.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> ctfr: ' + str(e))
+		print(' [ Error ] Toolsdata -> ctfr: ' + str(e))
 
 def github_subdomains(path):
 	try:
@@ -268,9 +199,9 @@ def github_subdomains(path):
 				domain = raw.strip().replace('*.','')
 				# dict data
 				value_dic = {'domain': domain.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> github_subdomains: ' + str(e))
+		print(' [ Error ] Toolsdata -> github_subdomains: ' + str(e))
 
 def knock(path):
 	try:
@@ -292,10 +223,10 @@ def knock(path):
 					ip = ips[0]
 				# dict data
 				value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> knock: ' + str(e))
+		print(' [ Error ] Toolsdata -> knock: ' + str(e))
 
 def dnsmap(path):
 	try:
@@ -323,9 +254,9 @@ def dnsmap(path):
 						 	ip = data_list[1]
 						# dict data
 						value_dic = {'domain': domain.strip(), 'ip': ip.strip()}
-						processing(**value_dic)
+						processdata.process(**value_dic)
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> dnsmap: ' + str(e))
+		print(' [ Error ] Toolsdata -> dnsmap: ' + str(e))
 
 def ksubdomain(path):
 	try:
@@ -370,10 +301,10 @@ def ksubdomain(path):
 					pass
 				# dict data
 				value_dic = {'domain': domain.strip(), 'ip': ip.strip(), 'cname': cname.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> ksubdomain: ' + str(e))
+		print(' [ Error ] Toolsdata -> ksubdomain: ' + str(e))
 
 def subfinder(path):
 	try:
@@ -392,9 +323,9 @@ def subfinder(path):
 				domain = sedomain + '.shisu.edu.cn'
 				# dict data
 				value_dic = {'domain': domain.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> subfinder: ' + str(e))
+		print(' [ Error ] Toolsdata -> subfinder: ' + str(e))
 
 def dnsub(path):
 	try:
@@ -412,7 +343,7 @@ def dnsub(path):
 				cname = i[2].strip()
 				# dict data
 				value_dic = {'domain': domain.strip('\ufeff'), 'ip': ip.strip(), 'cname': cname.strip()}
-				processing(**value_dic)
+				processdata.process(**value_dic)
 	except Exception as e:
 		print(f"[ Error ] dnsub: " + str(e))
 
@@ -467,26 +398,22 @@ def tools(ROOT):
 					dnsub(path)
 
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> Tools: ' + str(e))
+		print(' [ Error ] Toolsdata -> Tools: ' + str(e))
 
 def main(r_path):
 	# {domain: {CNAME: cname, IP: ip, PORT: port}}
 	# global variables
 	global alltools
-	global allvalue
 	global allfiles  
 
 	try:
-		allvalue = {}
 		alltools = []
 		allfiles = []
 
 		# perform tools function 
 		tools(r_path)
 
-		return alltools, allfiles, allvalue
+		return alltools, allfiles
 	except Exception as e:
-		print(' [ Error ] dataprocessing ->  Main: ' + str(e))
-	except KeyboardInterrupt:
-		sys.stdout.write("\n\nWho stopped my program!\n")
+		print(' [ Error ] Toolsdata ->  Main: ' + str(e))
 	

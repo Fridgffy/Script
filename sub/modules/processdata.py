@@ -1,9 +1,11 @@
-import config
+from . import allvalue_dict
 
-def processing(**kwargs):
+# allvalue: {domain: {'cname': [cname], 'ip': [ip], 'port': [port]},}
+# deal with value
+def process(**kwargs):
 	try:
 		# global allvalue
-		allvalue = config.allvalue
+		allvalue = allvalue_dict.allvalue
 		# {'domain':'domain','ip':'ip'}
 		if kwargs.get('domain'):
 			domain = kwargs.get('domain')
@@ -63,19 +65,7 @@ def processing(**kwargs):
 									domain_value['port'].append(port)
 					else:
 						domain_value['port'].append(port_value)
-			return allvalue
-
 		else:
-			print(f' [ Error ] dataprocessing -> kwargs no domain value')
+			print(f' [ Error ] process -> kwargs no domain value')
 	except Exception as e:
-		print(' [ Error ] dataprocessing -> Processing: ' + str(e))
-
-# def main():
-# 	for i in range(0,10):
-# 		domain = 'domain'
-# 		ip = i
-# 		dic = {'domain': domain, 'ip': str(ip)}
-# 		allvalue = processing(**dic)
-# 	print(allvalue)
-
-# main()
+		print(' [ Error ] Processing -> process: ' + str(e))
