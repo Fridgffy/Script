@@ -71,17 +71,14 @@ def runtools_config_value(config_pathname):
 		sys.exit(1)
 
 # call module Toolsdata and deal with result data
-def Runtool(interval, r_path, o_path, shell_path, p_path):
+def Runtool(interval, r_path, o_path, p_path):
 	try:
-		if os.path.exists(shell_path):
-			# if result dir not empty
-			if not os.listdir(r_path):
-				Runtools.main(interval, r_path, o_path, p_path, shell_path)
-			else:
-				print('[ Error ] result dir is not empty')
-				sys.exit(1)
+		# if result dir not empty
+		if not os.listdir(r_path):
+			
+			Runtools.main(interval, r_path, o_path, p_path)
 		else:
-			print('[ Error ] shell dir does not exists')
+			print('[ Error ] result dir is not empty')
 			sys.exit(1)
 	except Exception as e:
 		print('[ Error ] main -> Runtool: ' + str(e))
@@ -122,7 +119,6 @@ if __name__ == '__main__':
 		config_pathname = './configs/config.yml'
 		judge_config_pathname(config_pathname)
 
-		# 
 		### output value
 		# r_path: result path; o_path: output path; r_name: result file name; r_pathname: result path + filename; p_path: project absolute path
 		r_path, o_path, r_name, p_path = main_config_value(config_pathname)
@@ -131,6 +127,7 @@ if __name__ == '__main__':
 		### tools value
 		interval = runtools_config_value(config_pathname)
 		Runtool(interval, r_path, o_path, p_path)
+		#print(1)
 
 		# Toolsdataprocess(r_path)
 
@@ -140,4 +137,5 @@ if __name__ == '__main__':
 	except Exception as e:
 		print('[ Error ] main -> main: ' + str(e))
 		sys.exit(1)
+
 
