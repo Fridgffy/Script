@@ -1,11 +1,11 @@
-from . import allvalue_dict
+from . import config_var
 
 # allvalue: {domain: {'cname': [cname], 'ip': [ip], 'port': [port]},}
 # deal with value
 def process(**kwargs):
 	try:
 		# global allvalue
-		allvalue = allvalue_dict.allvalue
+		allvalue = config_var.allvalue
 		# {'domain':'domain','ip':'ip'}
 		if kwargs.get('domain'):
 			domain = kwargs.get('domain')
