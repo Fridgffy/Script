@@ -1,8 +1,0 @@
-main:
- o_path: /root/workspace
- r_path: /root/result/
- r_name: result.csv
- p_path: /root/workspace/Script/sub1
-
-Runtools:
-  interval: 3
