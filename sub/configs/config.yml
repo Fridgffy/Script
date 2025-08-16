@@ -1,0 +1,10 @@
+main:
+ o_path: /root/workspace/
+ r_path: /root/result/
+ r_name: result.csv
+ root_path: /root/workspace/sub/
+ subdict: /root/Dictfile/domain/sub
+Runtools:
+  timeout: 180 # minutes
+git_api: 
+chaos_api: 
