@@ -29,7 +29,7 @@ def perform(timeout, toolname, command):
 
 def command_dict(r_path, root_path, o_path, target, git_api, chaos_api, subdict):
 	try:
-		shell_path = os.path.join(root_path, 'findsubscripts')
+		shell_path = os.path.join(root_path, 'shells')
 		# findsub script absolute path
 		findsub_pathname = os.path.join(shell_path, 'findsub')
 
