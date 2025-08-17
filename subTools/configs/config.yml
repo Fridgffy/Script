@@ -5,6 +5,6 @@ main:
  root_path: /root/workspace/sub/
  subdict: /root/Dictfile/domain/sub
 Runtools:
-  timeout: 180 # minutes
+  timeout: 1440 # minutes
 git_api: 
 chaos_api: 
