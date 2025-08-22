@@ -143,7 +143,7 @@ def Toolsdataprocess(r_path):
 			for file in allfiles:
 				print(file)
 		else:
-			tlist = ['ESD', 'assetfinder', 'chaos', 'ctfr', 'dnsmap', 'fierce', 'findomain', 'github_subdomains', 'aquatone', 'ksubdomain', 'knock', 'subdomainbrute', 'subfinder', 'dnsub']
+			tlist = ['ESD', 'assetfinder', 'chaos', 'ctfr', 'fierce', 'findomain', 'aquatone', 'ksubdomain', 'knock', 'subdomainbrute', 'subfinder', 'dnsub']
 			elist = []
 			for t in tlist:
 				try:

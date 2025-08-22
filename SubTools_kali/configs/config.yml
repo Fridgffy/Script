@@ -1,0 +1,17 @@
+main:
+ o_path: /root/workspace/
+ r_path: /root/result/
+ r_name: result.csv
+ root_path: /root/workspace/SubTools_kali/
+ subdict: /root/Dictfile/domain/sub
+Runtools:
+  timeout: 1440 # minutes
+E-mail:
+  sender: 
+  password: 
+  receiver: 
+  smtp_server: smtp.163.com
+  smtp_port: 465
+git_api: 
+chaos_api: 
+
