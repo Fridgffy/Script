@@ -37,15 +37,17 @@ def command_dict(r_path, root_path, o_path, target, git_api, chaos_api, subdict)
 		# command dict
 		command = {
 		'oneforall': f'python /root/subdomain/OneForAll/oneforall.py --port large --brute --path {o_path}/oneforall.csv --target {target} run {output_config}',
-		'esd': f'esd -d {target}  >> {o_path}/output 2>&1',
+		'esd': f'esd -d {target} {output_config}',
+		'move_esd_file': 'mv /tmp/esd/.*.esd /root/result',
+		'ctfr': f'python /root/subdomain/ctfr/ctfr.py -o ${r_path}/ctfr -d {target} ${output_config}',
 		'subdomainsbrute': f'python /root/subdomain/subDomainsBrute/subDomainsBrute.py -o {r_path}/subdomainbrute --full {target} {output_config}',
 		'aquatone': f'aquatone-discover -t 10 -s 1 --fallback-nameservers 8.8.8.8,223.6.6.6,180.76.76.76,1.1.1.1 -d {target} {output_config}',
+		'move_aquatone_file': f'mv /root/aquatone/{target}/hosts.json {r_path}',
 		'ksubdomain': f'ksubdomain -full -l 1 -csv -o {r_path}/ksubdomain.csv -d {target} {output_config}',
 		'github-subdomains': f'github-subdomains -t {git_api} -o {r_path}/github_subdomains -d {target} {output_config}',
 		'chaos': f'chaos -silent -key {chaos_api} -o {r_path}/chaos -d {target} {output_config}',
 		'findsub_script': f'{findsub_pathname} -t {target}',
-		'move_file': 'mv /tmp/esd/.*.esd /root/result',
-		'fierce': f'fierce --wide --domain {target} {output_config}',
+		'fierce': f'fierce --wide --domain {target} >> {r_path}/fierce',
 		'dnsub_dns': f'/root/subdomain/dnsub/dnsub --dns 8.8.8.8,223.6.6.6,180.76.76.76,1.1.1.1 --depth 1 -o {r_path}/dnsub_dns.csv -d {target} {output_config}',
 		'dnsub_nodns': f'/root/subdomain/dnsub/dnsub --depth 1 -o {r_path}/dnsub_nodns.csv -d {target} {output_config}',
 		# bruteforce
@@ -71,3 +73,4 @@ def main(timeout, r_path, o_path, root_path, target, git_api, chaos_api, subdict
 				perform(timeout, toolname, command)
 		except Exception as e:
 				log.log('[ Runtools Error ]  main: ' + str(e))
+

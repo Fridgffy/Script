@@ -1,7 +1,7 @@
 import csv
 from . import config_var, log
 
-def write_in(r_pathname,):
+def write_in(r_pathname):
 	try:
 		allvalue = config_var.allvalue
 		with open(r_pathname,'w+', newline='') as file:
