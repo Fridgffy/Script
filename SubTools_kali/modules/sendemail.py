@@ -21,7 +21,7 @@ def send(start, end, spend, sender, password, receiver, smtp_server, smtp_port, 
 		smtp_port = smtp_port
 
 		msg = MIMEMultipart()
-		msg['Subject'] = "subTools send message"
+		msg['Subject'] = "subTools_kali send message"
 		msg['From'] = formataddr(["subTools", sender])
 		msg['To'] = formataddr(["Receiver", receiver])
 
