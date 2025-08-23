@@ -54,6 +54,7 @@ function MakeFolders()
 	folder /root/sensitive
 	folder /root/path
 	folder /root/comprehensive
+	folder /root/workspace
 	cd /root/ && git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 	ea 'Dictfile'
 
