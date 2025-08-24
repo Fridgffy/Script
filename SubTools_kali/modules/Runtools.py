@@ -47,10 +47,7 @@ def command_dict(r_path, root_path, o_path, target, git_api, chaos_api, subdict)
 		'chaos': f'chaos -silent -key {chaos_api} -o {r_path}/chaos -d {target} {output_config}',
 		'kalisub_script': f'{kalisub_pathname} -t {target}',
 		'fierce': f'fierce --wide --domain {target} >> {r_path}/fierce',
-		'dnsub_dns': f'/root/subdomain/dnsub/dnsub --dns 8.8.8.8,223.6.6.6,180.76.76.76,1.1.1.1 --depth 1 -o {r_path}/dnsub_dns.csv -d {target} {output_config}',
-		'dnsub_nodns': f'/root/subdomain/dnsub/dnsub --depth 1 -o {r_path}/dnsub_nodns.csv -d {target} {output_config}',
 		# bruteforce
-		'dnsub_brute': f'/root/subdomain/dnsub/dnsub -f {subdict} --depth 1 -o {r_path}/dnsub_brute.csv -d {target} {output_config}',
 		'ksubdomain_brute': f'ksubdomain -l 1 -f {subdict} -csv -filter-wild -o {r_path}/ksubdomain_brute.csv -d {target} {output_config}',
 		'findomain': f'findomain --ua /root/subdomain/findomain/ua -w {subdict} --pscan -u {r_path}/findomain_brute -t {target} {output_config}',
 		'subdomainsbrute': f'python /root/subdomain/subDomainsBrute/subDomainsBrute.py -o {r_path}/subdomainbrute_brute --full -f {subdict} {target} {output_config}'
