@@ -736,6 +736,7 @@ echo -e "${YELLOW}  google-chrome${END}"
 ### configuration Tools
 echo -e "${RED}Configuration Tools ${END}"
 echo -e "${YELLOW}  ARL${END}"
+echo -e "${YELLOW}  bbot${END}"
 echo -e "${YELLOW}  amass${END}"
 echo -e "${YELLOW}  shuize${END}"
 echo -e "${YELLOW}  reconftw${END}"
