@@ -8,7 +8,7 @@ def process(**kwargs):
 		allvalue = config_var.allvalue
 		# {'domain':'domain','ip':'ip'}
 		if kwargs.get('domain'):
-			domain = kwargs.get('domain')
+			domain = kwargs.get('domain').strip().lower()
 			# if domain exists, dict remains unchanged, otherwise create it
 			allvalue.setdefault(domain,{})
 
