@@ -136,21 +136,24 @@ def Toolsdataprocess(r_path):
 	try:
 		alltools, allfiles = Toolsdata.main(r_path)
 		total = len(alltools)
+		log.log(f'[ ToolResult ] A total of {total} tools were run, (should be 11)')
+
 		# determine all tools perform
-		if total == 14:
-			# print processed files
-			print('[ Processing files ]')
-			for file in allfiles:
-				print(file)
-		else:
-			tlist = ['ESD', 'assetfinder', 'chaos', 'ctfr', 'fierce', 'findomain', 'aquatone', 'ksubdomain', 'knock', 'subdomainbrute', 'subfinder', 'dnsub']
-			elist = []
-			for t in tlist:
-				try:
-					alltools.index(t)
-				except Exception as e:
-					if 'is not in list' in str(e):
-						log.log(f'[Result file Error ] {t} result file not find')
+		# if total == 14:
+		# 	# print processed files
+		# 	print('[ Processing files ]')
+		# 	for file in allfiles:
+		# 		print(file)
+		
+		# tlist = ['ESD', 'assetfinder', 'chaos', 'ctfr', 'fierce', 'findomain', 'aquatone', 'ksubdomain', 'knock', 'subdomainbrute', 'subfinder', 'dnsub']
+		tlist = ['ESD', 'assetfinder', 'chaos', 'fierce', 'findomain', 'aquatone', 'ksubdomain', 'knock', 'subdomainbrute', 'subfinder', 'dnsub']
+		elist = []
+		for t in tlist:
+			try:
+				alltools.index(t)
+			except Exception as e:
+				if 'is not in list' in str(e):
+					log.log(f'[Result file Error ] {t} result file not find')
 	except Exception as e:
 		log.log('[ Main Error ] Toolsdataprocess: ' + str(e))
 		sys.exit(1)

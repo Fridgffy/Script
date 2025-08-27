@@ -39,7 +39,7 @@ def command_dict(r_path, root_path, o_path, target, git_api, chaos_api, subdict)
 		'oneforall': f'python /root/subdomain/OneForAll/oneforall.py --port large --brute --path {o_path}/oneforall.csv --target {target} run {output_config}',
 		'esd': f'esd -d {target} {output_config}',
 		'move_esd_file': 'mv /tmp/esd/.*.esd /root/result',
-		'ctfr': f'python /root/subdomain/ctfr/ctfr.py -o ${r_path}/ctfr -d {target} ${output_config}',
+		# 'ctfr': f'python /root/subdomain/ctfr/ctfr.py -o ${r_path}/ctfr -d {target} ${output_config}',
 		'subdomainsbrute': f'python /root/subdomain/subDomainsBrute/subDomainsBrute.py -o {r_path}/subdomainbrute --full {target} {output_config}',
 		'aquatone': f'aquatone-discover -t 10 -s 1 --fallback-nameservers 8.8.8.8,223.6.6.6,180.76.76.76,1.1.1.1 -d {target} {output_config}',
 		'move_aquatone_file': f'mv /root/aquatone/{target}/hosts.json {r_path}',

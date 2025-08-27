@@ -167,23 +167,23 @@ def assetfinder(path):
 	except Exception as e:
 		log.log(' [ Toolsdata Error ] assetfinder: ' + str(e))
 
-def ctfr(path):
-	try:
-		global alltools
-		global allfiles
-		allfiles.append(path)
+# def ctfr(path):
+# 	try:
+# 		global alltools
+# 		global allfiles
+# 		allfiles.append(path)
 
-		if 'ctfr' not in alltools:
-			alltools.append('ctfr')
+# 		if 'ctfr' not in alltools:
+# 			alltools.append('ctfr')
 
-		with open(path,'r') as file:
-			for raw in file:
-				domain = raw.strip().replace('*.','')
-				# dict data
-				value_dic = {'domain': domain.strip()}
-				processdata.process(**value_dic)
-	except Exception as e:
-		log.log(' [ Toolsdata Error ] ctfr: ' + str(e))
+# 		with open(path,'r') as file:
+# 			for raw in file:
+# 				domain = raw.strip().replace('*.','')
+# 				# dict data
+# 				value_dic = {'domain': domain.strip()}
+# 				processdata.process(**value_dic)
+# 	except Exception as e:
+# 		log.log(' [ Toolsdata Error ] ctfr: ' + str(e))
 
 def knock(path):
 	try:
@@ -314,8 +314,8 @@ def tools(ROOT):
 				if 'assetfinder' in filename:
 					assetfinder(path)
 
-				if 'ctfr' in filename:
-					ctfr(path)
+				# if 'ctfr' in filename:
+				# 	ctfr(path)
 
 				if 'chaos' in filename:
 					chaos(path)
