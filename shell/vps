@@ -708,8 +708,11 @@ BatchTools
 echo -e "${YELLO}  Start download Subdomain tools${END}"
 SubdomainTools
 
-echo -e "${YELLO}  Start otherTools${END}"
+echo -e "${YELLO}  Start otherTools ${END}"
 otherTools
+
+echo -e "${YELLO}  Start portTools ${END}"
+portTools
 
 echo -e "${YELLO}  Start url crawl tool${END}"
 urlcrawl
