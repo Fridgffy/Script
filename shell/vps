@@ -42,19 +42,21 @@ function version()
 ### make new folders
 function MakeFolders()
 {
-	folder /root/batch
-	folder /root/vuln
-	folder /root/subdomain
-	folder /root/result
-	folder /root/other
-	folder /root/urlcrawl
-	folder /root/fuzz
-	folder /root/fingerprint
-	folder /root/port
-	folder /root/sensitive
-	folder /root/path
-	folder /root/comprehensive
-	folder /root/workspace
+	if [ -d '/data' ];then
+		folder /root/batch
+		folder /root/vuln
+		folder /root/subdomain
+		folder /root/result
+		folder /root/other
+		folder /root/urlcrawl
+		folder /root/fuzz
+		folder /root/fingerprint
+		folder /root/port
+		folder /root/sensitive
+		folder /root/path
+		folder /root/comprehensive
+		folder /root/workspace
+		folder /data/bbot
 	cd /root/ && git clone https://github.com/Fridgffy/Dictfile > /dev/null 2>&1 
 	ea 'Dictfile'
 
