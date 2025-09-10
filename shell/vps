@@ -698,14 +698,14 @@ MakeFolders
 echo -e "${YELLO}  Start download ARL${END}"
 ARL
 
+echo -e "${YELLO}  Start download BatchTools tools${END}"
+BatchTools
+
 echo -e "${YELLO}  Start download vuln tools${END}"
 vuln
 
 echo -e "${YELLO}  Start download comprehensive tools${END}"
 comprehensive
-
-echo -e "${YELLO}  Start download BatchTools tools${END}"
-BatchTools
 
 echo -e "${YELLO}  Start download Subdomain tools${END}"
 SubdomainTools
@@ -713,17 +713,25 @@ SubdomainTools
 echo -e "${YELLO}  Start otherTools ${END}"
 otherTools
 
-echo -e "${YELLO}  Start portTools ${END}"
-portTools
-
 echo -e "${YELLO}  Start url crawl tool${END}"
 urlcrawl
+
+echo -e "${YELLO}  Start url fuzz tool${END}"
+fuzz
 
 echo -e "${YELLO}  Start url fingerprintTools ${END}"
 fingerprintTools
 
+echo -e "${YELLO}  Start portTools ${END}"
+portTools
+
 echo -e "${YELLO}  Start url PathTools ${END}"
 PathTools
+
+echo -e "${YELLOW} Start sensitive Tools ${END}"
+SensitiveTools
+
+
 
 ### error
 if [ ${#array[*]} -ne 0 ];then
