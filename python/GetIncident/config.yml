@@ -1,0 +1,9 @@
+cookie: aops-sessionId=b930ac82-70c6-4c05-aae0-8a39b7513da6; SESSION=YjkzMGFjODItNzBjNi00YzA1LWFhZTAtOGEzOWI3NTEzZGE2; JSESSIONID=E73278CC3C12080489E40A31A33288A5
+old_name:
+  - neutron3-RG01AZ01-P1F1-MCORE-PM-OS01-BCEC-CTL-03
+  - neutron2-RG01AZ01-P1F1-MCORE-PM-OS01-BCEC-CTL-02
+  - neutron1-RG01AZ01-P1F1-MCORE-PM-OS01-BCEC-CTL-01
+  - mpp数据库15
+newjsonfile: ./new.json
+oldjsonfile: ./old.json
+pagesize: 15
