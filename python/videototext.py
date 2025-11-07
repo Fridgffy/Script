@@ -1,10 +1,34 @@
 import tkinter as tk
 import os
-import whisper
 import ffmpeg
 import sys
 import torch
 from tkinter import filedialog
+import warnings
+
+warnings.filterwarnings(
+    "ignore",
+    message="Torch was not compiled with flash attention",
+    category=UserWarning,
+)
+import whisper
+
+warnings.filterwarnings("ignore", message="A matching Triton")
+warnings.filterwarnings("ignore", message="1Torch was not compiled with flash attention.")
+warnings.filterwarnings("ignore", message="Torch was not compiled with flash attention")
+warnings.filterwarnings("ignore", message="A matching Triton")
+warnings.filterwarnings("ignore", message="Some optimizations will not be enabled")
+warnings.filterwarnings("ignore", message="No module named 'triton'")
+warnings.filterwarnings("ignore", category=UserWarning, module="whisper")
+stderr = sys.stderr
+sys.stderr = open(os.devnull, "w")
+try:
+    import xformers
+    import xformers.ops as xops
+except Exception:
+    pass
+sys.stderr.close()
+sys.stderr = stderr
 
 class Root():
 	def __init__(self, window):
@@ -58,10 +82,12 @@ class Root():
 		def getpath_video():
 			clean()
 			path = self.getpath()
+			e_video.delete(0, tk.END)
 			e_video.insert(0, path)
 		def getpath_text():
 			clean()
 			path = self.getpath()
+			e_text.delete(0, tk.END)
 			e_text.insert(0, path)
 		def extractaudio(videopath, audiopath):
 			try:
@@ -80,14 +106,19 @@ class Root():
 			try:
 				# load whisper
 				model = whisper.load_model('medium', device='cuda')
+				if hasattr(model, 'enable_xformers_memory_efficient_attention'):
+					model.enable_xformers_memory_efficient_attention()
+					sys.stdout.write("xFormers memory-efficient attention enabled.\n")
 				# transcribe
-				result = model.transcribe(audiopath, verbose=True, language="zh")
+				result = model.transcribe(audiopath, verbose=True, language="zh", fp16=True)
 				return result
 			except Exception as e:
 				self.display_results(self.window, 'whisper error: ' + str(e))
 
 		def transcribe():
 			try:
+				torch.backends.cuda.sdp_kernel(enable_flash=True, enable_math=False, enable_mem_efficient=True)
+				sys.stdout.write("Using xFormers memory-efficient attention instead of torch flash attention.\n")
 				videopath = e_video.get()
 				textpath = e_text.get()
 				audiopath = "tmp_audio.wav"
@@ -97,11 +128,11 @@ class Root():
 
 					if torch.cuda.is_available():
 						if torch.backends.cudnn.is_available():
-							sys.stdout.write('CUDA and cuDNN is availlable\n')
+							sys.stdout.write('CUDA and cuDNN is availlable\n\n\n')
 						else:
 							sys.stdout.write('cuDNN is not available\n')
 						result = whisper_GPU(audiopath)
-						t_output.insert("insert", str(result))
+						# t_output.insert("insert", str(result))
 						# delete temporary audio file
 						os.remove('./tmp_audio.wav')
 					else:
