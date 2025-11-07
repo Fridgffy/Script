@@ -1,0 +1,136 @@
+import tkinter as tk
+import os
+import whisper
+import ffmpeg
+import sys
+import torch
+from tkinter import filedialog
+
+class Root():
+	def __init__(self, window):
+		self.window = window
+		self.set_window()
+		self.create()
+
+	def set_window(self):
+		self.window.title('VideoToText')
+		width = 930
+		height = 700
+		screenwidth = self.window.winfo_screenwidth()
+		screenheight = self.window.winfo_screenheight()
+		size_geo = '%dx%d+%d+%d' % (width, height, (screenwidth-width)/2, (screenheight-height)/2)
+		self.window.geometry(size_geo)
+	def create_button(self,tab,function,display,w=10):
+		b = tk.Button(tab,text=display,command=function,font=('Consolas','12'),width=w)
+		return b
+
+	def create_text(self,tab,w,h):
+		t = tk.Text(tab, undo=True, width=w,height=h,font=('Consolas','12'))
+		return t
+
+	def create_label(self,tab,display,w=10,h=1):
+		l = tk.Label(tab,text=display,width=w,height=h,font=('Consolas','12'))
+		return l
+	
+	def create_entry(self,tab,w=15):
+		e = tk.Entry(tab,show=None,width=w,font=('Consolas','12'))
+		return e
+
+	def getpath(self):
+		path = filedialog.askopenfilename(
+				title = "Choise a file",
+				initialdir = r"D:\will\\",
+				# initialdir = "C:\\Users\\DC\\Desktop",
+				filetypes = (
+					("All Files", "*.*"),
+					("Text File", "*.txt")
+				)
+			)
+		return path
+	# result display
+	def display_results(self,tab,result):
+		l_result = tk.Label(tab, text=result,font=('Consolas','12'),width=100,height=5)
+		l_result.grid(row=30,column=0,columnspan=10)
+
+	def create(self):
+		def clean():
+			self.display_results(self.window, '')
+		def getpath_video():
+			clean()
+			path = self.getpath()
+			e_video.insert(0, path)
+		def getpath_text():
+			clean()
+			path = self.getpath()
+			e_text.insert(0, path)
+		def extractaudio(videopath, audiopath):
+			try:
+				# extract audio
+				(
+					ffmpeg
+					.input(videopath)
+					.output(audiopath, format='wav', acodec='pcm_s16le', ac=1, ar='16000')
+					.overwrite_output()
+					.run(quiet=True)
+				)
+			except Exception as e:
+				self.display_results(self.window, 'ffmpeg error: ' + str(e.stderr.decode('utf-8')))
+
+		def whisper_GPU(audiopath):
+			try:
+				# load whisper
+				model = whisper.load_model('medium', device='cuda')
+				# transcribe
+				result = model.transcribe(audiopath, verbose=True, language="zh")
+				return result
+			except Exception as e:
+				self.display_results(self.window, 'whisper error: ' + str(e))
+
+		def transcribe():
+			try:
+				videopath = e_video.get()
+				textpath = e_text.get()
+				audiopath = "tmp_audio.wav"
+				if videopath and  textpath:
+					# extract audio
+					extractaudio(videopath, audiopath)
+
+					if torch.cuda.is_available():
+						if torch.backends.cudnn.is_available():
+							sys.stdout.write('CUDA and cuDNN is availlable\n')
+						else:
+							sys.stdout.write('cuDNN is not available\n')
+						result = whisper_GPU(audiopath)
+						t_output.insert("insert", str(result))
+						# delete temporary audio file
+						os.remove('./tmp_audio.wav')
+					else:
+						sys.stdout.write('CUDA is not available, use cpu\n')
+				else:
+					self.display_results(self.window, 'Path is empty!')
+			except Exception as e:
+				self.display_results(self.window, str(e))
+
+		l_description = self.create_label(self.window, 'Vidoe To Text', w=65, h=1)
+		l_description.grid(row=0, column=0, columnspan=6)
+		l_video = self.create_label(self.window, 'Video', w=10, h=1)
+		l_video.grid(row=1, column=0)
+		e_video = self.create_entry(self.window, w=70)
+		e_video.grid(row=1, column=1)
+		b_video = self.create_button(self.window, getpath_video, 'File')
+		b_video.grid(row=1, column=2)
+		l_text = self.create_label(self.window, 'Text', w=10, h=1)
+		l_text.grid(row=2, column=0)
+		e_text = self.create_entry(self.window, w=70)
+		e_text.grid(row=2, column=1)
+		e_text.insert(0, "C:\\Users\\DC\\Desktop\\transcribe_output")
+		b_text = self.create_button(self.window, getpath_text, 'File')
+		b_text.grid(row=2, column=2)
+		# t_output = self.create_text(self.window, w=90, h=25)
+		# t_output.grid(row=3, column=0, columnspan=6)
+		b_transcribe = self.create_button(self.window, transcribe, 'Transcribe')
+		b_transcribe.grid(row=4, column=0, columnspan=6)
+if __name__ == '__main__':
+	window = tk.Tk()
+	Root(window)
+	window.mainloop()
