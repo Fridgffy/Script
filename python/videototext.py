@@ -6,6 +6,7 @@ import torch
 from tkinter import filedialog
 import warnings
 
+# filter warnings
 warnings.filterwarnings(
     "ignore",
     message="Torch was not compiled with flash attention",
@@ -30,6 +31,7 @@ except Exception:
 sys.stderr.close()
 sys.stderr = stderr
 
+# tkinter class
 class Root():
 	def __init__(self, window):
 		self.window = window
@@ -64,7 +66,6 @@ class Root():
 		path = filedialog.askopenfilename(
 				title = "Choise a file",
 				initialdir = r"D:\will\\",
-				# initialdir = "C:\\Users\\DC\\Desktop",
 				filetypes = (
 					("All Files", "*.*"),
 					("Text File", "*.txt")
@@ -115,28 +116,42 @@ class Root():
 			except Exception as e:
 				self.display_results(self.window, 'whisper error: ' + str(e))
 
+		def out_file(videopath, textpath, result):
+			try:
+				# format the result data
+				videofilename = os.path.split(videopath)[1]
+				v_name = os.path.splitext(videofilename)[0]
+				outfile = str(textpath) + str(v_name) + '.txt'
+				with open(outfile, 'w+') as f:
+					f.write(result)
+				t_output.insert("insert", str(result))
+			except Exception as e:
+				self.display_results(self.window, str(e))
+
 		def transcribe():
 			try:
 				torch.backends.cuda.sdp_kernel(enable_flash=True, enable_math=False, enable_mem_efficient=True)
 				sys.stdout.write("Using xFormers memory-efficient attention instead of torch flash attention.\n")
 				videopath = e_video.get()
-				textpath = e_text.get()
+				# textpath = e_text.get()
 				audiopath = "tmp_audio.wav"
-				if videopath and  textpath:
-					# extract audio
-					extractaudio(videopath, audiopath)
-
+				if videopath:
+				# if videopath and  textpath:
 					if torch.cuda.is_available():
 						if torch.backends.cudnn.is_available():
-							sys.stdout.write('CUDA and cuDNN is availlable\n\n\n')
+							sys.stdout.write(f'CUDA and cuDNN is availlable, CUDA version: {torch.version.cuda}, torch version: {torch.__version__}\n\n')
+							# extract audio
+							extractaudio(videopath, audiopath)
+							# transcribe audio
+							result = whisper_GPU(audiopath)
+							# output result
+							# out_file(videopath, textpath, str(result))
+							# delete temporary audio file
+							os.remove('./tmp_audio.wav')
 						else:
 							sys.stdout.write('cuDNN is not available\n')
-						result = whisper_GPU(audiopath)
-						# t_output.insert("insert", str(result))
-						# delete temporary audio file
-						os.remove('./tmp_audio.wav')
 					else:
-						sys.stdout.write('CUDA is not available, use cpu\n')
+						sys.stdout.write('CUDA is not available, please check, please check the configuration.\n')
 				else:
 					self.display_results(self.window, 'Path is empty!')
 			except Exception as e:
@@ -150,13 +165,13 @@ class Root():
 		e_video.grid(row=1, column=1)
 		b_video = self.create_button(self.window, getpath_video, 'File')
 		b_video.grid(row=1, column=2)
-		l_text = self.create_label(self.window, 'Text', w=10, h=1)
-		l_text.grid(row=2, column=0)
-		e_text = self.create_entry(self.window, w=70)
-		e_text.grid(row=2, column=1)
-		e_text.insert(0, "C:\\Users\\DC\\Desktop\\transcribe_output")
-		b_text = self.create_button(self.window, getpath_text, 'File')
-		b_text.grid(row=2, column=2)
+		# l_text = self.create_label(self.window, 'Text', w=10, h=1)
+		# l_text.grid(row=2, column=0)
+		# e_text = self.create_entry(self.window, w=70)
+		# e_text.grid(row=2, column=1)
+		# e_text.insert(0, "C:/Users/DC/Desktop/")
+		# b_text = self.create_button(self.window, getpath_text, 'File')
+		# b_text.grid(row=2, column=2)
 		# t_output = self.create_text(self.window, w=90, h=25)
 		# t_output.grid(row=3, column=0, columnspan=6)
 		b_transcribe = self.create_button(self.window, transcribe, 'Transcribe')
