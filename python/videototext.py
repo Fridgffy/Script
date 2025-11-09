@@ -130,6 +130,7 @@ class Root():
 
 		def transcribe():
 			try:
+				sys.stdout.write('[ START Transcribe ]\n')
 				torch.backends.cuda.sdp_kernel(enable_flash=True, enable_math=False, enable_mem_efficient=True)
 				sys.stdout.write("Using xFormers memory-efficient attention instead of torch flash attention.\n")
 				videopath = e_video.get()
@@ -148,10 +149,11 @@ class Root():
 							# out_file(videopath, textpath, str(result))
 							# delete temporary audio file
 							os.remove('./tmp_audio.wav')
+							sys.stdout.write('[ Transcription complete ]\n\n')
 						else:
-							sys.stdout.write('cuDNN is not available\n')
+							sys.stdout.write('cuDNN is not available\n\n')
 					else:
-						sys.stdout.write('CUDA is not available, please check, please check the configuration.\n')
+						sys.stdout.write('CUDA is not available, please check, please check the configuration.\n\n')
 				else:
 					self.display_results(self.window, 'Path is empty!')
 			except Exception as e:
